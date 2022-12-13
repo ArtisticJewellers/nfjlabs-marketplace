@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LazyMinting</title>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.6.9/ethers.umd.min.js"
+    ></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      // string private constant SIGNING_DOMAIN = "LazyNFT-Voucher";
+      //     string private constant SIGNATURE_VERSION = "1";
+      // ["0x1Ed536F8B373637e2A65469ED8DA1e527c3187C0", 10000, "5", "0x1Ed536F8B373637e2A65469ED8DA1e527c3187C0", "uri", "0x897c3d5a37413b33f9933d22a6348dc28431c45c78fd19c07b9911ae0ccdd0cf4b1aa5e4b173ddc1b51ee6f538dbc6582d22ba03849fcfed211ceed8af042db11c"]
+
+      const SIGNING_DOMAIN_NAME = "LazyNFT-Voucher";
+      const SIGNING_DOMAIN_VERSION = "1";
+      const chainId = 80001;
+      const contractAddress = "0xE33c16706Ab26327AE10922828825422Cb20760f"; // Put the address here from remix
+      const signer = new ethers.Wallet(
+        "fa91101129ccff920bc1cd29e021b16531f979e299d1b4bc4071788ad9651d74"
+      );
+
+      const domain = {
+        name: SIGNING_DOMAIN_NAME,
+        version: SIGNING_DOMAIN_VERSION,
+        verifyingContract: contractAddress,
+        chainId,
+      };
+
+      // creator, minPrice, royaltyCut, royaltyWalletAddr, uri
+      async function createVoucher(
+        creator,
+        minPrice,
+        royaltyCut,
+        royaltyWalletAddr,
+        uri
+      ) {
+        const voucher = {
+          creator,
+          minPrice,
+          royaltyCut,
+          royaltyWalletAddr,
+          uri,
+        };
+        const types = {
+          NFTVoucher: [
+            { name: "creator", type: "address" },
+            { name: "minPrice", type: "uint256" },
+            { name: "royaltyCut", type: "uint256" },
+            { name: "royaltyWalletAddr", type: "address" },
+            { name: "uri", type: "string" },
+          ],
+        };
+
+        const signature = await signer._signTypedData(domain, types, voucher);
+        return {
+          ...voucher,
+          signature,
+        };
+      }
+
+      async function main() {
+        const voucher = await createVoucher(
+          "0x50021f7e60caa0C25575c22D66CEEDdfF8BF8A35",
+          10000,
+          5,
+          "0xD14b1160Da6cb3D4963f48b25C596F007dc9aCf2",
+          "uri"
+        );
+        console.log(voucher);
+        console.log(
+          `["${voucher.creator}", "${voucher.minPrice}"", "${voucher.royaltyCut}", "${voucher.royaltyWalletAddr}", "${voucher.uri}", "${voucher.signature}"]`
+        );
+      }
+      main();
+    </script>
+  </body>
+</html>

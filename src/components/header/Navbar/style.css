@@ -1,0 +1,18 @@
+.logo{
+    margin-right: 10px;
+}
+
+@media only screen and (max-width: 769px) {
+    .network-name{
+        display: none;
+    }
+    .logo{
+        margin-right: 44px;
+    }
+  }
+
+  @media only screen and (max-width: 1025px) {
+    .network-name{
+        display: block;
+    }
+  }
