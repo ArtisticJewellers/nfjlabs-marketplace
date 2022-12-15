@@ -75,6 +75,26 @@ const ItemDetails = () => {
     getTokenBalance,
   } = useNFT();
 
+  let blockURL = "";
+  if (ChainsInfo[getNetworkChainID(network)].CHAIN_ID == 1) {
+    blockURL = "https://etherscan.io/";
+  }
+  else if (ChainsInfo[getNetworkChainID(network)].CHAIN_ID == 137) {
+    blockURL = "https://polygonscan.com/";
+  }
+  else if (ChainsInfo[getNetworkChainID(network)].CHAIN_ID == 80001) {
+    blockURL = "https://mumbai.polygonscan.com/";
+  }
+  else if (ChainsInfo[getNetworkChainID(network)].CHAIN_ID == 5) {
+    blockURL = "https://goerli.etherscan.io/";
+  }
+  else if (ChainsInfo[getNetworkChainID(network)].CHAIN_ID == 97) {
+    blockURL = "https://testnet.bscscan.com/";
+  }
+  else {
+    blockURL = "https://bscscan.com/";
+  }
+
   const { downloadJSONOnIpfs } = useStorage();
   const [metaData, setMetaData] = useState({});
   const { account, active } = useWeb3React();
@@ -111,8 +131,8 @@ const ItemDetails = () => {
     if (nftDetails?.getNftDetails?.chainId) {
       fetch(
         "https://cex.io/api/last_price/" +
-          ChainsInfo[nftDetails?.getNftDetails?.chainId]?.CURRENCY_SYMBOL +
-          "/USD"
+        ChainsInfo[nftDetails?.getNftDetails?.chainId]?.CURRENCY_SYMBOL +
+        "/USD"
       )
         .then((res) => res.json())
         .then((data) => {
@@ -454,7 +474,7 @@ const ItemDetails = () => {
                           placeholder={"0.0001 WMATIC"}
                           className="form-control"
                           type="number"
-                          // min={MIN_PRICE}
+                        // min={MIN_PRICE}
                         ></Input>
                       </Form.Item>{" "}
                       <Form.Item style={{ marginTop: "20px" }}>
@@ -511,7 +531,7 @@ const ItemDetails = () => {
                       if (active) {
                         if (
                           parseInt(auctionDetails.highestBid) /
-                            Math.pow(10, 18) <
+                          Math.pow(10, 18) <
                           parseFloat(value.price)
                         ) {
                           showLoading();
@@ -583,7 +603,7 @@ const ItemDetails = () => {
                           placeholder={"0.0001 WMATIC"}
                           className="form-control"
                           type="number"
-                          // min={MIN_PRICE}
+                        // min={MIN_PRICE}
                         ></Input>
                       </Form.Item>{" "}
                       <Form.Item style={{ marginTop: "20px" }}>
@@ -697,11 +717,11 @@ const ItemDetails = () => {
                         }}
                       >
                         <li className="d-flex justify-content-between mr-4">
-                          <div>IPFS: </div>
+                          <div>Metadata: </div>
                           <a
-                            href={`${metaData?.external_link}`}
+                            href={getIPFSLink(metaData?.ipfsLink)}
                             target="_blank"
-                            alt="IPFS"
+                            alt="metadata"
                           >
                             https://ipfs.com/{metaData?.title}
                           </a>
@@ -709,8 +729,7 @@ const ItemDetails = () => {
                         <li className="d-flex justify-content-between mr-4">
                           <div>Contract Address: </div>
                           <a
-                            href="/"
-                            // href={`${blockchainURL}/address/${address}`}
+                            href={`${blockURL}address/${address}`}
                             target="_blank"
                           >
                             {truncateAddress(address)}
@@ -719,8 +738,7 @@ const ItemDetails = () => {
                         <li className="d-flex justify-content-between mr-4">
                           <div>TokenID: </div>
                           <a
-                            href="/"
-                            // href={`${blockchainURL}/token/${ChainsInfo[chainId]?.NFT_ADDRESS}?a=${tokenId}#inventory`}
+                            href={`${blockURL}token/${address}?a=${tokenId}`}
                             target="_blank"
                           >
                             {tokenId}
@@ -732,6 +750,10 @@ const ItemDetails = () => {
                         <li className="d-flex justify-content-between mr-4">
                           <div>Blockchain:</div>
                           <span className="capitalize">{network}</span>{" "}
+                        </li>
+                        <li className="d-flex justify-content-between mr-4">
+                          <div>Royalty:</div>
+                          <span className="capitalize">5%</span>{" "}
                         </li>
                       </ul>
                     </div>
@@ -763,7 +785,7 @@ const ItemDetails = () => {
                       >
                         {auctionDetails.started &&
                           decimalToInt(auctionDetails.highestBid).toFixed(4) +
-                            " "}
+                          " "}
                         {saleDetails.forSale &&
                           decimalToInt(saleDetails.price).toFixed(4) + " "}
                         {ChainsInfo[getNetworkChainID(network)].CURRENCY_SYMBOL}
@@ -951,12 +973,37 @@ const ItemDetails = () => {
                           View On IPFS
                         </div>
                       </a>
+
+                      {/* <a
+                        target="_blank"
+                        href={`${metaData?.unlock}`}
+                        rel="noreferrer"
+                        style={{
+                          border: "1px solid black",
+                          padding: "8px 20px",
+                          borderRadius: "999px",
+                          display: "flex",
+                          gap: "10px",
+                          alignItems: "center",
+                        }}
+                      >
+                        <div>
+                          <img
+                            width={30}
+                            src={"https://gateway.ipfscdn.io/ipfs/QmUHyyLR4m29GRM1Sjgrx9FgtiMucgUsKZRCfruDByYeC4/pdf-file.png"}
+                            alt="dashghg"
+                          />
+                        </div>
+                        <div style={{ fontBold: "10px", color: "black" }}>
+                          View Certificate
+                        </div>
+                      </a> */}
                     </div>
                     {nftDetails?.getNftDetails?.ownerAddress === account && (
                       <>
                         {saleDetails.forSale ||
-                        auctionDetails.started ||
-                        auctionDetails.ended ? (
+                          auctionDetails.started ||
+                          auctionDetails.ended ? (
                           saleDetails.forSale ? (
                             <span
                               onClick={() => {

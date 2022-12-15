@@ -1,5 +1,5 @@
 #app {
-  height: 100%
+  height: 100%;
 }
 
 html,
@@ -47,4 +47,132 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* hero styling  */
+
+.mainHeroDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-left: 80px;
+}
+
+.img1Div {
+  height: 310px;
+  width: 310px;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 0 0 14px 2px rgb(213, 213, 213);
+}
+
+.img2Div {
+  height: 150px;
+  width: 150px;
+  border-radius: 20px;
+  margin-bottom: 15px;
+  position: relative;
+  box-shadow: 0 0 14px 2px rgb(213, 213, 213);
+}
+
+.img3Div {
+  height: 150px;
+  width: 150px;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 0 0 14px 2px rgb(213, 213, 213);
+}
+
+.ImageStyles {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+}
+
+.hidden1Div {
+  position: absolute;
+  bottom: 0;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.hidden1Div h2 {
+  font-size: 20px;
+  color: black;
+  font-weight: bold;
+  margin-bottom: -1px;
+}
+
+.hidden1Div span {
+  font-size: 15px;
+  color: black;
+}
+
+/* div 2 */
+.hidden2Div {
+  position: absolute;
+  bottom: 0;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.hidden2Div h2 {
+  font-size: 13px;
+  color: black;
+  font-weight: bold;
+  margin-bottom: -7px;
+}
+
+.hidden2Div span {
+  font-size: 8px;
+  color: black;
+}
+
+/* div 3 */
+.hidden3Div {
+  position: absolute;
+  bottom: 0;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.hidden3Div h2 {
+  font-size: 13px;
+  color: black;
+  font-weight: bold;
+  margin-bottom: -7px;
+}
+
+.hidden3Div span {
+  font-size: 8px;
+  color: black;
+}
+
+.mainImg1Div {
+  width: 50%;
+}
+
+@media only screen and (max-width: 800px) {
+  .mainHeroDiv {
+    margin-left: 0;
+  }
+  .mobileViewGayab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  .mobileViewGayab {
+    display: none;
+  }
+  .mainImg1Div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
 }

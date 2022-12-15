@@ -30,6 +30,9 @@ import { useWeb3React } from "@web3-react/core";
 import { ChainsInfo } from "../../config/config-chains";
 import Navbar from "../../components/header/Navbar/Navbar";
 import Typewriter from "typewriter-effect";
+import jhumka from "../../assets/nfts/jhumka.gif"
+import dolce from "../../assets/nfts/alessio/dolce.gif"
+import ring2 from "../../assets/nfts/ring2.gif"
 
 const Marketplace = () => {
   const { data: banner_nft } = useQuery(BannerNft, {
@@ -120,116 +123,123 @@ const Marketplace = () => {
                         </div>
                       </div>
                     </div>
-                    <div
-                      className="col-lg-6 align-items-center"
-                      style={{ height: "300px" }}
-                    >
-                      <Swiper
-                        slidesPerView={3}
+                    <div className="col-lg-6 align-items-center" style={{ height: "300px", width: "700px" }}>
+                      {/* new animated failed swiper  */}
+                      {/* <Swiper
+                        slidesPerView={1}
                         spaceBetween={30}
                         autoplay={50}
                         speed={800}
                         freeMode={true}
+                        direction={"vertical"}
                         modules={[Pagination]}
                         className="mySwiper"
-                        // style={{ padding: "40px 0" }}
+                        style={{ width: "600px", height: "400px" }}
                       >
                         <SwiperSlide>
-                          <div
-                            className="col-lg-6 align-items-center"
-                            style={{
-                              display: "flex",
-                              justifyContent: "end",
-                              width: "100%",
-                              height: "100%",
-                            }}
-                          >
-                            <img
-                              className="img-fluid"
-                              id="img_js"
-                              src={process.env.PUBLIC_URL + "/img/card.svg"}
-                              alt="img"
-                              style={{ height: "320px", width: "100%" }}
-                            />
+                          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", marginLeft: "80px" }}>
+                            <div style={{ width: "50%" }}>
+                              <div className="img1Div">
+                                <Link to={"explore"}>
+                                  <img src={dolcering} alt="image1hero" className="ImageStyles" />
+                                </Link>
+                                <div className="hidden1Div">
+                                  <h2>Vincezaro</h2>
+                                  <span>NFT #23</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div style={{ width: "50%" }}>
+                              <div className="img2Div">
+                                <Link to={"explore"}>
+                                  <img src={dolcering} alt="image1hero" className="ImageStyles" />
+                                </Link>
+                                <div className="hidden2Div">
+                                  <h2>Vincezaro</h2>
+                                  <span>NFT #23</span>
+                                </div>
+                              </div>
+                              <div className="img3Div">
+                                <Link to={"explore"}>
+                                  <img src={dolcering} alt="image1hero" className="ImageStyles" />
+                                </Link>
+                                <div className="hidden3Div">
+                                  <h2>Vincezaro</h2>
+                                  <span>NFT #23</span>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </SwiperSlide>
                         <SwiperSlide>
-                          <div
-                            className="col-lg-6 align-items-center"
-                            style={{
-                              display: "flex",
-                              justifyContent: "end",
-                              width: "100%",
-                              height: "100%",
-                            }}
-                          >
-                            <img
-                              className="img-fluid"
-                              id="img_js"
-                              src={process.env.PUBLIC_URL + "/img/card.svg"}
-                              alt="img"
-                              style={{ height: "320px", width: "100%" }}
-                            />
+                          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", marginLeft: "80px" }}>
+                            <div style={{ width: "50%" }}>
+                              <div className="img1Div">
+                                <Link to={"explore"}>
+                                  <img src={dolcering} alt="image1hero" className="ImageStyles" />
+                                </Link>
+                                <div className="hidden1Div">
+                                  <h2>Vincezaro</h2>
+                                  <span>NFT #23</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div style={{ width: "50%" }}>
+                              <div className="img2Div">
+                                <Link to={"explore"}>
+                                  <img src={dolcering} alt="image1hero" className="ImageStyles" />
+                                </Link>
+                                <div className="hidden2Div">
+                                  <h2>Vincezaro</h2>
+                                  <span>NFT #23</span>
+                                </div>
+                              </div>
+                              <div className="img3Div">
+                                <Link to={"explore"}>
+                                  <img src={dolcering} alt="image1hero" className="ImageStyles" />
+                                </Link>
+                                <div className="hidden3Div">
+                                  <h2>Vincezaro</h2>
+                                  <span>NFT #23</span>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </SwiperSlide>
-                        <SwiperSlide>
-                          <div
-                            className="col-lg-6 align-items-center"
-                            style={{
-                              display: "flex",
-                              justifyContent: "end",
-                              width: "100%",
-                              height: "100%",
-                            }}
-                          >
-                            <img
-                              className="img-fluid"
-                              id="img_js"
-                              src={process.env.PUBLIC_URL + "/img/card.svg"}
-                              alt="img"
-                              style={{ height: "320px", width: "100%" }}
-                            />
+                      </Swiper> */}
+                      <div className="mainHeroDiv">
+                        <div className="mainImg1Div">
+                          <div className="img1Div">
+                            <Link to={"item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/5"}>
+                              <img src={jhumka} alt="image1hero" className="ImageStyles" />
+                            </Link>
+                            <div className="hidden1Div">
+                              <h2>Aleksandra <MdVerified color="#009eee" size={20} /></h2>
+                              <span>The Avya Jhumka</span>
+                            </div>
                           </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                          <div
-                            className="col-lg-6 align-items-center"
-                            style={{
-                              display: "flex",
-                              justifyContent: "end",
-                              width: "100%",
-                              height: "100%",
-                            }}
-                          >
-                            <img
-                              className="img-fluid"
-                              id="img_js"
-                              src={process.env.PUBLIC_URL + "/img/card.svg"}
-                              alt="img"
-                              style={{ height: "320px", width: "100%" }}
-                            />
+                        </div>
+                        <div style={{ width: "50%" }} className="mobileViewGayab">
+                          <div className="img2Div">
+                            <Link to={"item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/11"}>
+                              <img src={dolce} alt="image1hero" className="ImageStyles" />
+                            </Link>
+                            <div className="hidden2Div">
+                              <h2>@Aleesio.B <MdVerified color="#009eee" size={15} /></h2>
+                              <span>Dolce Vita</span>
+                            </div>
                           </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                          <div
-                            className="col-lg-6 align-items-center"
-                            style={{
-                              display: "flex",
-                              justifyContent: "end",
-                              width: "100%",
-                              height: "100%",
-                            }}
-                          >
-                            <img
-                              className="img-fluid"
-                              id="img_js"
-                              src={process.env.PUBLIC_URL + "/img/card.svg"}
-                              alt="img"
-                              style={{ height: "320px", width: "100%" }}
-                            />
+                          <div className="img3Div">
+                            <Link to={"item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/3"}>
+                              <img src={ring2} alt="image1hero" className="ImageStyles" />
+                            </Link>
+                            <div className="hidden3Div">
+                              <h2>Aleksandra <MdVerified color="#009eee" size={15} /></h2>
+                              <span>Basic Band</span>
+                            </div>
                           </div>
-                        </SwiperSlide>
-                      </Swiper>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -343,11 +353,9 @@ const FeaturedNfts = () => {
         >
           {featured_nft?.allFeatureNft?.featuredNft?.map((val, index) => (
             <>
-              {val.isListed && (
-                <SwiperSlide index={index}>
-                  <NftCard val={val} />
-                </SwiperSlide>
-              )}
+              <SwiperSlide index={index}>
+                <NftCard val={val} />
+              </SwiperSlide>
             </>
           ))}
         </Swiper>
@@ -378,11 +386,9 @@ const TrendingNfts = () => {
         >
           {trending_nft?.allTrendingNft?.trendingNft?.map((val, index) => (
             <>
-              {val.isListed && (
-                <SwiperSlide index={index}>
-                  <NftCard val={val} />
-                </SwiperSlide>
-              )}
+              <SwiperSlide index={index}>
+                <NftCard val={val} />
+              </SwiperSlide>
             </>
           ))}
         </Swiper>
@@ -628,9 +634,8 @@ function NftCard({ val }) {
 
                 <div className="card_head">
                   <Link
-                    to={`/item/${val.network}/${
-                      ChainsInfo[val.chainId].NFT_ADDRESS
-                    }/${val.tokenId}`}
+                    to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS
+                      }/${val.tokenId}`}
                   >
                     <img src={val.imageUrl} alt="nftimage" />
                   </Link>

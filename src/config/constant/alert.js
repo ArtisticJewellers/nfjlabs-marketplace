@@ -1,64 +1,64 @@
 import Swal from "sweetalert2";
 
 export const WALLET_ALERT = () =>
-  Swal.fire("Please connect wallet first", "", "warning");
+  Swal.fire("Please connect your wallet first", "", "warning");
 
 export const ACCOUNT_CREATE_ALERT = () =>
   Swal.fire(
     "Account Created",
-    "You have successfully create your account ",
+    "You have successfully created your account ",
     "success"
   );
 export const ACCOUNT_UPDATE_ALERT = () =>
   Swal.fire(
-    "Profile Update",
-    "You have successfully update  your profile. ",
+    "Profile Updated",
+    "You have successfully updated your profile. ",
     "success"
   );
 export const VERIFY_ALERT = () =>
   Swal.fire(
-    "Please create account first",
-    "once you create account you can access all feature of platform.",
+    "Please create an account first",
+    "once you create an account you can access all the feature on our platform.",
     "warning"
   );
 
 export const MINT_ALERT = () =>
   Swal.fire(
     "NFT minted successfully",
-    "You can see your minted NFT in your profile after it gets approved by admin",
+    "You can see your minted NFT on marketplace after it gets approved by admin",
     "success"
   );
 
 export const PUT_SALE_ALERT = () =>
   Swal.fire(
     "Transaction successfully",
-    "Your NFT is successfully put on marketplace.",
+    "Your NFT is successfully listed on the marketplace.",
     "success"
   );
 
 export const REMOVE_SALE_ALERT = () =>
   Swal.fire(
-    "NFT remove successfully",
-    "Your NFT is successfully remove  on marketplace.",
+    "NFT removed successfully",
+    "Your NFT is successfully removed from the marketplace.",
     "success"
   );
 export const CANCEL_BID_ALERT = () =>
   Swal.fire(
-    "You have successfully cancel your bid.",
+    "You have successfully cancelled your bid.",
     "Your bid has remove from this NFT.",
     "success"
   );
 export const REMOVE_AUCTION_ALERT = () =>
   Swal.fire(
-    "NFT remove successfully",
-    "Your NFT is successfully remove  on marketplace.",
+    "NFT removed successfully",
+    "Your NFT is successfully removed from the marketplace.",
     "success"
   );
 
 export const PUT_AUCTION_ALERT = () =>
   Swal.fire(
     "Transaction successfully",
-    "Your NFT is successfully listed on marketplace.",
+    "Your NFT is successfully listed on the marketplace.",
     "success"
   );
 
@@ -71,20 +71,20 @@ export const BUY_NFT_ALERT = () =>
 
 export const PLACE_BID_ALERT = () =>
   Swal.fire(
-    "Your bid place successfully",
-    "Check NFT after sale end!",
+    "Your bid placed successfully",
+    "Check NFT status after the sale ends!",
     "success"
   );
 export const PLACE_BID_AMOUNT_ALERT = () =>
   Swal.fire(
-    "Your amount should be high.",
+    "Your bid amount should be high than listed amount.",
     "Please enter correct amount!",
     "warning"
   );
 export const TOKEN_SUFFICIENT_AMOUNT_ALERT = () =>
   Swal.fire(
-    "You don't have sufficient token.",
-    "Please add  amount!",
+    "You don't have sufficient tokens.",
+    "Please add tokens to complete purchase!",
     "warning"
   );
 

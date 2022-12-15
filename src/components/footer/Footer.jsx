@@ -25,7 +25,7 @@ function Footer() {
               style={{ textAlign: "center", alignSelf: "center" }}
             >
               <a href="https://nfjlabs.com/" target="_blank">
-                <span className=" btn btn-grad btn-tran">
+                <span className=" btn btn-gradFooter btn-tran" style={{ color: "white !important" }}>
                   Visit Our Webiste
                 </span>
               </a>
