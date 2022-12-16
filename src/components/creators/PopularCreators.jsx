@@ -59,8 +59,7 @@ const ArtistCard = ({ index, val }) => {
       <div className="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-20" key={index}>
         <div className="" style={{ cursor: "pointer" }}>
           <div
-            className="card__item 
- "
+            className="card__item"
             style={{ padding: "20px" }}
           >
             <div className="card_body space-y-10">

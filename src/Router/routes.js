@@ -2,24 +2,26 @@ import React from "react";
 import Home1 from "../views/homes/Home1";
 //  Account inner pages
 import EditProfile from "../views/pages/account/EditProfile";
-import Login from "../views/pages/account/Login";
+import Login from "../views/pages/account/Login"; //notused
 import Profile from "../views/pages/account/Profile";
-import Register from "../views/pages/account/Register";
+import Register from "../views/pages/account/Register";  //notused
 
 //  Blog inner pages
-import Blog from "../views/pages/blog/Blog";
-import Article from "../views/pages/blog/Article";
+import Blog from "../views/pages/blog/Blog";  //notused
+import Article from "../views/pages/blog/Article"; //notused
 
 //  item inner pages
 import ItemDetails from "../views/pages/item/ItemDetails";
 import UploadType from "../views/pages/item/UploadType";
 
 // NftPages
-import Creators from "../views/pages/NftPages/Creators";
+import Artists from "../views/pages/NftPages/Creators";
 import LiveAuctions from "../views/pages/NftPages/LiveAuctions";
 import Marketplace from "../views/pages/NftPages/Marketplace";
+
+// nftpages 
 import Ranking from "../views/pages/NftPages/Ranking";
-import UpcomingProjects from "../views/pages/NftPages/UpcomingProjects";
+import UpcomingProjects from "../views/pages/NftPages/UpcomingProjects"; //not-used
 
 // other pages
 import Activity from "../views/pages/others/Activity";
@@ -28,6 +30,7 @@ import NotFound from "../views/NotFound";
 
 import Faq from "../views/pages/Support/Faq";
 import Contact from "../views/pages/Support/Contact";
+// import collection from "../views/pages/NftPages/Collections";
 
 // Route Specific
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -53,8 +56,8 @@ const Routes = () => {
           />
           <Route path="/upload" component={UploadComponent} />
           <Route path="/upload-type" component={UploadType} />
-          {/* <Route path="/collections" component={Collections} /> */}
-          <Route path="/artists" component={Creators} />
+          {/* <Route path="/collection" component={collection} /> */}
+          <Route path="/artists" component={Artists} />
           <Route path="/live-auctions" component={LiveAuctions} />
           <Route path="/ranking" component={Ranking} />
           <Route path="/upcoming-projects" component={UpcomingProjects} />

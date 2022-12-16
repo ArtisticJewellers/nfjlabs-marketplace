@@ -96,6 +96,7 @@ const Marketplace = () => {
                             to={"explore"}
                             className="btn btn-grad2 btn-border"
                             rel="noreferrer"
+                            style={{ margin: "0 10px" }}
                           >
                             Gems <i class="ri-arrow-right-s-line"></i>
                           </Link>

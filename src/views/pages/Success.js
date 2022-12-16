@@ -7,7 +7,7 @@ function Success() {
     <div>
       <Result
         status="success"
-        title="Successfully Mint NFT"
+        title="Successfully Minted NFT"
         subTitle="Go to home page and check your newly minted nft."
         extra={[
           <Link to="/">
