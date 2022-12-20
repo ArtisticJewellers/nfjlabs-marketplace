@@ -78,20 +78,15 @@ const ItemDetails = () => {
   let blockURL = "";
   if (ChainsInfo[getNetworkChainID(network)].CHAIN_ID == 1) {
     blockURL = "https://etherscan.io/";
-  }
-  else if (ChainsInfo[getNetworkChainID(network)].CHAIN_ID == 137) {
+  } else if (ChainsInfo[getNetworkChainID(network)].CHAIN_ID == 137) {
     blockURL = "https://polygonscan.com/";
-  }
-  else if (ChainsInfo[getNetworkChainID(network)].CHAIN_ID == 80001) {
+  } else if (ChainsInfo[getNetworkChainID(network)].CHAIN_ID == 80001) {
     blockURL = "https://mumbai.polygonscan.com/";
-  }
-  else if (ChainsInfo[getNetworkChainID(network)].CHAIN_ID == 5) {
+  } else if (ChainsInfo[getNetworkChainID(network)].CHAIN_ID == 5) {
     blockURL = "https://goerli.etherscan.io/";
-  }
-  else if (ChainsInfo[getNetworkChainID(network)].CHAIN_ID == 97) {
+  } else if (ChainsInfo[getNetworkChainID(network)].CHAIN_ID == 97) {
     blockURL = "https://testnet.bscscan.com/";
-  }
-  else {
+  } else {
     blockURL = "https://bscscan.com/";
   }
 
@@ -103,6 +98,7 @@ const ItemDetails = () => {
   const [createTrans] = useMutation(CreateTrans);
   const [nftListed] = useMutation(NftListed);
   const [UsdPrice, setUsdPrice] = useState(0);
+  const [readMore, setReadMore] = useState(false);
 
   const { data: nftDetails } = useQuery(GetNftDetails, {
     variables: { contractAddress: address, tokenId: parseInt(tokenId) },
@@ -128,11 +124,13 @@ const ItemDetails = () => {
   });
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     if (nftDetails?.getNftDetails?.chainId) {
       fetch(
         "https://cex.io/api/last_price/" +
-        ChainsInfo[nftDetails?.getNftDetails?.chainId]?.CURRENCY_SYMBOL +
-        "/USD"
+          ChainsInfo[nftDetails?.getNftDetails?.chainId]?.CURRENCY_SYMBOL +
+          "/USD"
       )
         .then((res) => res.json())
         .then((data) => {
@@ -474,7 +472,7 @@ const ItemDetails = () => {
                           placeholder={"0.0001 WMATIC"}
                           className="form-control"
                           type="number"
-                        // min={MIN_PRICE}
+                          // min={MIN_PRICE}
                         ></Input>
                       </Form.Item>{" "}
                       <Form.Item style={{ marginTop: "20px" }}>
@@ -531,7 +529,7 @@ const ItemDetails = () => {
                       if (active) {
                         if (
                           parseInt(auctionDetails.highestBid) /
-                          Math.pow(10, 18) <
+                            Math.pow(10, 18) <
                           parseFloat(value.price)
                         ) {
                           showLoading();
@@ -603,7 +601,7 @@ const ItemDetails = () => {
                           placeholder={"0.0001 WMATIC"}
                           className="form-control"
                           type="number"
-                        // min={MIN_PRICE}
+                          // min={MIN_PRICE}
                         ></Input>
                       </Form.Item>{" "}
                       <Form.Item style={{ marginTop: "20px" }}>
@@ -656,6 +654,9 @@ const ItemDetails = () => {
       ],
     });
   };
+
+  const handleReadMore = () => setReadMore(!readMore);
+
   const transCreate = (type, buyerId, sellerId, nftId) => {
     return createTrans({
       variables: {
@@ -703,8 +704,8 @@ const ItemDetails = () => {
                   </div>
                   <div className="my-4">
                     <div>
-                      <h3>Description:</h3>
-                      <p>{metaData?.description}</p>
+                      {/* <h3>Description:</h3>
+                      <p>{metaData?.description}</p> */}
                     </div>
                     <div className="my-4">
                       <ul
@@ -763,7 +764,17 @@ const ItemDetails = () => {
               <div className="col-lg-6">
                 <div className="space-y-20">
                   <h3>{metaData?.title}</h3>
-                  <div>{metaData?.description}</div>
+                  <div>
+                    {readMore
+                      ? metaData?.description
+                      : metaData?.description?.slice(0, 80) + "...."}
+                    <a
+                      style={{ color: "red" }}
+                      onClick={() => setReadMore(!readMore)}
+                    >
+                      {readMore ? "show less" : "read more"}
+                    </a>
+                  </div>
                   <div>
                     {" "}
                     <p
@@ -785,7 +796,7 @@ const ItemDetails = () => {
                       >
                         {auctionDetails.started &&
                           decimalToInt(auctionDetails.highestBid).toFixed(4) +
-                          " "}
+                            " "}
                         {saleDetails.forSale &&
                           decimalToInt(saleDetails.price).toFixed(4) + " "}
                         {ChainsInfo[getNetworkChainID(network)].CURRENCY_SYMBOL}
@@ -1002,8 +1013,8 @@ const ItemDetails = () => {
                     {nftDetails?.getNftDetails?.ownerAddress === account && (
                       <>
                         {saleDetails.forSale ||
-                          auctionDetails.started ||
-                          auctionDetails.ended ? (
+                        auctionDetails.started ||
+                        auctionDetails.ended ? (
                           saleDetails.forSale ? (
                             <span
                               onClick={() => {

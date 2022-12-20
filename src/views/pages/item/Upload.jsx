@@ -23,6 +23,7 @@ import {
 import { useWalletValidation } from "../../../context/WalletValidationContext";
 import { useHistory } from "react-router-dom";
 import { GetAllNfts, UserDetails } from "../../../graphql/query";
+import Badge from "react-bootstrap/Badge";
 
 const UploadComponent = () => {
   const { mintNFT } = useNFT();
@@ -32,18 +33,16 @@ const UploadComponent = () => {
   const { showLoading, hideLoading } = useLoading();
   const { checkVerification, isVerify } = useWalletValidation();
   const [createNft] = useMutation(CreateNft);
+  const [tags, setTags] = useState([]);
 
   let exampleName = "Polygon";
   if (chainId == "5" || chainId == "1") {
     exampleName = "Ethereum";
-  }
-  else if (chainId == "97" || chainId == "56") {
+  } else if (chainId == "97" || chainId == "56") {
     exampleName = "Binance";
-  }
-  else {
+  } else {
     exampleName = "Polygon";
   }
-
 
   useEffect(() => {
     if (active) {
@@ -127,6 +126,19 @@ const UploadComponent = () => {
           console.log(error);
           hideLoading();
         });
+    }
+  };
+
+  const selectTags = (newTag) => {
+    if (tags.includes(newTag)) {
+      setTags((state) =>
+        tags.filter((item) => {
+          return newTag !== item;
+        })
+      );
+    } else {
+      setTags([...tags, newTag]);
+      console.log(tags);
     }
   };
 
@@ -330,6 +342,52 @@ const UploadComponent = () => {
                               </span>
                             </div>
                           </div>
+                          <div>
+                            <h1 sty>Tags</h1>
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "flex-start",
+                              }}
+                            >
+                              <Badge
+                                bg={
+                                  !tags.includes("tag1") ? "danger" : "success"
+                                }
+                                style={{
+                                  marginLeft: "10px",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => selectTags("tag1")}
+                              >
+                                Tag 1
+                              </Badge>
+                              <Badge
+                                bg={
+                                  !tags.includes("tag2") ? "danger" : "success"
+                                }
+                                style={{
+                                  marginLeft: "10px",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => selectTags("tag2")}
+                              >
+                                Tag 2
+                              </Badge>
+                              <Badge
+                                bg={
+                                  !tags.includes("tag3") ? "danger" : "success"
+                                }
+                                style={{
+                                  marginLeft: "10px",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => selectTags("tag3")}
+                              >
+                                Tag 3
+                              </Badge>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -366,7 +424,7 @@ const UploadComponent = () => {
                 <div className="text-center">
                   <div
                     className="text-center"
-                  // onClick={update}
+                    // onClick={update}
                   >
                     <div className="btn  btn-grad">Connect Wallet</div>
                   </div>
