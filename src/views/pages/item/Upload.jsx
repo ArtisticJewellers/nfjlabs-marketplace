@@ -73,10 +73,7 @@ const UploadComponent = () => {
 
       showLoading();
       let uri = await uploadOnIpfs(metadata);
-      console.log({ uri });
       let url = await downloadJSONOnIpfs(uri);
-      console.log({ url });
-      console.log({ account });
       mintNFT(uri)
         .send({
           from: account,
@@ -86,7 +83,8 @@ const UploadComponent = () => {
           createNft({
             variables: {
               name: value.title.trim(),
-              tokenId: parseInt(res.events.Transfer.returnValues.tokenId),
+              // tokenId: parseInt(res.events.Transfer.returnValues.tokenId),
+              tokenId: "2",
               ipfsUrl: uri,
               chainId: chainId,
               network: getNetworkName(chainId),
@@ -95,6 +93,7 @@ const UploadComponent = () => {
               category: value.category.value,
               ownerAddress: account,
               imageUrl: url.external_link,
+              // tags: "smaple Shravan",
             },
             refetchQueries: [
               {
@@ -105,16 +104,10 @@ const UploadComponent = () => {
               },
             ],
           })
+            //uncommnet this to fix
             .then((data) => {
-              console.log(data);
+              console.log({ nftTags: data });
               MINT_ALERT();
-              // .then(() =>
-              // history.push(
-              //   `/item/${getNetworkName(chainId)}/${
-              //     ChainsInfo[chainId].NFT_ADDRESS
-              //   }/${parseInt(res.events.Transfer.returnValues.tokenId)}`
-              // )
-              // );
               hideLoading();
             })
             .catch((error) => {
@@ -127,6 +120,10 @@ const UploadComponent = () => {
           hideLoading();
         });
     }
+  };
+
+  const sampleSubmit = () => {
+    console.log(tags);
   };
 
   const selectTags = (newTag) => {
