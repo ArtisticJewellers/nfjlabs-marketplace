@@ -106,6 +106,8 @@ const GetNftDetails = gql`
       isApproved
       price
       contractAddress
+      tags
+      unlockableContent
     }
   }
 `;

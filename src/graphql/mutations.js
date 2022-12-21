@@ -92,6 +92,7 @@ const CreateNft = gql`
     $contractAddress: String
     $category: String
     $tags: [String]
+    $unlockableContent: String
   ) {
     createNft(
       chainId: $chainId
@@ -105,6 +106,7 @@ const CreateNft = gql`
       contractAddress: $contractAddress
       category: $category
       tags: $tags
+      unlockableContent: $unlockableContent
     ) {
       _id
       name
@@ -121,6 +123,7 @@ const CreateNft = gql`
       price
       contractAddress
       tags
+      unlockableContent
     }
   }
 `;

@@ -48,6 +48,7 @@ import {
 } from "../../../graphql/mutations";
 import { TransStatus } from "../../../config/constant/enum";
 import moment from "moment";
+import Badge from "react-bootstrap/Badge";
 
 // Random component
 const ItemDetails = () => {
@@ -122,6 +123,8 @@ const ItemDetails = () => {
       nftId: nftDetails?.getNftDetails?._id,
     },
   });
+
+  console.log({ account });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -724,7 +727,7 @@ const ItemDetails = () => {
                             target="_blank"
                             alt="metadata"
                           >
-                            https://ipfs.com/{metaData?.title}
+                            https://ipfs.com/{metaData?.title?.slice(0, 5)}...
                           </a>
                         </li>
                         <li className="d-flex justify-content-between mr-4">
@@ -756,12 +759,37 @@ const ItemDetails = () => {
                           <div>Royalty:</div>
                           <span className="capitalize">5%</span>{" "}
                         </li>
+                        <li className="d-flex justify-content-between mr-4">
+                          <div>External Link:</div>
+                          <span className="capitalize">
+                            {metaData?.extLink?.slice(0, 10)}...
+                          </span>{" "}
+                        </li>
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="col-lg-6">
+                {/* title */}
+                <div>
+                  {/* tags */}
+                  {nftDetails?.getNftDetails?.tags?.map((e) => (
+                    <Badge
+                      bg="warning"
+                      text="dark"
+                      style={{ margin: "0 10px 10px 0" }}
+                    >
+                      {e}
+                    </Badge>
+                  ))}
+                </div>
+                {/* unlockable content */}
+                <div>
+                  {account === nftDetails?.getNftDetails?.ownerAddress
+                    ? nftDetails?.getNftDetails?.unlockableContent
+                    : ""}
+                </div>
                 <div className="space-y-20">
                   <h3>{metaData?.title}</h3>
                   <div>

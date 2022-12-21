@@ -68,7 +68,8 @@ const UploadComponent = () => {
         description: value.description,
         external_link: value.image.file.originFileObj,
         properties: value.properties,
-        unlock: value.unlock,
+        extLink: value.extlink,
+        // unlock: value.unlock,
       };
       showLoading();
       let uri = await uploadOnIpfs(metadata);
@@ -92,6 +93,7 @@ const UploadComponent = () => {
               ownerAddress: account,
               imageUrl: url.external_link,
               tags,
+              unlockableContent: value.unlock,
             },
             refetchQueries: [
               {
@@ -260,6 +262,24 @@ const UploadComponent = () => {
                             <Form.Item
                               label="Unlockable Content (Link or Text)"
                               name="unlock"
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Please input unlock!",
+                                },
+                              ]}
+                            >
+                              <Input
+                                className="form-control"
+                                placeholder="e. g. `Artistic design art`"
+                                required={true}
+                              />
+                            </Form.Item>
+                          </div>
+                          <div className="space-y-10">
+                            <Form.Item
+                              label="External Link"
+                              name="extlink"
                               rules={[
                                 {
                                   required: true,
