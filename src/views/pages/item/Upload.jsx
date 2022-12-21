@@ -70,7 +70,6 @@ const UploadComponent = () => {
         properties: value.properties,
         unlock: value.unlock,
       };
-
       showLoading();
       let uri = await uploadOnIpfs(metadata);
       let url = await downloadJSONOnIpfs(uri);
@@ -91,7 +90,8 @@ const UploadComponent = () => {
               creatorAddress: account,
               category: value.category.value,
               ownerAddress: account,
-              imageUrl: url.external_link
+              imageUrl: url.external_link,
+              tags,
             },
             refetchQueries: [
               {
@@ -109,12 +109,12 @@ const UploadComponent = () => {
               hideLoading();
             })
             .catch((error) => {
-              console.log(error);
+              console.log(error.message);
               hideLoading();
             });
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.message);
           hideLoading();
         });
     }
