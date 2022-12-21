@@ -33,7 +33,7 @@ const UploadComponent = () => {
   const { showLoading, hideLoading } = useLoading();
   const { checkVerification, isVerify } = useWalletValidation();
   const [createNft] = useMutation(CreateNft);
-  // const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState([]);
 
   let exampleName = "Polygon";
   if (chainId == "5" || chainId == "1") {
@@ -126,18 +126,18 @@ const UploadComponent = () => {
   //   console.log(tags);
   // };
 
-  // const selectTags = (newTag) => {
-  //   if (tags.includes(newTag)) {
-  //     setTags((state) =>
-  //       tags.filter((item) => {
-  //         return newTag !== item;
-  //       })
-  //     );
-  //   } else {
-  //     setTags([...tags, newTag]);
-  //     console.log(tags);
-  //   }
-  // };
+  const selectTags = (newTag) => {
+    if (tags.includes(newTag)) {
+      setTags((state) =>
+        tags.filter((item) => {
+          return newTag !== item;
+        })
+      );
+    } else {
+      setTags([...tags, newTag]);
+      console.log(tags);
+    }
+  };
 
   return (
     <>
@@ -357,7 +357,7 @@ const UploadComponent = () => {
                               </span>
                             </div>
                           </div>
-                          {/* <div>
+                          <div>
                             <h1 sty>Tags</h1>
                             <div
                               style={{
@@ -402,7 +402,7 @@ const UploadComponent = () => {
                                 Tag 3
                               </Badge>
                             </div>
-                          </div> */}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -439,7 +439,7 @@ const UploadComponent = () => {
                 <div className="text-center">
                   <div
                     className="text-center"
-                  // onClick={update}
+                    // onClick={update}
                   >
                     <div className="btn  btn-grad">Connect Wallet</div>
                   </div>
