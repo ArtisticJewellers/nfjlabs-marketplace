@@ -196,91 +196,93 @@ const CardProfile = ({ creatorData }) => {
     <div className="row mb-30_reset">
       {creatorData?.nfts?.map((val, i) => (
         <>
-          <div
-            className="col-lg-3 col-md-6 col-sm-6"
-            key={i}
-            style={{ maxWidth: "21rem", width: "100%" }}
-          >
-            <div className="card__item four">
-              <div className="card_body space-y-10">
-                {/* =============== */}
+          {val.isApproved && (
+            <div
+              className="col-lg-3 col-md-6 col-sm-6"
+              key={i}
+              style={{ maxWidth: "21rem", width: "100%" }}
+            >
+              <div className="card__item four">
+                <div className="card_body space-y-10">
+                  {/* =============== */}
 
-                <div className="card_head">
-                  <Link
-                    to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS
-                      }/${val.tokenId}`}
-                  >
-                    <img alt="nftimage" src={val.imageUrl} />
-                  </Link>
-                  {/*
+                  <div className="card_head">
+                    <Link
+                      to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS
+                        }/${val.tokenId}`}
+                    >
+                      <img alt="nftimage" src={val.imageUrl} />
+                    </Link>
+                    {/*
                    */}
-                </div>
-                {/* =============== */}
-                <h6 className="card_title">{val.name}</h6>
-                <p></p>
-                <div className="card_footer d-block space-y-10">
+                  </div>
+                  {/* =============== */}
+                  <h6 className="card_title">{val.name}</h6>
+                  <p></p>
                   <div className="card_footer d-block space-y-10">
-                    <div className="card_footer justify-content-between">
-                      <div className="">
-                        <p className="txt_sm d-flex flex-column">
-                          <span
-                            style={{
-                              color: "#808080",
-                              fontSize: "12px",
-                            }}
-                          >
-                            Price:
-                          </span>
-                          <span
-                            className="txt_sm"
-                            style={{
-                              color: "#000",
-                              fontSize: "14px",
-                            }}
-                          >
-                            {val.price}{" "}
-                            {ChainsInfo[val.chainId].CURRENCY_SYMBOL}
-                          </span>
-                        </p>
-                      </div>
-                      <div>
-                        <div
-                          className="py-2 d-flex gap-2"
-                          style={{ alignItems: "center" }}
-                        >
-                          <div>
-                            <img
-                              src={creatorData?.avatar_url}
-                              alt=""
-                              width="40px"
-                              height="40px"
+                    <div className="card_footer d-block space-y-10">
+                      <div className="card_footer justify-content-between">
+                        <div className="">
+                          <p className="txt_sm d-flex flex-column">
+                            <span
                               style={{
-                                borderRadius: "9999px",
-                                objectFit: "cover",
+                                color: "#808080",
+                                fontSize: "12px",
                               }}
-                            ></img>
-                          </div>
-
-                          <Link to={"/profile/" + val.ownerAddress}>
+                            >
+                              Price:
+                            </span>
+                            <span
+                              className="txt_sm"
+                              style={{
+                                color: "#000",
+                                fontSize: "14px",
+                              }}
+                            >
+                              {val.price}{" "}
+                              {ChainsInfo[val.chainId].CURRENCY_SYMBOL}
+                            </span>
+                          </p>
+                        </div>
+                        <div>
+                          <div
+                            className="py-2 d-flex gap-2"
+                            style={{ alignItems: "center" }}
+                          >
                             <div>
-                              <div
+                              <img
+                                src={creatorData?.avatar_url}
+                                alt=""
+                                width="40px"
+                                height="40px"
                                 style={{
-                                  color: "#808080",
-                                  fontSize: "12px",
+                                  borderRadius: "9999px",
+                                  objectFit: "cover",
                                 }}
-                              >
-                                Artist
-                              </div>
-                              <div
-                                style={{
-                                  color: "#000",
-                                  fontSize: "10px",
-                                }}
-                              >
-                                @{creatorData?.username}
-                              </div>
+                              ></img>
                             </div>
-                          </Link>
+
+                            <Link to={"/profile/" + val.ownerAddress}>
+                              <div>
+                                <div
+                                  style={{
+                                    color: "#808080",
+                                    fontSize: "12px",
+                                  }}
+                                >
+                                  Artist
+                                </div>
+                                <div
+                                  style={{
+                                    color: "#000",
+                                    fontSize: "10px",
+                                  }}
+                                >
+                                  @{creatorData?.username}
+                                </div>
+                              </div>
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -288,7 +290,7 @@ const CardProfile = ({ creatorData }) => {
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </>
       ))}
     </div>
