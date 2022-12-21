@@ -406,9 +406,9 @@ const TopArtist = () => {
     <>
       <div>
         <Swiper
-          slidesPerView={6}
+          slidesPerView={4}
           spaceBetween={80}
-          slidesPerGroup={6}
+          slidesPerGroup={4}
           loop={false}
           loopFillGroupWithBlank={false}
           pagination={{
@@ -456,7 +456,7 @@ const ArtistCard = ({ index, val }) => {
                   <div style={{ height: "100px" }}>
                     <img
                       src={val?.bg_image}
-                      alt="dasd"
+                      alt="backgroundImage"
                       width={"100%"}
                       height={"120px"}
                       style={{
@@ -480,7 +480,7 @@ const ArtistCard = ({ index, val }) => {
                   >
                     <img
                       src={val?.avatar_url}
-                      alt="dasd"
+                      alt="MainImage"
                       width={"100%"}
                       height={"100%"}
                       style={{

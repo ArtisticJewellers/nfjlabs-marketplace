@@ -33,7 +33,7 @@ const UploadComponent = () => {
   const { showLoading, hideLoading } = useLoading();
   const { checkVerification, isVerify } = useWalletValidation();
   const [createNft] = useMutation(CreateNft);
-  const [tags, setTags] = useState([]);
+  // const [tags, setTags] = useState([]);
 
   let exampleName = "Polygon";
   if (chainId == "5" || chainId == "1") {
@@ -83,8 +83,7 @@ const UploadComponent = () => {
           createNft({
             variables: {
               name: value.title.trim(),
-              // tokenId: parseInt(res.events.Transfer.returnValues.tokenId),
-              tokenId: "2",
+              tokenId: parseInt(res.events.Transfer.returnValues.tokenId),
               ipfsUrl: uri,
               chainId: chainId,
               network: getNetworkName(chainId),
@@ -92,8 +91,7 @@ const UploadComponent = () => {
               creatorAddress: account,
               category: value.category.value,
               ownerAddress: account,
-              imageUrl: url.external_link,
-              // tags: "smaple Shravan",
+              imageUrl: url.external_link
             },
             refetchQueries: [
               {
@@ -106,7 +104,7 @@ const UploadComponent = () => {
           })
             //uncommnet this to fix
             .then((data) => {
-              console.log({ nftTags: data });
+              console.log({ data });
               MINT_ALERT();
               hideLoading();
             })
@@ -122,22 +120,22 @@ const UploadComponent = () => {
     }
   };
 
-  const sampleSubmit = () => {
-    console.log(tags);
-  };
+  // const sampleSubmit = () => {
+  //   console.log(tags);
+  // };
 
-  const selectTags = (newTag) => {
-    if (tags.includes(newTag)) {
-      setTags((state) =>
-        tags.filter((item) => {
-          return newTag !== item;
-        })
-      );
-    } else {
-      setTags([...tags, newTag]);
-      console.log(tags);
-    }
-  };
+  // const selectTags = (newTag) => {
+  //   if (tags.includes(newTag)) {
+  //     setTags((state) =>
+  //       tags.filter((item) => {
+  //         return newTag !== item;
+  //       })
+  //     );
+  //   } else {
+  //     setTags([...tags, newTag]);
+  //     console.log(tags);
+  //   }
+  // };
 
   return (
     <>
@@ -339,7 +337,7 @@ const UploadComponent = () => {
                               </span>
                             </div>
                           </div>
-                          <div>
+                          {/* <div>
                             <h1 sty>Tags</h1>
                             <div
                               style={{
@@ -384,7 +382,7 @@ const UploadComponent = () => {
                                 Tag 3
                               </Badge>
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
@@ -421,7 +419,7 @@ const UploadComponent = () => {
                 <div className="text-center">
                   <div
                     className="text-center"
-                    // onClick={update}
+                  // onClick={update}
                   >
                     <div className="btn  btn-grad">Connect Wallet</div>
                   </div>
