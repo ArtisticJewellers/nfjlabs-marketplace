@@ -70,7 +70,6 @@ const UploadComponent = () => {
         properties: value.properties,
         unlock: value.unlock,
       };
-
       showLoading();
       let uri = await uploadOnIpfs(metadata);
       let url = await downloadJSONOnIpfs(uri);
@@ -83,8 +82,7 @@ const UploadComponent = () => {
           createNft({
             variables: {
               name: value.title.trim(),
-              // tokenId: parseInt(res.events.Transfer.returnValues.tokenId),
-              tokenId: "2",
+              tokenId: parseInt(res.events.Transfer.returnValues.tokenId),
               ipfsUrl: uri,
               chainId: chainId,
               network: getNetworkName(chainId),
@@ -93,7 +91,7 @@ const UploadComponent = () => {
               category: value.category.value,
               ownerAddress: account,
               imageUrl: url.external_link,
-              // tags: "smaple Shravan",
+              tags,
             },
             refetchQueries: [
               {
@@ -111,12 +109,12 @@ const UploadComponent = () => {
               hideLoading();
             })
             .catch((error) => {
-              console.log(error);
+              console.log(error.message);
               hideLoading();
             });
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.message);
           hideLoading();
         });
     }
