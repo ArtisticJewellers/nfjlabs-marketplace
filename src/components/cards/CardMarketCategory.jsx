@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "reactjs-popup/dist/index.css";
 
-function CardMarketCategory({ category }) {
+function CardMarketCategory({ category, subcategory }) {
   const [NFTData, setNFTData] = useState([]);
 
   return (

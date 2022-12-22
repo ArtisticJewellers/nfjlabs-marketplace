@@ -132,8 +132,8 @@ const ItemDetails = () => {
     if (nftDetails?.getNftDetails?.chainId) {
       fetch(
         "https://cex.io/api/last_price/" +
-          ChainsInfo[nftDetails?.getNftDetails?.chainId]?.CURRENCY_SYMBOL +
-          "/USD"
+        ChainsInfo[nftDetails?.getNftDetails?.chainId]?.CURRENCY_SYMBOL +
+        "/USD"
       )
         .then((res) => res.json())
         .then((data) => {
@@ -252,6 +252,25 @@ const ItemDetails = () => {
               label: `Offers`,
               key: "3",
               children: `No Offers`,
+            },
+            {
+              label: `Certificates`,
+              key: "4",
+              children: `No Certificates`,
+            },
+            {
+              label: `Unlockable`,
+              key: "5",
+              children: (
+                <>
+                  {account === nftDetails?.getNftDetails?.ownerAddress ?
+                    (<div>
+                      {account === nftDetails?.getNftDetails?.ownerAddress
+                        ? nftDetails?.getNftDetails?.unlockableContent
+                        : ""}
+                    </div>) : ("Only owner of this nft can view the unlockable content")}
+                </>
+              ),
             },
           ]}
         />
@@ -467,7 +486,7 @@ const ItemDetails = () => {
                         rules={[
                           {
                             required: true,
-                            message: "Please enter the price of NFT ",
+                            message: "Please enter the price of NFT",
                           },
                         ]}
                       >
@@ -475,7 +494,7 @@ const ItemDetails = () => {
                           placeholder={"0.0001 WMATIC"}
                           className="form-control"
                           type="number"
-                          // min={MIN_PRICE}
+                        // min={MIN_PRICE}
                         ></Input>
                       </Form.Item>{" "}
                       <Form.Item style={{ marginTop: "20px" }}>
@@ -532,7 +551,7 @@ const ItemDetails = () => {
                       if (active) {
                         if (
                           parseInt(auctionDetails.highestBid) /
-                            Math.pow(10, 18) <
+                          Math.pow(10, 18) <
                           parseFloat(value.price)
                         ) {
                           showLoading();
@@ -604,7 +623,7 @@ const ItemDetails = () => {
                           placeholder={"0.0001 WMATIC"}
                           className="form-control"
                           type="number"
-                          // min={MIN_PRICE}
+                        // min={MIN_PRICE}
                         ></Input>
                       </Form.Item>{" "}
                       <Form.Item style={{ marginTop: "20px" }}>
@@ -761,9 +780,12 @@ const ItemDetails = () => {
                         </li>
                         <li className="d-flex justify-content-between mr-4">
                           <div>External Link:</div>
-                          <span className="capitalize">
+                          <a
+                            href={metaData?.extLink}
+                            target="_blank"
+                          >
                             {metaData?.extLink?.slice(0, 10)}...
-                          </span>{" "}
+                          </a>
                         </li>
                       </ul>
                     </div>
@@ -784,12 +806,12 @@ const ItemDetails = () => {
                     </Badge>
                   ))}
                 </div>
-                {/* unlockable content */}
-                <div>
+                {/* ex unlockable content */}
+                {/* <div>
                   {account === nftDetails?.getNftDetails?.ownerAddress
                     ? nftDetails?.getNftDetails?.unlockableContent
                     : ""}
-                </div>
+                </div> */}
                 <div className="space-y-20">
                   <h3>{metaData?.title}</h3>
                   <div>
@@ -824,7 +846,7 @@ const ItemDetails = () => {
                       >
                         {auctionDetails.started &&
                           decimalToInt(auctionDetails.highestBid).toFixed(4) +
-                            " "}
+                          " "}
                         {saleDetails.forSale &&
                           decimalToInt(saleDetails.price).toFixed(4) + " "}
                         {ChainsInfo[getNetworkChainID(network)].CURRENCY_SYMBOL}
@@ -987,7 +1009,7 @@ const ItemDetails = () => {
                     <div>
                       <a
                         target="_blank"
-                        href={getIPFSLink(metaData?.ipfsLink)}
+                        href={getIPFSLink(metaData?.external_link)}
                         rel="noreferrer"
                         style={{
                           border: "1px solid black",
@@ -1012,37 +1034,12 @@ const ItemDetails = () => {
                           View On IPFS
                         </div>
                       </a>
-
-                      {/* <a
-                        target="_blank"
-                        href={`${metaData?.unlock}`}
-                        rel="noreferrer"
-                        style={{
-                          border: "1px solid black",
-                          padding: "8px 20px",
-                          borderRadius: "999px",
-                          display: "flex",
-                          gap: "10px",
-                          alignItems: "center",
-                        }}
-                      >
-                        <div>
-                          <img
-                            width={30}
-                            src={"https://gateway.ipfscdn.io/ipfs/QmUHyyLR4m29GRM1Sjgrx9FgtiMucgUsKZRCfruDByYeC4/pdf-file.png"}
-                            alt="dashghg"
-                          />
-                        </div>
-                        <div style={{ fontBold: "10px", color: "black" }}>
-                          View Certificate
-                        </div>
-                      </a> */}
                     </div>
                     {nftDetails?.getNftDetails?.ownerAddress === account && (
                       <>
                         {saleDetails.forSale ||
-                        auctionDetails.started ||
-                        auctionDetails.ended ? (
+                          auctionDetails.started ||
+                          auctionDetails.ended ? (
                           saleDetails.forSale ? (
                             <span
                               onClick={() => {

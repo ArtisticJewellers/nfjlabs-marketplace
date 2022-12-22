@@ -24,6 +24,9 @@ import { useWalletValidation } from "../../../context/WalletValidationContext";
 import { useHistory } from "react-router-dom";
 import { GetAllNfts, UserDetails } from "../../../graphql/query";
 import Badge from "react-bootstrap/Badge";
+import polygon from "../../../assets/icon/polygon.png";
+import ethereum from "../../../assets/icon/eth.svg";
+import binance from "../../../assets/icon/bnb.svg";
 
 const UploadComponent = () => {
   const { mintNFT } = useNFT();
@@ -38,11 +41,11 @@ const UploadComponent = () => {
 
   let exampleName = "Polygon";
   if (chainId == "5" || chainId == "1") {
-    exampleName = "Ethereum";
+    exampleName = "ethereum";
   } else if (chainId == "97" || chainId == "56") {
-    exampleName = "Binance";
+    exampleName = "binance";
   } else {
-    exampleName = "Polygon";
+    exampleName = "polygon";
   }
 
   useEffect(() => {
@@ -60,7 +63,7 @@ const UploadComponent = () => {
     }
   }, [active, account]);
   const handleSubmitNFT = async (value) => {
-    console.log("handle submit called");
+    console.log("NFT MINTING STARTED");
     if (!active) {
       WALLET_ALERT();
     } else {
@@ -91,6 +94,7 @@ const UploadComponent = () => {
               contractAddress: ChainsInfo[chainId].NFT_ADDRESS,
               creatorAddress: account,
               category: value.category.value,
+              subcategory: value.subcategory.value,
               ownerAddress: account,
               imageUrl: url.external_link,
               tags,
@@ -105,7 +109,6 @@ const UploadComponent = () => {
               },
             ],
           })
-            //uncommnet this to fix
             .then((data) => {
               console.log({ data });
               MINT_ALERT();
@@ -263,18 +266,12 @@ const UploadComponent = () => {
                         <div className="space-y-10">
                           <div className="space-y-10">
                             <Form.Item
-                              label="Unlockable Content (Link or Text)"
+                              label="Unlockable Content (Only Visible To Owner Of NFT)"
                               name="unlock"
-                              rules={[
-                                {
-                                  required: true,
-                                  message: "Please input unlock!",
-                                },
-                              ]}
                             >
                               <Input
                                 className="form-control"
-                                placeholder="e. g. `Artistic design art`"
+                                placeholder="eg. `Link or Text`"
                                 required={true}
                               />
                             </Form.Item>
@@ -286,27 +283,20 @@ const UploadComponent = () => {
                               rules={[
                                 {
                                   required: true,
-                                  message: "Please input unlock!",
+                                  message: "Please input externalLink",
                                 },
                               ]}
                             >
                               <Input
                                 className="form-control"
-                                placeholder="e. g. `Artistic design art`"
+                                placeholder="eg. https://nfjlabs.com/"
                                 required={true}
                               />
                             </Form.Item>
                           </div>
-
-                          {/* <input
-                            type="text"
-                            className="form-control"
-                            placeholder="e. g. www.example.com"
-                            required={true}
-                          /> */}
                         </div>
 
-                        <div className="space-y-10">
+                        {/* <div className="space-y-10">
                           <span className="nameInput">Network</span>
                           <input
                             type="text"
@@ -356,7 +346,9 @@ const UploadComponent = () => {
                             />
                           </div>
                         </div>
+                        </div> */}
 
+                        {/* categories  */}
                         <div className="space-y-10">
                           <Form.Item
                             label="Category"
@@ -372,19 +364,52 @@ const UploadComponent = () => {
                               isSearchable={false}
                               placeholder="Category"
                               options={[
+                                { label: "Gems", value: "gems" },
+                                { label: "Jewellery", value: "jewellery" },
+                              ]}
+                            ></Select>
+                          </Form.Item>
+                        </div>
+
+                        {/* sub categroies  */}
+                        <div className="space-y-10">
+                          <Form.Item
+                            label="Sub Category"
+                            name="subcategory"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please select sub-category!",
+                              },
+                            ]}
+                          >
+                            <Select
+                              isSearchable={false}
+                              placeholder="Sub Category"
+                              options={[
                                 { label: "Necklace", value: "necklaces" },
                                 { label: "Pendant", value: "pendant" },
                                 { label: "Rings", value: "rings" },
                                 { label: "Brooch", value: "brooch" },
                                 { label: "Earrings", value: "earrings" },
                                 { label: "Watch Charm", value: "watch_charm" },
+                                { label: "Natural Pearl", value: "natural_pearl" },
+                                { label: "Cultured Pearl", value: "cultured_pearl" },
+                                { label: "Natural Diamond", value: "natural_diamond" },
+                                { label: "Ruby", value: "ruby" },
+                                { label: "Sapphire", value: "sapphire" },
+                                { label: "Emrald", value: "emrald" },
                               ]}
                             ></Select>
                           </Form.Item>
                         </div>
+
+                        {/* properties  */}
+                        <PropertiesForm />
+
                         <div className="space-y-10">
-                          <span className="variationInput">Collection</span>
-                          <div className="d-flex flex-column flex-md-row">
+                          {/* collection  */}
+                          {/* <div className="d-flex flex-column flex-md-row">
                             <div className="choose_collection bg_black  ">
                               <img
                                 src={process.env.PUBLIC_URL + "logo.svg"}
@@ -397,9 +422,11 @@ const UploadComponent = () => {
                                 Artistic Jewellery Collection
                               </span>
                             </div>
-                          </div>
+                          </div> */}
+
+                          {/* tags  */}
+                          <span className="variationInput">Tags</span>
                           <div>
-                            <h1 sty>Tags</h1>
                             <div
                               style={{
                                 display: "flex",
@@ -480,7 +507,7 @@ const UploadComponent = () => {
                 <div className="text-center">
                   <div
                     className="text-center"
-                    // onClick={update}
+                  // onClick={update}
                   >
                     <div className="btn  btn-grad">Connect Wallet</div>
                   </div>
