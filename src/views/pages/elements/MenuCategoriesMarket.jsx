@@ -13,6 +13,7 @@ function MenuCategoriesMarket() {
       max: null,
     },
     category: "",
+    subcategory: "",
     network: "",
     isListed: true,
   });
@@ -23,6 +24,7 @@ function MenuCategoriesMarket() {
       priceMin: FilterData.price.min,
       priceMax: FilterData.price.max,
       category: FilterData.category,
+      subcategory: FilterData.subcategory,
       isListed: FilterData.isListed,
     },
   });
@@ -32,39 +34,90 @@ function MenuCategoriesMarket() {
   }, []);
   const CateoryData = [
     {
+      title: "Jewellery",
+      category: "jewellery",
+      heading: "Jewellery",
+      icon: "ri-omega",
+    },
+    {
+      title: "Gems",
+      category: "gems",
+      heading: "Gems",
+      icon: "ri-omega",
+    },
+  ];
+
+  const SubCateoryData = [
+    {
       title: "Necklace",
-      category: "necklaces",
+      subcategory: "necklaces",
       heading: "Necklace",
       icon: "ri-vip-diamond-fill",
     },
     {
       title: "Pendant",
-      category: "pendant",
+      subcategory: "pendant",
       heading: "Pendant",
       icon: "ri-focus-2-line",
     },
     {
       title: "Rings",
-      category: "rings",
+      subcategory: "rings",
       heading: "Rings",
       icon: "ri-omega",
     },
     {
       title: "Brooch",
-      category: "brooch",
+      subcategory: "brooch",
       heading: "Brooch",
       icon: "ri-omega",
     },
     {
       title: "Earrings",
-      category: "earrings",
+      subcategory: "earrings",
       heading: "Earrings",
       icon: "ri-omega",
     },
     {
       title: "Watch Charm",
-      category: "watch charm",
+      subcategory: "watch_charm",
       heading: "Watch Charm",
+      icon: "ri-omega",
+    },
+    {
+      title: "Natural Pearl",
+      subcategory: "natural_pearl",
+      heading: "Natural Pearl",
+      icon: "ri-omega",
+    },
+    {
+      title: "Cultured Pearl",
+      subcategory: "cultured_pearl",
+      heading: "Cultured Pearl",
+      icon: "ri-omega",
+    },
+    {
+      title: "Natural Diamond",
+      subcategory: "natural_diamond",
+      heading: "Natural Diamond",
+      icon: "ri-omega",
+    },
+    {
+      title: "Ruby",
+      subcategory: "ruby",
+      heading: "Ruby",
+      icon: "ri-omega",
+    },
+    {
+      title: "Sapphire",
+      subcategory: "sapphire",
+      heading: "Sapphire",
+      icon: "ri-omega",
+    },
+    {
+      title: "Emrald",
+      subcategory: "emrald",
+      heading: "Emrald",
       icon: "ri-omega",
     },
   ];

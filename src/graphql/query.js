@@ -49,6 +49,7 @@ const UserDetails = gql`
         ipfsUrl
         imageUrl
         category
+        subcategory
         chainId
         network
         ownerAddress
@@ -71,6 +72,7 @@ const GetNftsOfUser = gql`
       ipfsUrl
       imageUrl
       category
+      subcategory
       chainId
       network
       ownerAddress
@@ -98,6 +100,7 @@ const GetNftDetails = gql`
       ipfsUrl
       imageUrl
       category
+      subcategory
       chainId
       network
       ownerAddress
@@ -148,6 +151,7 @@ const GetAllNfts = gql`
       ipfsUrl
       imageUrl
       category
+      subcategory
       chainId
       network
       ownerAddress
@@ -184,6 +188,7 @@ const NftUpdate = gql`
       ipfsUrl
       imageUrl
       category
+      subcategory
       chainId
       network
       ownerAddress
@@ -202,6 +207,7 @@ const FilterNfts = gql`
     $priceMax: Float
     $network: String
     $category: String
+    $subcategory: String
     $isListed: Boolean
   ) {
     filterNfts(
@@ -209,6 +215,7 @@ const FilterNfts = gql`
       price_max: $priceMax
       network: $network
       category: $category
+      subcategory: $subcategory
       isListed: $isListed
     ) {
       _id
@@ -217,6 +224,7 @@ const FilterNfts = gql`
       ipfsUrl
       imageUrl
       category
+      subcategory
       chainId
       network
       ownerAddress
@@ -243,6 +251,7 @@ const FeatureNft = gql`
         _id
         name
         category
+        subcategory
         tokenId
         imageUrl
         ipfsUrl
@@ -270,6 +279,7 @@ const TrendingNft = gql`
         ipfsUrl
         imageUrl
         category
+        subcategory
         chainId
         network
         ownerAddress
@@ -294,6 +304,7 @@ const BannerNft = gql`
         ipfsUrl
         imageUrl
         category
+        subcategory
         chainId
         network
         ownerAddress
@@ -312,6 +323,7 @@ const SearchNft = gql`
       _id
       name
       category
+      subcategory
       imageUrl
       network
       chainId

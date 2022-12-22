@@ -17,12 +17,29 @@ function getItem(label, key, icon, children, type) {
 }
 const category = [
   { label: "All", value: "" },
+  // { label: "Necklace", value: "necklaces" },
+  // { label: "Pendant", value: "pendant" },
+  // { label: "Rings", value: "rings" },
+  // { label: "Brooch", value: "brooch" },
+  // { label: "Earrings", value: "earrings" },
+  // { label: "Watch Charm", value: "watch_charm" },
+  { label: "Jewellery", value: "jewellery" },
+  { label: "Gems", value: "gems" },
+];
+const subcategory = [
+  { label: "All", value: "" },
   { label: "Necklace", value: "necklaces" },
   { label: "Pendant", value: "pendant" },
   { label: "Rings", value: "rings" },
   { label: "Brooch", value: "brooch" },
   { label: "Earrings", value: "earrings" },
   { label: "Watch Charm", value: "watch_charm" },
+  { label: "Natural Pearl", value: "natural_pearl" },
+  { label: "Cultured Pearl", value: "cultured_pearl" },
+  { label: "Natural Diamond", value: "natural_diamond" },
+  { label: "Ruby", value: "ruby" },
+  { label: "Sapphire", value: "sapphire" },
+  { label: "Emrald", value: "emrald" },
 ];
 const network = [
   { label: "All blockchain", value: "" },
@@ -43,11 +60,13 @@ const FilterComponent = ({ onFilterChange }) => {
   });
   const [isList, setListed] = useState(true);
   const [categorys, setCategory] = useState("");
+  const [subCategorys, setSubCategory] = useState("");
   const onChangeNetwork = (e) => {
     setNetworks(e.target.value);
     onFilterChange({
       price: price,
       category: categorys,
+      subcategory: subCategorys,
       network: e.target.value,
       isListed: isList,
     });
@@ -57,16 +76,27 @@ const FilterComponent = ({ onFilterChange }) => {
     onFilterChange({
       price: price,
       category: e.target.value,
+      subcategory: subCategorys,
+      network: networks,
+      isListed: isList,
+    });
+  };
+  const onChangeSubCategory = (e) => {
+    setSubCategory(e.target.value);
+    onFilterChange({
+      price: price,
+      category: categorys,
+      subcategory: e.target.value,
       network: networks,
       isListed: isList,
     });
   };
   const onChangeListed = (e) => {
     setListed(e.target.value);
-    console.log(e.target.value);
     onFilterChange({
       price: price,
       category: categorys,
+      subcategory: subCategorys,
       network: networks,
       isListed: e.target.value,
     });
@@ -76,6 +106,7 @@ const FilterComponent = ({ onFilterChange }) => {
     onFilterChange({
       price: values,
       category: categorys,
+      subcategory: subCategorys,
       network: networks,
       isListed: isList,
     });
@@ -91,6 +122,18 @@ const FilterComponent = ({ onFilterChange }) => {
           options={category}
           onChange={onChangeCategory}
           value={categorys}
+        />
+      ),
+    ]),
+    getItem("Sub Category", "subcategory", <MailOutlined />, [
+      getItem(
+        null,
+        "subcategory-list",
+
+        <Radio.Group
+          options={subcategory}
+          onChange={onChangeSubCategory}
+          value={subCategorys}
         />
       ),
     ]),

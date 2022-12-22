@@ -253,6 +253,25 @@ const ItemDetails = () => {
               key: "3",
               children: `No Offers`,
             },
+            {
+              label: `Certificates`,
+              key: "4",
+              children: `No Certificates`,
+            },
+            {
+              label: `Unlockable`,
+              key: "5",
+              children: (
+                <>
+                  {account === nftDetails?.getNftDetails?.ownerAddress ?
+                    (<div>
+                      {account === nftDetails?.getNftDetails?.ownerAddress
+                        ? nftDetails?.getNftDetails?.unlockableContent
+                        : ""}
+                    </div>) : ("Only owner of this nft can view the unlockable content")}
+                </>
+              ),
+            },
           ]}
         />
       </>
@@ -761,9 +780,12 @@ const ItemDetails = () => {
                         </li>
                         <li className="d-flex justify-content-between mr-4">
                           <div>External Link:</div>
-                          <span className="capitalize">
+                          <a
+                            href={metaData?.extLink}
+                            target="_blank"
+                          >
                             {metaData?.extLink?.slice(0, 10)}...
-                          </span>{" "}
+                          </a>
                         </li>
                       </ul>
                     </div>
@@ -784,12 +806,12 @@ const ItemDetails = () => {
                     </Badge>
                   ))}
                 </div>
-                {/* unlockable content */}
-                <div>
+                {/* ex unlockable content */}
+                {/* <div>
                   {account === nftDetails?.getNftDetails?.ownerAddress
                     ? nftDetails?.getNftDetails?.unlockableContent
                     : ""}
-                </div>
+                </div> */}
                 <div className="space-y-20">
                   <h3>{metaData?.title}</h3>
                   <div>
@@ -987,7 +1009,7 @@ const ItemDetails = () => {
                     <div>
                       <a
                         target="_blank"
-                        href={getIPFSLink(metaData?.ipfsLink)}
+                        href={getIPFSLink(metaData?.external_link)}
                         rel="noreferrer"
                         style={{
                           border: "1px solid black",
@@ -1012,31 +1034,6 @@ const ItemDetails = () => {
                           View On IPFS
                         </div>
                       </a>
-
-                      {/* <a
-                        target="_blank"
-                        href={`${metaData?.unlock}`}
-                        rel="noreferrer"
-                        style={{
-                          border: "1px solid black",
-                          padding: "8px 20px",
-                          borderRadius: "999px",
-                          display: "flex",
-                          gap: "10px",
-                          alignItems: "center",
-                        }}
-                      >
-                        <div>
-                          <img
-                            width={30}
-                            src={"https://gateway.ipfscdn.io/ipfs/QmUHyyLR4m29GRM1Sjgrx9FgtiMucgUsKZRCfruDByYeC4/pdf-file.png"}
-                            alt="dashghg"
-                          />
-                        </div>
-                        <div style={{ fontBold: "10px", color: "black" }}>
-                          View Certificate
-                        </div>
-                      </a> */}
                     </div>
                     {nftDetails?.getNftDetails?.ownerAddress === account && (
                       <>

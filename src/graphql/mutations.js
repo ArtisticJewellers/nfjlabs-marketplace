@@ -91,6 +91,7 @@ const CreateNft = gql`
     $creatorAddress: String
     $contractAddress: String
     $category: String
+    $subcategory: String
     $tags: [String]
     $unlockableContent: String
   ) {
@@ -105,6 +106,7 @@ const CreateNft = gql`
       creatorAddress: $creatorAddress
       contractAddress: $contractAddress
       category: $category
+      subcategory: $subcategory
       tags: $tags
       unlockableContent: $unlockableContent
     ) {
@@ -114,6 +116,7 @@ const CreateNft = gql`
       ipfsUrl
       imageUrl
       category
+      subcategory
       chainId
       network
       ownerAddress
@@ -177,6 +180,7 @@ const NftListed = gql`
       ipfsUrl
       imageUrl
       category
+      subcategory
       chainId
       network
       ownerAddress
