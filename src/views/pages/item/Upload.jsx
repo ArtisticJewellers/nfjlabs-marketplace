@@ -34,6 +34,7 @@ const UploadComponent = () => {
   const { checkVerification, isVerify } = useWalletValidation();
   const [createNft] = useMutation(CreateNft);
   const [tags, setTags] = useState([]);
+  const [certf, setCertf] = useState([{ title: "", image: "" }]);
 
   let exampleName = "Polygon";
   if (chainId == "5" || chainId == "1") {
@@ -122,10 +123,6 @@ const UploadComponent = () => {
     }
   };
 
-  // const sampleSubmit = () => {
-  //   console.log(tags);
-  // };
-
   const selectTags = (newTag) => {
     if (tags.includes(newTag)) {
       setTags((state) =>
@@ -137,6 +134,12 @@ const UploadComponent = () => {
       setTags([...tags, newTag]);
       console.log(tags);
     }
+  };
+
+  const handleCertfOnChange = (e, index) => {
+    let obj = [];
+    const { name, value } = e.target;    
+    console.log({ name });
   };
 
   return (
@@ -315,6 +318,44 @@ const UploadComponent = () => {
                         </div>
 
                         <PropertiesForm />
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            width: "100%",
+                          }}
+                        >
+                          <div>
+                            <input
+                              type="text"
+                              name="title"
+                              id="title"
+                              placeholder="Enter Certificate Title"
+                              onChange={(e) => handleCertfOnChange(e, 1)}
+                            />
+                            <input
+                              type="file"
+                              name="image"
+                              id="name"
+                              onChange={(e) => handleCertfOnChange(e, 1)}
+                            />
+                          </div>
+                          <div>
+                            <input
+                              type="text"
+                              name="title"
+                              id="title"
+                              placeholder="Enter Certificate Title"
+                              onChange={handleCertfOnChange}
+                            />
+                            <input
+                              type="file"
+                              name="image"
+                              id="name"
+                              onChange={handleCertfOnChange}
+                            />
+                          </div>
+                        </div>
 
                         <div className="space-y-10">
                           <Form.Item
@@ -536,8 +577,7 @@ const PropertiesForm = () => {
             <Form.Item>
               <span
                 type="dashed"
-                className="btn btn-grad
-					btn_create btn-border"
+                className="btn btn-grad btn_create btn-border"
                 onClick={() => add()}
                 block
                 icon={<PlusOutlined />}
