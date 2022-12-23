@@ -36,7 +36,7 @@ const UploadComponent = () => {
   const { showLoading, hideLoading } = useLoading();
   const { checkVerification, isVerify } = useWalletValidation();
   const [createNft] = useMutation(CreateNft);
-  const [tags, setTags] = useState([]);
+  // const [tags, setTags] = useState([]);
   const [certf, setCertf] = useState([{ title: "", image: "" }]);
 
   let exampleName = "Polygon";
@@ -99,7 +99,7 @@ const UploadComponent = () => {
               subcategory: value.subcategory.value,
               ownerAddress: account,
               imageUrl: url.external_link,
-              tags,
+              // tags,
               unlockableContent: value.unlock,
             },
             refetchQueries: [
@@ -128,18 +128,18 @@ const UploadComponent = () => {
     }
   };
 
-  const selectTags = (newTag) => {
-    if (tags.includes(newTag)) {
-      setTags((state) =>
-        tags.filter((item) => {
-          return newTag !== item;
-        })
-      );
-    } else {
-      setTags([...tags, newTag]);
-      console.log(tags);
-    }
-  };
+  // const selectTags = (newTag) => {
+  //   if (tags.includes(newTag)) {
+  //     setTags((state) =>
+  //       tags.filter((item) => {
+  //         return newTag !== item;
+  //       })
+  //     );
+  //   } else {
+  //     setTags([...tags, newTag]);
+  //     console.log(tags);
+  //   }
+  // };
 
   const handleChangeInput = async (index, e, file) => {
     const values = [...certf];
@@ -382,22 +382,30 @@ const UploadComponent = () => {
                         </div>
 
                         {/* properties  */}
+                        <span className="variationInput">Properties</span>
                         <PropertiesForm />
 
                         <div>
-                          <div>
+                          <span className="variationInput">Certificates</span>
+                          <div style={{ marginTop: "15px", width: "100%" }}>
                             {certf.map((inputField, index) => (
                               <div
                                 key={index}
                                 style={{
                                   display: "flex",
+                                  // flexDirection: "column",
+                                  flexWrap: "wrap",
+                                  width: "100%",
+                                  marginBottom: "20px",
                                   justifyContent: "space-between",
                                 }}
                               >
                                 <input
                                   type="text"
                                   name="title"
+                                  placeholder="Certificate Name"
                                   value={inputField.title}
+                                  style={{ width: "200px", height: "30px", marginRight: "25px", marginBottom: "25px" }}
                                   onChange={(e) => {
                                     handleChangeInput(index, e);
                                   }}
@@ -406,6 +414,7 @@ const UploadComponent = () => {
                                   <input
                                     type="file"
                                     name="image"
+                                    style={{ width: "200px" }}
                                     onChange={(e) => {
                                       handleChangeInput(
                                         index,
@@ -415,14 +424,16 @@ const UploadComponent = () => {
                                     }}
                                   />
                                 </div>
-                                <div>
+                                <div style={{ display: "flex", marginRight: "20px" }}>
                                   <button
                                     type="button"
+                                    style={{ marginRight: "4px", height: "30px", width: "30px" }}
                                     onClick={() => handleRemoveFileds(index)}
                                   >
                                     -
                                   </button>
                                   <button
+                                    style={{ marginRight: "4px", height: "30px", width: "30px" }}
                                     type="button"
                                     onClick={() => handleAddFileds()}
                                   >
@@ -437,7 +448,7 @@ const UploadComponent = () => {
 
                         <div className="space-y-10">
                           {/* tags  */}
-                          <span className="variationInput">Tags</span>
+                          {/* <span className="variationInput">Tags</span>
                           <div>
                             <div
                               style={{
@@ -482,7 +493,7 @@ const UploadComponent = () => {
                                 Tag 3
                               </Badge>
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
@@ -502,6 +513,7 @@ const UploadComponent = () => {
                         className="btn btn-grad btn-border"
                         htmlType="submit"
                         to="item-details"
+                        style={{ backgroundColor: "#8c52ff", color: "white", padding: "0 15px" }}
                       >
                         Create Item
                       </Button>
@@ -519,7 +531,7 @@ const UploadComponent = () => {
                 <div className="text-center">
                   <div
                     className="text-center"
-                    // onClick={update}
+                  // onClick={update}
                   >
                     <div className="btn  btn-grad">Connect Wallet</div>
                   </div>
@@ -596,7 +608,7 @@ const PropertiesForm = () => {
                     },
                   ]}
                 >
-                  <Input placeholder="Key" />
+                  <Input placeholder="Key" style={{ height: "30px" }} />
                 </Form.Item>
                 <Form.Item
                   {...restField}
@@ -608,7 +620,7 @@ const PropertiesForm = () => {
                     },
                   ]}
                 >
-                  <Input placeholder="Values" />
+                  <Input placeholder="Values" style={{ height: "30px" }} />
                 </Form.Item>
                 <MinusCircleOutlined onClick={() => remove(name)} />
               </Space>

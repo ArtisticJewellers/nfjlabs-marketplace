@@ -256,7 +256,41 @@ const ItemDetails = () => {
             {
               label: `Certificates`,
               key: "4",
-              children: `No Certificates`,
+              children: (
+                <>
+                  <div>
+                    <>
+                      <div className="d-flex gap-3 flex-wrap ">
+                        <>
+                          {metaData?.certificates?.map((item, key) => (
+                            <>
+                              <a href={item.image} target={"_blank"}>
+                                <div
+                                  className="border py-3 px-4  border-primary rounded min-w-10"
+                                  style={{
+                                    background: "#15b2e50f",
+                                    border: "1px solid rgb(21, 178, 229)",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      color: "#15b2e5",
+                                      fontSize: "16px",
+                                    }}
+                                  >
+                                    {item.title}
+                                  </div>
+                                </div>
+                              </a>
+                            </>
+                          ))}
+                        </>
+                      </div>
+                    </>
+                  </div>
+                </>
+              ),
             },
             {
               label: `Unlockable`,
