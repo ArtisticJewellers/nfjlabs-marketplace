@@ -27,7 +27,7 @@ import Badge from "react-bootstrap/Badge";
 import polygon from "../../../assets/icon/polygon.png";
 import ethereum from "../../../assets/icon/eth.svg";
 import binance from "../../../assets/icon/bnb.svg";
-
+import { ThirdwebStorage } from "@thirdweb-dev/storage";
 const UploadComponent = () => {
   const { mintNFT } = useNFT();
   const history = useHistory();
@@ -62,6 +62,7 @@ const UploadComponent = () => {
       });
     }
   }, [active, account]);
+
   const handleSubmitNFT = async (value) => {
     console.log("NFT MINTING STARTED");
     if (!active) {
@@ -73,6 +74,7 @@ const UploadComponent = () => {
         external_link: value.image.file.originFileObj,
         properties: value.properties,
         extLink: value.extlink,
+        certificates: certf,
         // unlock: value.unlock,
       };
       showLoading();
@@ -139,10 +141,28 @@ const UploadComponent = () => {
     }
   };
 
-  const handleCertfOnChange = (e, index) => {
-    let obj = [];
-    const { name, value } = e.target;    
-    console.log({ name });
+  const handleChangeInput = async (index, e, file) => {
+    const values = [...certf];
+    values[index][e.target.name] = e.target.value;
+    values[index]["image"] = file;
+    console.log(values);
+    setCertf(values);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const res = await uploadOnIpfs(certf);
+    console.log({ res });
+  };
+
+  const handleAddFileds = () => {
+    setCertf([...certf, { title: "", image: "" }]);
+  };
+
+  const handleRemoveFileds = (index) => {
+    const values = [...certf];
+    values.splice(index, 1);
+    setCertf(values);
   };
 
   return (
@@ -296,58 +316,6 @@ const UploadComponent = () => {
                           </div>
                         </div>
 
-                        {/* <div className="space-y-10">
-                          <span className="nameInput">Network</span>
-                          <input
-                            type="text"
-                            placeholder={exampleName}
-                            disabled={true}
-                            required={true}
-                            className="form-control"
-                          />
-                        </div>
-
-                        <PropertiesForm />
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            width: "100%",
-                          }}
-                        >
-                          <div>
-                            <input
-                              type="text"
-                              name="title"
-                              id="title"
-                              placeholder="Enter Certificate Title"
-                              onChange={(e) => handleCertfOnChange(e, 1)}
-                            />
-                            <input
-                              type="file"
-                              name="image"
-                              id="name"
-                              onChange={(e) => handleCertfOnChange(e, 1)}
-                            />
-                          </div>
-                          <div>
-                            <input
-                              type="text"
-                              name="title"
-                              id="title"
-                              placeholder="Enter Certificate Title"
-                              onChange={handleCertfOnChange}
-                            />
-                            <input
-                              type="file"
-                              name="image"
-                              id="name"
-                              onChange={handleCertfOnChange}
-                            />
-                          </div>
-                        </div>
-                        </div> */}
-
                         {/* categories  */}
                         <div className="space-y-10">
                           <Form.Item
@@ -393,9 +361,18 @@ const UploadComponent = () => {
                                 { label: "Brooch", value: "brooch" },
                                 { label: "Earrings", value: "earrings" },
                                 { label: "Watch Charm", value: "watch_charm" },
-                                { label: "Natural Pearl", value: "natural_pearl" },
-                                { label: "Cultured Pearl", value: "cultured_pearl" },
-                                { label: "Natural Diamond", value: "natural_diamond" },
+                                {
+                                  label: "Natural Pearl",
+                                  value: "natural_pearl",
+                                },
+                                {
+                                  label: "Cultured Pearl",
+                                  value: "cultured_pearl",
+                                },
+                                {
+                                  label: "Natural Diamond",
+                                  value: "natural_diamond",
+                                },
                                 { label: "Ruby", value: "ruby" },
                                 { label: "Sapphire", value: "sapphire" },
                                 { label: "Emrald", value: "emrald" },
@@ -407,23 +384,58 @@ const UploadComponent = () => {
                         {/* properties  */}
                         <PropertiesForm />
 
+                        <div>
+                          <div>
+                            {certf.map((inputField, index) => (
+                              <div
+                                key={index}
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                }}
+                              >
+                                <input
+                                  type="text"
+                                  name="title"
+                                  value={inputField.title}
+                                  onChange={(e) => {
+                                    handleChangeInput(index, e);
+                                  }}
+                                />
+                                <div>
+                                  <input
+                                    type="file"
+                                    name="image"
+                                    onChange={(e) => {
+                                      handleChangeInput(
+                                        index,
+                                        e,
+                                        e.target.files[0]
+                                      );
+                                    }}
+                                  />
+                                </div>
+                                <div>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleRemoveFileds(index)}
+                                  >
+                                    -
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleAddFileds()}
+                                  >
+                                    +
+                                  </button>
+                                </div>
+                              </div>
+                            ))}
+                            {/* <button type="button" onClick={handleSubmit}>send</button> */}
+                          </div>
+                        </div>
+
                         <div className="space-y-10">
-                          {/* collection  */}
-                          {/* <div className="d-flex flex-column flex-md-row">
-                            <div className="choose_collection bg_black  ">
-                              <img
-                                src={process.env.PUBLIC_URL + "logo.svg"}
-                                alt="raroin_icon"
-                                width="40px"
-                                height="40px"
-                              />
-
-                              <span className="color_white ml-10">
-                                Artistic Jewellery Collection
-                              </span>
-                            </div>
-                          </div> */}
-
                           {/* tags  */}
                           <span className="variationInput">Tags</span>
                           <div>
@@ -507,7 +519,7 @@ const UploadComponent = () => {
                 <div className="text-center">
                   <div
                     className="text-center"
-                  // onClick={update}
+                    // onClick={update}
                   >
                     <div className="btn  btn-grad">Connect Wallet</div>
                   </div>
@@ -618,4 +630,5 @@ const PropertiesForm = () => {
     </>
   );
 };
+
 export default UploadComponent;
