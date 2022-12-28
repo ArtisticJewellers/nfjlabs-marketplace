@@ -738,10 +738,10 @@ const ItemDetails = () => {
   return (
     <div style={{ background: "white" }}>
       <Header />
-      <div className="container">
-        <Link to="/explore" className="btn btn-white btn-sm my-40">
+      <div className="container" style={{ padding: "60px 5px" }}>
+        {/* <Link to="/explore" className="btn btn-white btn-sm my-40">
           Back to home
-        </Link>
+        </Link> */}
         {false ? (
           <div>
             <Loading />

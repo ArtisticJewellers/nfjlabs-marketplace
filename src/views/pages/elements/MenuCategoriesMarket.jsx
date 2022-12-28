@@ -132,27 +132,12 @@ function MenuCategoriesMarket() {
       <Tabs className=" border-b">
         <div style={{ paddingBottom: "50px" }}>
           <TabPanel>
-            <div className="container">
-              <div className="section mt-50">
-                <div>
-                  {/* <h2 className="section__title mb-20"> All NFTs</h2> */}
-                  <div className="d-flex flex-column flex-row gap-4">
-                    <div>
-                      <FilterComponent onFilterChange={onFilterChange} />
-                    </div>
-                    <div>
-                      <div className="d-flex align-items-center">
-                        <Tabs>
-                          <div className="row justify-content-between align-items-center">
-                            <div className="col-lg-auto"></div>
-                          </div>
-
-                          <CardMarketplace FilterData={data} />
-                        </Tabs>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            <div className="marketplaceStyle">
+              <div className="filterStyle">
+                <FilterComponent onFilterChange={onFilterChange} />
+              </div>
+              <div className="cardStyle">
+                <CardMarketplace FilterData={data} />
               </div>
             </div>
           </TabPanel>
