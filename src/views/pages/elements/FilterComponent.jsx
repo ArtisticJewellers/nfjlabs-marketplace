@@ -6,6 +6,7 @@ import {
 import { Button, Form, InputNumber, Menu, Radio } from "antd";
 import React, { useState } from "react";
 import "antd/dist/antd.css";
+
 function getItem(label, key, icon, children, type) {
   return {
     key,
@@ -26,7 +27,26 @@ const category = [
   { label: "Jewellery", value: "jewellery" },
   { label: "Gems", value: "gems" },
 ];
-const subcategory = [
+
+let jewelleryCat = [
+  { label: "Necklace", value: "necklaces" },
+  { label: "Pendant", value: "pendant" },
+  { label: "Rings", value: "rings" },
+  { label: "Brooch", value: "brooch" },
+  { label: "Earrings", value: "earrings" },
+  { label: "Watch Charm", value: "watch_charm" },
+];
+
+let gemsCat = [
+  { label: "Natural Pearl", value: "natural_pearl" },
+  { label: "Cultured Pearl", value: "cultured_pearl" },
+  { label: "Natural Diamond", value: "natural_diamond" },
+  { label: "Ruby", value: "ruby" },
+  { label: "Sapphire", value: "sapphire" },
+  { label: "Emrald", value: "emrald" },
+];
+
+let allCat = [
   { label: "All", value: "" },
   { label: "Necklace", value: "necklaces" },
   { label: "Pendant", value: "pendant" },
@@ -39,8 +59,9 @@ const subcategory = [
   { label: "Natural Diamond", value: "natural_diamond" },
   { label: "Ruby", value: "ruby" },
   { label: "Sapphire", value: "sapphire" },
-  { label: "Emrald", value: "emrald" }
+  { label: "Emrald", value: "emrald" },
 ];
+
 const network = [
   { label: "All blockchain", value: "" },
   { label: "Polygon", value: "polygon" },
@@ -61,6 +82,18 @@ const FilterComponent = ({ onFilterChange }) => {
   const [isList, setListed] = useState(true);
   const [categorys, setCategory] = useState("");
   const [subCategorys, setSubCategory] = useState("");
+
+  const selectCat = () => {
+    console.log({ categorys });
+    if (categorys == "") {
+      return allCat;
+    } else if (categorys == "jewellery") {
+      return jewelleryCat;
+    } else {
+      return gemsCat;
+    }
+  };
+
   const onChangeNetwork = (e) => {
     setNetworks(e.target.value);
     onFilterChange({
@@ -71,6 +104,7 @@ const FilterComponent = ({ onFilterChange }) => {
       isListed: isList,
     });
   };
+
   const onChangeCategory = (e) => {
     setCategory(e.target.value);
     onFilterChange({
@@ -81,6 +115,7 @@ const FilterComponent = ({ onFilterChange }) => {
       isListed: isList,
     });
   };
+
   const onChangeSubCategory = (e) => {
     setSubCategory(e.target.value);
     onFilterChange({
@@ -101,6 +136,7 @@ const FilterComponent = ({ onFilterChange }) => {
       isListed: e.target.value,
     });
   };
+
   const onChangePrice = (values) => {
     setPrice(values);
     onFilterChange({
@@ -117,7 +153,6 @@ const FilterComponent = ({ onFilterChange }) => {
       getItem(
         null,
         "category-list",
-
         <Radio.Group
           options={category}
           onChange={onChangeCategory}
@@ -125,13 +160,19 @@ const FilterComponent = ({ onFilterChange }) => {
         />
       ),
     ]),
+
     getItem("Sub Category", "subcategory", <MailOutlined />, [
       getItem(
         null,
         "subcategory-list",
         <Radio.Group
-          // options={subCategorys == "jewellery" ? subcategory[0] : subcategory[1]}
-          options={subcategory}
+          options={
+            categorys == ""
+              ? allCat
+              : categorys == "jewellery"
+              ? jewelleryCat
+              : gemsCat
+          }
           onChange={onChangeSubCategory}
           value={subCategorys}
         />
@@ -167,7 +208,6 @@ const FilterComponent = ({ onFilterChange }) => {
       getItem(
         null,
         "network-list",
-
         <Radio.Group
           options={network}
           onChange={onChangeNetwork}
@@ -179,7 +219,6 @@ const FilterComponent = ({ onFilterChange }) => {
       getItem(
         null,
         "listed-list",
-
         <Radio.Group
           options={listing}
           onChange={onChangeListed}
@@ -189,15 +228,17 @@ const FilterComponent = ({ onFilterChange }) => {
     ]),
   ];
   return (
-    <Menu
-      style={{
-        width: 256,
-      }}
-      defaultSelectedKeys={["1"]}
-      defaultOpenKeys={["category"]}
-      mode="inline"
-      items={items}
-    />
+    <>
+      <Menu
+        style={{
+          width: 256,
+        }}
+        defaultSelectedKeys={["1"]}
+        defaultOpenKeys={["category"]}
+        mode="inline"
+        items={items}
+      />
+    </>
   );
 };
 

@@ -29,15 +29,6 @@ const KYCRegistration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // wallet: String;
-    // fname: String;
-    // lname: String;
-    // dob: String;
-    // email: String;
-    // phone: String;
-    // address: String;
-    // country: String;
-    // identity: String;
     const {
       wallet,
       fname,
@@ -62,6 +53,14 @@ const KYCRegistration = () => {
         country,
         identity,
       },
+      refetchQueries: [
+        {
+          query: kyc,
+          variables: {
+            walletAddress: account,
+          },
+        },
+      ],
     });
 
     console.log({ res });

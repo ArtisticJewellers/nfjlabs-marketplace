@@ -32,6 +32,7 @@ function MenuCategoriesMarket() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   const CateoryData = [
     {
       title: "Jewellery",

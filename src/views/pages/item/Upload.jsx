@@ -99,7 +99,6 @@ const UploadComponent = () => {
               subcategory: value.subcategory.value,
               ownerAddress: account,
               imageUrl: url.external_link,
-              // tags,
               unlockableContent: value.unlock,
             },
             refetchQueries: [
