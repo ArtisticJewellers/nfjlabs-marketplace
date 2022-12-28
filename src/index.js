@@ -15,7 +15,7 @@ function getLibrary(provider) {
 }
 const client = new ApolloClient({
   uri: "http://localhost:5000/graphql",
-  // uri: "http://192.168.0.101:5000/graphql",
+  // uri: "http://54.211.23.70:5000/graphql",
   cache: new InMemoryCache(),
 });
 

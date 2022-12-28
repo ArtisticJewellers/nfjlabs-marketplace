@@ -39,7 +39,7 @@ const subcategory = [
   { label: "Natural Diamond", value: "natural_diamond" },
   { label: "Ruby", value: "ruby" },
   { label: "Sapphire", value: "sapphire" },
-  { label: "Emrald", value: "emrald" },
+  { label: "Emrald", value: "emrald" }
 ];
 const network = [
   { label: "All blockchain", value: "" },
@@ -129,8 +129,8 @@ const FilterComponent = ({ onFilterChange }) => {
       getItem(
         null,
         "subcategory-list",
-
         <Radio.Group
+          // options={subCategorys == "jewellery" ? subcategory[0] : subcategory[1]}
           options={subcategory}
           onChange={onChangeSubCategory}
           value={subCategorys}
@@ -194,7 +194,7 @@ const FilterComponent = ({ onFilterChange }) => {
         width: 256,
       }}
       defaultSelectedKeys={["1"]}
-      defaultOpenKeys={["sub1"]}
+      defaultOpenKeys={["category"]}
       mode="inline"
       items={items}
     />

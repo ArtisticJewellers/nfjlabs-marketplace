@@ -21959,6 +21959,25 @@ select {
   width: 1500px;
 }
 
+.marketplaceStyle {
+  display: flex;
+  /* flex-wrap: wrap; */
+  width: 100%;
+  margin-top: 50px;
+  justify-content: center;
+  /* align-items: center; */
+}
+
+.filterStyle {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+}
+
+.cardStyle {
+  width: 80%;
+}
+
 @media only screen and (max-width: 1600px) {
   .explorePage {
     width: 1000px;
@@ -21968,5 +21987,37 @@ select {
 @media only screen and (max-width: 1090px) {
   .explorePage {
     width: 100%;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  .filterStyle {
+    width: 35%;
+  }
+
+  .cardStyle {
+    width: 65%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .marketplaceStyle {
+    flex-direction: column;
+  }
+  .filterStyle {
+    width: 100%;
+    display: none;
+  }
+
+  .cardStyle {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .InnerDivCards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
