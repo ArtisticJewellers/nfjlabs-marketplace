@@ -1,5 +1,21 @@
 import { gql } from "@apollo/client";
 
+const kyc = gql`
+  query KYC($walletAddress: String) {
+    kyc(walletAddress: $walletAddress) {
+      wallet: String
+      fname: String
+      lname: String
+      dob: String
+      email: String
+      phone: String
+      address: String
+      country: String
+      identity: String
+    }
+  }
+`;
+
 const SignIn = gql`
   query SignIn($walletAddress: String) {
     signIn(walletAddress: $walletAddress) {
@@ -20,7 +36,6 @@ const SignIn = gql`
     }
   }
 `;
-
 const UserDetails = gql`
   query User($walletAddress: String) {
     user(walletAddress: $walletAddress) {
@@ -62,7 +77,6 @@ const UserDetails = gql`
     }
   }
 `;
-
 const GetNftsOfUser = gql`
   query GetNftsOfUser($ownerAddress: String) {
     getNftsOfUser(ownerAddress: $ownerAddress) {
@@ -83,7 +97,6 @@ const GetNftsOfUser = gql`
     }
   }
 `;
-
 const GetNftDetails = gql`
   query GetNftDetails($contractAddress: String, $tokenId: Int) {
     getNftDetails(contractAddress: $contractAddress, tokenId: $tokenId) {
@@ -114,7 +127,6 @@ const GetNftDetails = gql`
     }
   }
 `;
-
 const GetPopularCreators = gql`
   query AllCreators($popularCollection: String) {
     allArtist(popularCollection: $popularCollection) {
@@ -141,7 +153,6 @@ const GetPopularCreators = gql`
     }
   }
 `;
-
 const GetAllNfts = gql`
   query Nfts {
     nfts {
@@ -169,7 +180,6 @@ const GetAllNfts = gql`
     }
   }
 `;
-
 const WalletId = gql`
   query WalletId($walletId: String) {
     walletId(walletId: $walletId) {
@@ -178,7 +188,6 @@ const WalletId = gql`
     }
   }
 `;
-
 const NftUpdate = gql`
   mutation NftUpdate($nftId: String, $price: Float, $isMarketPlace: Boolean) {
     nftUpdate(nftId: $nftId, price: $price, isMarketPlace: $isMarketPlace) {
@@ -200,7 +209,6 @@ const NftUpdate = gql`
     }
   }
 `;
-
 const FilterNfts = gql`
   query FilterNfts(
     $priceMin: Float
@@ -242,7 +250,6 @@ const FilterNfts = gql`
     }
   }
 `;
-
 const FeatureNft = gql`
   query AllFeatureNft($popularCollection: String) {
     allFeatureNft(popularCollection: $popularCollection) {
@@ -384,4 +391,5 @@ export {
   GetNftDetails,
   GetNftTrans,
   GetPopularCreators,
+  kyc,
 };

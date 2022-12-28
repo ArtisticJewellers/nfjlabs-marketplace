@@ -14,13 +14,14 @@ import Swal from "sweetalert2";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { Register, UpdateProfile } from "../../../graphql/mutations";
 import { SignIn, UserDetails } from "../../../graphql/query";
-import { useWeb3React } from "@web3-react/core";
+  import { useWeb3React } from "@web3-react/core";
 import { Link, useHistory } from "react-router-dom";
 import {
   ACCOUNT_CREATE_ALERT,
   ACCOUNT_UPDATE_ALERT,
 } from "../../../config/constant/alert";
 import useStorage from "../../../hooks/useStorage";
+
 const EditProfile = () => {
   useDocumentTitle("NFJ Labs-Marketplace");
   const { account, active, chainId } = useWeb3React();

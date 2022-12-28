@@ -2,6 +2,7 @@ const initialState = {
   isConnect: false,
   provider: null,
   isCorrect: false,
+  wallet: "",
 };
 
 export function walletReducer(state = initialState, action) {

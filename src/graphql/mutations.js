@@ -39,6 +39,43 @@ const UpdateProfile = gql`
     }
   }
 `;
+
+const completeKYC = gql`
+  mutation KYC(
+    $wallet: String
+    $fname: String
+    $lname: String
+    $dob: String
+    $email: String
+    $phone: String
+    $address: String
+    $country: String
+    $identity: String
+  ) {
+    kyc(
+      wallet: String
+      fname: String
+      lname: String
+      dob: String
+      email: String
+      phone: String
+      address: String
+      country: String
+      identity: String
+    ) {
+      wallet
+      fname
+      lname
+      dob
+      email
+      phone
+      address
+      country
+      identity
+    }
+  }
+`;
+
 const Register = gql`
   mutation SignUp(
     $walletAddress: String
@@ -201,4 +238,5 @@ export {
   NftOwnerUpdate,
   CreateTrans,
   NftListed,
+  completeKYC,
 };
