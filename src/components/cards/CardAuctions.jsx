@@ -8,7 +8,7 @@ const CardAuctions = ({ FilterData }) => {
   }, []);
 
   return (
-    <div className="row mb-30_reset">
+    <div className="row mb-30_reset InnerDivCards">
       {FilterData?.filterNfts?.map((val, i) => (
         <>
           {val.isApproved && val.isMarketPlace && (
@@ -23,9 +23,8 @@ const CardAuctions = ({ FilterData }) => {
 
                   <div className="card_head">
                     <Link
-                      to={`/item/${val.network}/${
-                        ChainsInfo[val.chainId].NFT_ADDRESS
-                      }/${val.tokenId}`}
+                      to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS
+                        }/${val.tokenId}`}
                     >
                       <img src={val.imageUrl} alt="nftimage" />
                     </Link>
