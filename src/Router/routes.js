@@ -4,10 +4,10 @@ import Home1 from "../views/homes/Home1";
 import EditProfile from "../views/pages/account/EditProfile";
 import Login from "../views/pages/account/Login"; //notused
 import Profile from "../views/pages/account/Profile";
-import Register from "../views/pages/account/Register";  //notused
+import Register from "../views/pages/account/Register"; //notused
 
 //  Blog inner pages
-import Blog from "../views/pages/blog/Blog";  //notused
+import Blog from "../views/pages/blog/Blog"; //notused
 import Article from "../views/pages/blog/Article"; //notused
 
 //  item inner pages
@@ -19,7 +19,7 @@ import Artists from "../views/pages/NftPages/Creators";
 import LiveAuctions from "../views/pages/NftPages/LiveAuctions";
 import Marketplace from "../views/pages/NftPages/Marketplace";
 
-// nftpages 
+// nftpages
 import Ranking from "../views/pages/NftPages/Ranking";
 import UpcomingProjects from "../views/pages/NftPages/UpcomingProjects"; //not-used
 
@@ -37,6 +37,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import UploadComponent from "../views/pages/item/Upload";
 import UserProfile from "../views/pages/account/UserProfile";
 import Success from "../views/pages/Success";
+import KYCRegistration from "../views/pages/account/KYCRegistration";
 const Routes = () => {
   return (
     <>
@@ -47,6 +48,7 @@ const Routes = () => {
           <Route path="/success" component={Success} />
           <Route path="/login" component={Login} />
           <Route path="/user-profile" component={UserProfile} />
+          <Route path="/kyc" component={KYCRegistration} />
           <Route path="/profile/:address" component={Profile} />
           <Route path="/edit-profile" component={EditProfile} />
           <Route path="/register" component={Register} />

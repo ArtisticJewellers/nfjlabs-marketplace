@@ -99,7 +99,6 @@ const UploadComponent = () => {
               subcategory: value.subcategory.value,
               ownerAddress: account,
               imageUrl: url.external_link,
-              // tags,
               unlockableContent: value.unlock,
             },
             refetchQueries: [
@@ -173,7 +172,6 @@ const UploadComponent = () => {
           <div className="container">
             <div className="space-y-20">
               <div
-                // to="upload-type"
                 className="btn btn-white btn-sm
                     switch"
               >
@@ -405,7 +403,12 @@ const UploadComponent = () => {
                                   name="title"
                                   placeholder="Certificate Name"
                                   value={inputField.title}
-                                  style={{ width: "200px", height: "30px", marginRight: "25px", marginBottom: "25px" }}
+                                  style={{
+                                    width: "200px",
+                                    height: "30px",
+                                    marginRight: "25px",
+                                    marginBottom: "25px",
+                                  }}
                                   onChange={(e) => {
                                     handleChangeInput(index, e);
                                   }}
@@ -424,16 +427,29 @@ const UploadComponent = () => {
                                     }}
                                   />
                                 </div>
-                                <div style={{ display: "flex", marginRight: "20px" }}>
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    marginRight: "20px",
+                                  }}
+                                >
                                   <button
                                     type="button"
-                                    style={{ marginRight: "4px", height: "30px", width: "30px" }}
+                                    style={{
+                                      marginRight: "4px",
+                                      height: "30px",
+                                      width: "30px",
+                                    }}
                                     onClick={() => handleRemoveFileds(index)}
                                   >
                                     -
                                   </button>
                                   <button
-                                    style={{ marginRight: "4px", height: "30px", width: "30px" }}
+                                    style={{
+                                      marginRight: "4px",
+                                      height: "30px",
+                                      width: "30px",
+                                    }}
                                     type="button"
                                     onClick={() => handleAddFileds()}
                                   >
@@ -513,7 +529,11 @@ const UploadComponent = () => {
                         className="btn btn-grad btn-border"
                         htmlType="submit"
                         to="item-details"
-                        style={{ backgroundColor: "#8c52ff", color: "white", padding: "0 15px" }}
+                        style={{
+                          backgroundColor: "#8c52ff",
+                          color: "white",
+                          padding: "0 15px",
+                        }}
                       >
                         Create Item
                       </Button>
@@ -531,7 +551,7 @@ const UploadComponent = () => {
                 <div className="text-center">
                   <div
                     className="text-center"
-                  // onClick={update}
+                    // onClick={update}
                   >
                     <div className="btn  btn-grad">Connect Wallet</div>
                   </div>
