@@ -14,6 +14,8 @@ import useAuth from "../../hooks/useAuth";
 import { ChainsInfo } from "../../config/config-chains";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { SearchNft } from "../../graphql/query";
+import { useHistory } from "react-router-dom";
+
 const icons = {
   80001: {
     icon: polygon,
@@ -30,6 +32,7 @@ const icons = {
 };
 
 const Header = () => {
+  const history = useHistory();
   const [isActive, setActive] = useState(false);
   const [searchData, setSearchData] = useState([]);
   const [searchNft] = useLazyQuery(SearchNft);
@@ -57,6 +60,7 @@ const Header = () => {
       setIsVisible(false);
     }
   };
+
   const Search = async (value, searchNft) => {
     let search = await searchNft({
       variables: {
@@ -67,6 +71,12 @@ const Header = () => {
     console.log(search?.data?.searchNfts);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("form submitted");
+    if(searchData.length)
+    history.push("/explore");
+  };
   return (
     <div>
       <header
@@ -155,27 +165,29 @@ const Header = () => {
               className="d-none  header__search position-relative"
               style={{ display: "flex" }}
             >
-              <input
-                type="text"
-                placeholder="Search"
-                style={{
-                  border: "2px solid #8C52FF",
-                  borderRadius: 0,
-                  borderTopLeftRadius: ".375rem",
-                  borderBottomLeftRadius: ".375rem",
-                  borderRight: 0,
-                }}
-                onChange={(e) => {
-                  setIsVisible(true);
-                  console.log(e.target.value);
-                  e.target.value.trim() !== ""
-                    ? Search(e.target.value, searchNft)
-                    : setSearchData([]);
-                }}
-                onFocus={() => {
-                  setSearchData([]);
-                }}
-              />
+              <form onSubmit={handleSubmit}>
+                <input
+                  type="text"
+                  placeholder="Search"
+                  style={{
+                    border: "2px solid #8C52FF",
+                    borderRadius: 0,
+                    borderTopLeftRadius: ".375rem",
+                    borderBottomLeftRadius: ".375rem",
+                    borderRight: 0,
+                  }}
+                  onChange={(e) => {
+                    setIsVisible(true);
+                    console.log(e.target.value);
+                    e.target.value.trim() !== ""
+                      ? Search(e.target.value, searchNft)
+                      : setSearchData([]);
+                  }}
+                  onFocus={() => {
+                    setSearchData([]);
+                  }}
+                />
+              </form>
 
               <div
                 className="btn-grad"
@@ -249,7 +261,7 @@ const Header = () => {
 
             <div className="d-flex" style={{ alignItems: "center", gap: 15 }}>
               {active ? (
-                <div className="switchNetwork" >
+                <div className="switchNetwork">
                   <SwitchNetwork
                     url={
                       icons[chainId]?.icon ||
@@ -303,8 +315,9 @@ const Header = () => {
               onClick={toggleClass}
             />
             <div
-              className={` header__mobile js-header-mobile  ${isActive ? "visible" : null
-                } `}
+              className={` header__mobile js-header-mobile  ${
+                isActive ? "visible" : null
+              } `}
             >
               <MobileMenu />
             </div>
