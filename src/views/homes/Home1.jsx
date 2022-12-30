@@ -30,17 +30,30 @@ import { useWeb3React } from "@web3-react/core";
 import { ChainsInfo } from "../../config/config-chains";
 import Navbar from "../../components/header/Navbar/Navbar";
 import Typewriter from "typewriter-effect";
-import jhumka from "../../assets/nfts/jhumka.gif"
-import dolce from "../../assets/nfts/alessio/dolce.gif"
-import ring2 from "../../assets/nfts/ring2.gif"
+import jhumka from "../../assets/nfts/jhumka.gif";
+import dolce from "../../assets/nfts/alessio/dolce.gif";
+import ring2 from "../../assets/nfts/ring2.gif";
+import Alert from "react-bootstrap/Alert";
 
 const Marketplace = () => {
+  const [show, setShow] = useState(true);
   const { data: banner_nft } = useQuery(BannerNft, {
     variables: { popularCollection: "banner_nft" },
   });
   return (
     <div>
       <Header />
+      {show && (
+        <Alert
+          style={{ textAlign: "center" }}
+          variant="warning"
+          onClose={() => setShow(false)}
+          dismissible
+        >
+          <Alert.Heading>This Website Is Under Beta Version</Alert.Heading>
+          <p>All NFTs You See Are The Demo NFTs</p>
+        </Alert>
+      )}
       {/* //HeaderMarketplace Collection*/}
       <div>
         <>
@@ -124,7 +137,10 @@ const Marketplace = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-lg-6 align-items-center" style={{ height: "300px", width: "700px" }}>
+                    <div
+                      className="col-lg-6 align-items-center"
+                      style={{ height: "300px", width: "700px" }}
+                    >
                       {/* new animated failed swiper  */}
                       {/* <Swiper
                         slidesPerView={1}
@@ -211,31 +227,67 @@ const Marketplace = () => {
                       <div className="mainHeroDiv">
                         <div className="mainImg1Div">
                           <div className="img1Div">
-                            <Link to={"item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/5"}>
-                              <img src={jhumka} alt="image1hero" className="ImageStyles" />
+                            <Link
+                              to={
+                                "item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/5"
+                              }
+                            >
+                              <img
+                                src={jhumka}
+                                alt="image1hero"
+                                className="ImageStyles"
+                              />
                             </Link>
                             <div className="hidden1Div">
-                              <h2>Aleksandra <MdVerified color="#009eee" size={20} /></h2>
+                              <h2>
+                                Aleksandra{" "}
+                                <MdVerified color="#009eee" size={20} />
+                              </h2>
                               <span>The Avya Jhumka</span>
                             </div>
                           </div>
                         </div>
-                        <div style={{ width: "50%" }} className="mobileViewGayab">
+                        <div
+                          style={{ width: "50%" }}
+                          className="mobileViewGayab"
+                        >
                           <div className="img2Div">
-                            <Link to={"item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/11"}>
-                              <img src={dolce} alt="image1hero" className="ImageStyles" />
+                            <Link
+                              to={
+                                "item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/11"
+                              }
+                            >
+                              <img
+                                src={dolce}
+                                alt="image1hero"
+                                className="ImageStyles"
+                              />
                             </Link>
                             <div className="hidden2Div">
-                              <h2>@Aleesio.B <MdVerified color="#009eee" size={15} /></h2>
+                              <h2>
+                                @Aleesio.B{" "}
+                                <MdVerified color="#009eee" size={15} />
+                              </h2>
                               <span>Dolce Vita</span>
                             </div>
                           </div>
                           <div className="img3Div">
-                            <Link to={"item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/3"}>
-                              <img src={ring2} alt="image1hero" className="ImageStyles" />
+                            <Link
+                              to={
+                                "item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/3"
+                              }
+                            >
+                              <img
+                                src={ring2}
+                                alt="image1hero"
+                                className="ImageStyles"
+                              />
                             </Link>
                             <div className="hidden3Div">
-                              <h2>Aleksandra <MdVerified color="#009eee" size={15} /></h2>
+                              <h2>
+                                Aleksandra{" "}
+                                <MdVerified color="#009eee" size={15} />
+                              </h2>
                               <span>Basic Band</span>
                             </div>
                           </div>
@@ -635,8 +687,9 @@ function NftCard({ val }) {
 
                 <div className="card_head">
                   <Link
-                    to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS
-                      }/${val.tokenId}`}
+                    to={`/item/${val.network}/${
+                      ChainsInfo[val.chainId].NFT_ADDRESS
+                    }/${val.tokenId}`}
                   >
                     <img src={val.imageUrl} alt="nftimage" />
                   </Link>

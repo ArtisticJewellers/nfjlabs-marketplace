@@ -62,7 +62,6 @@ const KYCRegistration = () => {
         },
       ],
     });
-
     console.log({ res });
   };
 
