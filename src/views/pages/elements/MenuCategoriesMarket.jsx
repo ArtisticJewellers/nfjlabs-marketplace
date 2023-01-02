@@ -5,8 +5,19 @@ import CardMarketCategory from "../../../components/cards/CardMarketCategory";
 import CardMarketplace from "../../../components/cards/CardMarketplace";
 import { FilterNfts, GetAllNfts } from "../../../graphql/query";
 import FilterComponent from "./FilterComponent";
+import { useSelector } from "react-redux";
+import Shravan_demo_card from "../../../components/cards/Shravan_Card/Shravan_demo_card";
+import { useDispatch } from "react-redux";
+import { setNftData } from "../../../Redux/reducers/nftReducer";
+function MenuCategoriesMarket({ cat }) {
+  const dispatch = useDispatch();
+  const { nftData } = useSelector((state) => state.nftData);
+  const { filterNFTData } = useSelector((state) => state.nftData);
+  console.log({ filterNFTData });
 
-function MenuCategoriesMarket() {
+  console.log(nftData);
+  console.log({ cat });
+
   const [FilterData, setFilterData] = useState({
     price: {
       min: null,
@@ -17,7 +28,7 @@ function MenuCategoriesMarket() {
     network: "",
     isListed: true,
   });
-  // const { data } = useQuery(GetAllNfts);
+
   const { data } = useQuery(FilterNfts, {
     variables: {
       network: FilterData.network,
@@ -28,10 +39,9 @@ function MenuCategoriesMarket() {
       isListed: FilterData.isListed,
     },
   });
-  console.log(data);
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [filterNFTData]);
 
   const CateoryData = [
     {
@@ -124,20 +134,35 @@ function MenuCategoriesMarket() {
   ];
 
   const onFilterChange = (data) => {
-    console.log(data);
+    console.log({ data });
+    dispatch(setNftData([]));
     setFilterData(data);
   };
 
   return (
     <div className="w-100">
+      {FilterData.category}
       <Tabs className=" border-b">
         <div style={{ paddingBottom: "50px" }}>
           <TabPanel>
             <div className="marketplaceStyle">
               <div className="filterStyle">
-                <FilterComponent onFilterChange={onFilterChange} />
+                <FilterComponent
+                  onFilterChange={onFilterChange}
+                  defaultCat={cat}
+                />
               </div>
               <div className="cardStyle">
+                <div className="cardStyle">
+                  {nftData &&
+                    nftData.map((e) => {
+                      return (
+                        <div>
+                          <Shravan_demo_card searchNFTData={e} />
+                        </div>
+                      );
+                    })}
+                </div>
                 <CardMarketplace FilterData={data} />
               </div>
             </div>

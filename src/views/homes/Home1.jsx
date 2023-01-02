@@ -99,14 +99,14 @@ const Marketplace = () => {
                           style={{ width: "100%", alignItems: "center" }}
                         >
                           <Link
-                            to={"explore"}
+                            to={"/explore/jewellery"}
                             className="btn btn-grad1 btn-border"
                             rel="noreferrer"
                           >
                             Jewellery
                           </Link>
                           <Link
-                            to={"explore"}
+                            to={"/explore/gems"}
                             className="btn btn-grad2 btn-border"
                             rel="noreferrer"
                             style={{ margin: "0 10px" }}
