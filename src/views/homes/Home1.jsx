@@ -324,41 +324,12 @@ const Marketplace = () => {
             </div>
           </div>
         </div>
-        {/* //Top Artist */}
-        <div
-          style={{
-            background: "linear-gradient(180deg, #fff 50%, #000 50%)",
-            padding: " 30px 10px",
-          }}
-        >
-          {/* // Treding Colletion */}
-          <div>
-            <div
-              className=" py-5"
-              style={{ textAlign: "end", margin: "0 30px" }}
-            >
-              <h3 style={{ color: "#000", fontWeight: "bold" }}>Top Artists</h3>
-              <p style={{ color: "#000000ab", fontWeight: "bold" }}>
-                The best artists in the world in one place, handpicked and{" "}
-                <br></br> curated pieces just the way our clients like it.
-              </p>
-            </div>
-          </div>
-          {/* Artists Artist Collection*/}
-          <div>
-            <div className="">
-              <div>
-                <TopArtist />
-              </div>
-            </div>
-          </div>
-        </div>
         {/* //Feature NFT  */}
         <div
           style={{
             background: "linear-gradient(180deg, #000 60%, #FFF 40%)",
             padding: "30px 0",
-            paddingBottom: "80px",
+            // paddingBottom: "80px",
           }}
         >
           <div>
@@ -373,6 +344,34 @@ const Marketplace = () => {
             <div className="">
               <div>
                 <FeaturedNfts />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* //Top Artist */}
+        <div
+          style={{
+            background: "linear-gradient(180deg, #fff 50%, #000 50%)",
+            padding: " 30px 10px",
+          }}
+        >
+          <div>
+            <div
+              className=" py-5"
+              style={{ textAlign: "end", margin: "0 30px" }}
+            >
+              <h3 style={{ color: "#000", fontWeight: "bold" }}>Top Artists</h3>
+              <p style={{ color: "#000000ab", fontWeight: "bold" }}>
+                The best artists in the world in one place, handpicked and{" "}
+                <br></br> curated pieces just the way our clients like it.
+              </p>
+            </div>
+          </div>
+          <div>
+            <div className="">
+              <div>
+                <TopArtist />
               </div>
             </div>
           </div>
@@ -687,9 +686,8 @@ function NftCard({ val }) {
 
                 <div className="card_head">
                   <Link
-                    to={`/item/${val.network}/${
-                      ChainsInfo[val.chainId].NFT_ADDRESS
-                    }/${val.tokenId}`}
+                    to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS
+                      }/${val.tokenId}`}
                   >
                     <img src={val.imageUrl} alt="nftimage" />
                   </Link>
