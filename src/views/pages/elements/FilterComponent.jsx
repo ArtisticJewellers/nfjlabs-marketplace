@@ -4,9 +4,10 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import { Button, Form, InputNumber, Menu, Radio } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "antd/dist/antd.css";
-
+import { useDispatch } from "react-redux";
+import { filterNFT } from "../../../Redux/reducers/nftReducer";
 function getItem(label, key, icon, children, type) {
   return {
     key,
@@ -73,8 +74,11 @@ const listing = [
   { label: "Listed", value: true },
   { label: "Not Listed", value: false },
 ];
-const FilterComponent = ({ onFilterChange }) => {
+
+const FilterComponent = ({ onFilterChange, defaultCat }) => {
+  const dispatch = useDispatch();
   const [networks, setNetworks] = useState("");
+  const [defaultCategory, setDefaultCategory] = useState();
   const [price, setPrice] = useState({
     min: null,
     max: null,
@@ -82,17 +86,6 @@ const FilterComponent = ({ onFilterChange }) => {
   const [isList, setListed] = useState(true);
   const [categorys, setCategory] = useState("");
   const [subCategorys, setSubCategory] = useState("");
-
-  const selectCat = () => {
-    console.log({ categorys });
-    if (categorys == "") {
-      return allCat;
-    } else if (categorys == "jewellery") {
-      return jewelleryCat;
-    } else {
-      return gemsCat;
-    }
-  };
 
   const onChangeNetwork = (e) => {
     setNetworks(e.target.value);
@@ -107,14 +100,40 @@ const FilterComponent = ({ onFilterChange }) => {
 
   const onChangeCategory = (e) => {
     setCategory(e.target.value);
+    setDefaultCategory(e.target.value);
     onFilterChange({
       price: price,
       category: e.target.value,
+      // category: defaultCategory,
       subcategory: subCategorys,
       network: networks,
       isListed: isList,
     });
+    dispatch(
+      filterNFT({
+        price: price,
+        // category: e.target.value,
+        category: defaultCategory,
+        subcategory: subCategorys,
+        network: networks,
+        isListed: isList,
+      })
+    );
   };
+
+  useEffect(() => {
+    if (defaultCat) {
+      setCategory(defaultCat);
+      onFilterChange({
+        price: price,
+        // category: e.target.value,
+        category: defaultCategory,
+        subcategory: subCategorys,
+        network: networks,
+        isListed: isList,
+      });
+    }
+  }, []);
 
   const onChangeSubCategory = (e) => {
     setSubCategory(e.target.value);
@@ -126,6 +145,7 @@ const FilterComponent = ({ onFilterChange }) => {
       isListed: isList,
     });
   };
+
   const onChangeListed = (e) => {
     setListed(e.target.value);
     onFilterChange({
@@ -227,8 +247,10 @@ const FilterComponent = ({ onFilterChange }) => {
       ),
     ]),
   ];
+
   return (
     <>
+      {defaultCategory}
       <Menu
         style={{
           width: 256,

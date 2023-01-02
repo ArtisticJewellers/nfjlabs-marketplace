@@ -11,7 +11,7 @@ function Footer() {
       }}
     >
       <footer className="footer__1" style={{ marginTop: "0" }}>
-        <div className=" container px-5">
+        <div className="container px-5">
           <div className="row " style={{ marginBottom: "100px" }}>
             <div className="col-lg-6 space-y-20 ">
               <h2 style={{ color: "white", lineHeight: 1.4 }}>
@@ -25,7 +25,10 @@ function Footer() {
               style={{ textAlign: "center", alignSelf: "center" }}
             >
               <a href="https://nfjlabs.com/" target="_blank">
-                <span className=" btn btn-gradFooter btn-tran" style={{ color: "white !important" }}>
+                <span
+                  className=" btn btn-gradFooter btn-tran"
+                  style={{ color: "white !important" }}
+                >
                   Visit Our Webiste
                 </span>
               </a>
@@ -40,7 +43,7 @@ function Footer() {
             background: "linear-gradient(90deg, #4B2BE9,#E70FD1, #F0F442)",
           }}
         >
-          { }{" "}
+          {}{" "}
         </div>
         <div className="container px-5">
           <div className="row">

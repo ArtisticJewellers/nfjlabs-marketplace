@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "reactjs-popup/dist/index.css";
 import { ChainsInfo } from "../../config/config-chains";
 
-function CardMarketplace({ FilterData }) {
+function CardMarketplace({ FilterData, searchNFTData }) {
   return (
     <div style={{ width: "100%" }}>
       <div className="row mb-30_reset InnerDivCards">
@@ -21,10 +21,14 @@ function CardMarketplace({ FilterData }) {
 
                     <div className="card_head">
                       <Link
-                        to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS
-                          }/${val.tokenId}`}
+                        to={`/item/${val.network}/${
+                          ChainsInfo[val.chainId].NFT_ADDRESS
+                        }/${val.tokenId}`}
                       >
-                        <img src={val.imageUrl} alt="nftimage" />
+                        <img
+                          src={val.imageUrl || searchNFTData.imageUrl}
+                          alt="nftimage"
+                        />
                       </Link>
                       {/*
                        */}

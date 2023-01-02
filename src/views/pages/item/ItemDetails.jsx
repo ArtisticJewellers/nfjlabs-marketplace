@@ -124,10 +124,8 @@ const ItemDetails = () => {
     },
   });
 
-  console.log({ account });
-
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
 
     if (nftDetails?.getNftDetails?.chainId) {
       fetch(
@@ -143,6 +141,7 @@ const ItemDetails = () => {
         .catch((err) => console.log(err));
     }
   });
+
   useEffect(() => {
     getNftTokenIdData(tokenId, network).then(async (res) => {
       let data = await downloadJSONOnIpfs(res.jsonData);
@@ -676,7 +675,6 @@ const ItemDetails = () => {
       </>
     );
   };
-
   const nftUpdateInfo = (price, nftId, isMarketPlace) => {
     return nftUpdate({
       variables: {
@@ -736,524 +734,360 @@ const ItemDetails = () => {
     });
   };
   return (
-    <div style={{ background: "white" }}>
+    <>
       <Header />
-      <div className="container" style={{ padding: "60px 5px" }}>
-        {/* <Link to="/explore" className="btn btn-white btn-sm my-40">
+      <div style={{ background: "white" }}>
+        <div
+          className="container"
+          style={{
+            padding: "60px 5px",
+          }}
+        >
+          {/* <Link to="/explore" className="btn btn-white btn-sm my-40">
           Back to home
         </Link> */}
-        {false ? (
-          <div>
-            <Loading />
-          </div>
-        ) : (
-          <div className="item_details my-10 ">
-            <div
-              className="row sm:space-y-20"
-              style={{ justifyContent: "center", gap: "25px" }}
-            >
-              <div className="col-md-4">
-                <div>
-                  <div className="shadow-lg item_img p-3">
-                    <img
-                      className="item_img"
-                      src={metaData?.external_link}
-                      alt={metaData?.title}
-                    />
-                  </div>
-                  <div className="my-4">
-                    <div>
-                      {/* <h3>Description:</h3>
-                      <p>{metaData?.description}</p> */}
+          {false ? (
+            <div>
+              <Loading />
+            </div>
+          ) : (
+            <div className="item_details my-10 ">
+              <div
+                className="row sm:space-y-20"
+                style={{ justifyContent: "center", gap: "25px" }}
+              >
+                <div className="col-md-4">
+                  <div>
+                    <div className="shadow-lg item_img p-3">
+                      <img
+                        className="item_img"
+                        src={metaData?.external_link}
+                        alt={metaData?.title}
+                      />
                     </div>
                     <div className="my-4">
-                      <ul
-                        style={{
-                          fontWeight: "500",
-                          color: "#766767",
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "5px",
-                        }}
-                      >
-                        <li className="d-flex justify-content-between mr-4">
-                          <div>Metadata: </div>
-                          <a
-                            href={getIPFSLink(metaData?.ipfsLink)}
-                            target="_blank"
-                            alt="metadata"
-                          >
-                            https://ipfs.com/{metaData?.title?.slice(0, 5)}...
-                          </a>
-                        </li>
-                        <li className="d-flex justify-content-between mr-4">
-                          <div>Contract Address: </div>
-                          <a
-                            href={`${blockURL}address/${address}`}
-                            target="_blank"
-                          >
-                            {truncateAddress(address)}
-                          </a>
-                        </li>
-                        <li className="d-flex justify-content-between mr-4">
-                          <div>TokenID: </div>
-                          <a
-                            href={`${blockURL}token/${address}?a=${tokenId}`}
-                            target="_blank"
-                          >
-                            {tokenId}
-                          </a>
-                        </li>
-                        <li className="d-flex justify-content-between mr-4">
-                          <div>Token Standard:</div> <div>ERC-721</div>
-                        </li>
-                        <li className="d-flex justify-content-between mr-4">
-                          <div>Blockchain:</div>
-                          <span className="capitalize">{network}</span>{" "}
-                        </li>
-                        <li className="d-flex justify-content-between mr-4">
-                          <div>Royalty:</div>
-                          <span className="capitalize">5%</span>{" "}
-                        </li>
-                        {/* <li className="d-flex justify-content-between mr-4">
-                          <div>External Link:</div>
-                          <a href={metaData?.extLink} target="_blank">
-                            {metaData?.extLink?.slice(0, 10)}...
-                          </a>
-                        </li> */}
-                      </ul>
+                      <div>
+                        {/* <h3>Description:</h3>
+                      <p>{metaData?.description}</p> */}
+                      </div>
+                      <div className="my-4">
+                        <ul
+                          style={{
+                            fontWeight: "500",
+                            color: "#766767",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "5px",
+                          }}
+                        >
+                          <li className="d-flex justify-content-between mr-4">
+                            <div>Metadata: </div>
+                            <a
+                              href={getIPFSLink(metaData?.ipfsLink)}
+                              target="_blank"
+                              alt="metadata"
+                            >
+                              https://ipfs.com/{metaData?.title?.slice(0, 5)}...
+                            </a>
+                          </li>
+                          <li className="d-flex justify-content-between mr-4">
+                            <div>Contract Address: </div>
+                            <a
+                              href={`${blockURL}address/${address}`}
+                              target="_blank"
+                            >
+                              {truncateAddress(address)}
+                            </a>
+                          </li>
+                          <li className="d-flex justify-content-between mr-4">
+                            <div>TokenID: </div>
+                            <a
+                              href={`${blockURL}token/${address}?a=${tokenId}`}
+                              target="_blank"
+                            >
+                              {tokenId}
+                            </a>
+                          </li>
+                          <li className="d-flex justify-content-between mr-4">
+                            <div>Token Standard:</div> <div>ERC-721</div>
+                          </li>
+                          <li className="d-flex justify-content-between mr-4">
+                            <div>Blockchain:</div>
+                            <span className="capitalize">{network}</span>{" "}
+                          </li>
+                          <li className="d-flex justify-content-between mr-4">
+                            <div>Royalty:</div>
+                            <span className="capitalize">5%</span>{" "}
+                          </li>
+                          <li className="d-flex justify-content-between mr-4">
+                            <div>External Link:</div>
+                            <a href={metaData?.extLink} target="_blank">
+                              {metaData?.extLink?.slice(0, 10)}...
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="col-lg-6">
-                {/* title */}
-                <div>
-                  {/* tags */}
-                  {nftDetails?.getNftDetails?.tags?.map((e) => (
-                    <Badge
-                      bg="warning"
-                      text="dark"
-                      style={{ margin: "0 10px 10px 0" }}
-                    >
-                      {e}
-                    </Badge>
-                  ))}
-                </div>
-                {/* ex unlockable content */}
-                {/* <div>
+                <div className="col-lg-6">
+                  {/* title */}
+                  <div>
+                    {/* tags */}
+                    {nftDetails?.getNftDetails?.tags?.map((e) => (
+                      <Badge
+                        bg="warning"
+                        text="dark"
+                        style={{ margin: "0 10px 10px 0" }}
+                      >
+                        {e}
+                      </Badge>
+                    ))}
+                  </div>
+                  {/* ex unlockable content */}
+                  {/* <div>
                   {account === nftDetails?.getNftDetails?.ownerAddress
                     ? nftDetails?.getNftDetails?.unlockableContent
                     : ""}
                 </div> */}
-                <div className="space-y-20">
-                  <h3>{metaData?.title}</h3>
-                  <div>
-                    {readMore
-                      ? metaData?.description
-                      : metaData?.description?.slice(0, 80) + "...."}
-                    <a
-                      style={{ color: "red" }}
-                      onClick={() => setReadMore(!readMore)}
-                    >
-                      {readMore ? "show less" : "read more"}
-                    </a>
-                  </div>
-                  <div>
-                    {" "}
-                    <p
-                      className=""
-                      style={{
-                        fontSize: "18px",
-                        fontWeight: "bold",
-                        color: "black",
-                      }}
-                    >
-                      Price:
-                      <br />
-                      <span
-                        style={{
-                          color: "#1B9F07",
-                          fontSize: "18px",
-                          fontWeight: "bold",
-                        }}
+                  <div className="space-y-20">
+                    <h3>{metaData?.title}</h3>
+                    <div>
+                      {readMore
+                        ? metaData?.description
+                        : metaData?.description?.slice(0, 80) + "...."}
+                      <a
+                        style={{ color: "red" }}
+                        onClick={() => setReadMore(!readMore)}
                       >
-                        {auctionDetails.started &&
-                          decimalToInt(auctionDetails.highestBid).toFixed(4) +
-                          " "}
-                        {saleDetails.forSale &&
-                          decimalToInt(saleDetails.price).toFixed(4) + " "}
-                        {ChainsInfo[getNetworkChainID(network)].CURRENCY_SYMBOL}
-                      </span>
-                      <br />
-                      <span
+                        {readMore ? "show less" : "read more"}
+                      </a>
+                    </div>
+                    <div>
+                      {" "}
+                      <p
+                        className=""
                         style={{
                           fontSize: "18px",
                           fontWeight: "bold",
                           color: "black",
                         }}
                       >
-                        $
-                        {auctionDetails.started &&
-                          (
-                            decimalToInt(auctionDetails.highestBid).toFixed(4) *
-                            UsdPrice.toFixed(2)
-                          ).toFixed(2)}{" "}
-                        {saleDetails.forSale &&
-                          (
-                            decimalToInt(saleDetails.price).toFixed(4) *
-                            UsdPrice.toFixed(2)
-                          ).toFixed(2)}{" "}
-                        USD
-                      </span>
-                    </p>
-                  </div>
-
-                  <div
-                    style={{
-                      display: "flex",
-                    }}
-                  >
-                    {auctionDetails.started && (
-                      <p>
-                        <div
+                        Price:
+                        <br />
+                        <span
                           style={{
-                            alignItems: "center",
-                            display: "flex",
-                            justifyContent: "start",
-                            marginBottom: "10px",
+                            color: "#1B9F07",
+                            fontSize: "18px",
+                            fontWeight: "bold",
                           }}
                         >
-                          <i class="ri-timer-fill"></i>
-                          <span>Auction ending in:</span>
-                        </div>{" "}
-                        <CounterComponent
-                          endDate={parseInt(auctionDetails?.endAt)}
-                        />
+                          {auctionDetails.started &&
+                            decimalToInt(auctionDetails.highestBid).toFixed(4) +
+                            " "}
+                          {saleDetails.forSale &&
+                            decimalToInt(saleDetails.price).toFixed(4) + " "}
+                          {
+                            ChainsInfo[getNetworkChainID(network)]
+                              .CURRENCY_SYMBOL
+                          }
+                        </span>
+                        <br />
+                        <span
+                          style={{
+                            fontSize: "18px",
+                            fontWeight: "bold",
+                            color: "black",
+                          }}
+                        >
+                          $
+                          {auctionDetails.started &&
+                            (
+                              decimalToInt(auctionDetails.highestBid).toFixed(
+                                4
+                              ) * UsdPrice.toFixed(2)
+                            ).toFixed(2)}{" "}
+                          {saleDetails.forSale &&
+                            (
+                              decimalToInt(saleDetails.price).toFixed(4) *
+                              UsdPrice.toFixed(2)
+                            ).toFixed(2)}{" "}
+                          USD
+                        </span>
                       </p>
-                    )}
-                  </div>
+                    </div>
 
-                  <div style={{ display: "flex", gap: "50px" }}>
-                    {" "}
                     <div
-                      className="avatars space-x-5"
-                      style={{ marginBottom: 8 }}
+                      style={{
+                        display: "flex",
+                      }}
                     >
-                      <div className="media">
-                        <Link
-                          to={
-                            "/profile/" +
-                            nftDetails?.getNftDetails?.ownerAddress
-                          }
-                        >
-                          <div className="badge">
-                            <img
-                              className="badge"
-                              src="https://gateway.ipfscdn.io/ipfs/QmQE4KLmCE7JqfFwgqDduH1i5Xmhmo4aoMb3xFHtnoFy8d/avatar_1.png"
-                              alt="ImgPreview"
-                            />
-                          </div>
-
-                          <img
-                            alt="Avatar"
-                            src={signInOwner?.signIn?.user?.avatar_url}
-                            className="avatar avatar-sm"
-                            width={20}
+                      {auctionDetails.started && (
+                        <p>
+                          <div
+                            style={{
+                              alignItems: "center",
+                              display: "flex",
+                              justifyContent: "start",
+                              marginBottom: "10px",
+                            }}
+                          >
+                            <i class="ri-timer-fill"></i>
+                            <span>Auction ending in:</span>
+                          </div>{" "}
+                          <CounterComponent
+                            endDate={parseInt(auctionDetails?.endAt)}
                           />
-                        </Link>
-                      </div>
-                      <div>
-                        <Link
-                          to={
-                            "/profile/" +
-                            nftDetails?.getNftDetails?.ownerAddress
-                          }
-                        >
-                          <div>
-                            <p
-                              className="avatars_name color_black"
-                              style={{ margin: 0 }}
-                            >
-                              Owner
-                            </p>
-                            <p
-                              className="avatars_name"
-                              style={{ margin: 0, color: "#707070" }}
-                            >
-                              @{signInOwner?.signIn?.user?.username}
-                            </p>
-                          </div>
-                        </Link>
-                      </div>
+                        </p>
+                      )}
                     </div>
-                    <div
-                      className="avatars space-x-5"
-                      style={{ marginBottom: 8 }}
-                    >
-                      <div className="media">
-                        <Link
-                          to={
-                            "/profile/" +
-                            nftDetails?.getNftDetails?.creatorAddress
-                          }
-                        >
-                          <div className="badge">
-                            <img
-                              className="badge"
-                              src="https://gateway.ipfscdn.io/ipfs/QmQE4KLmCE7JqfFwgqDduH1i5Xmhmo4aoMb3xFHtnoFy8d/avatar_1.png"
-                              alt="ImgPreview"
-                            />
-                          </div>
 
-                          <img
-                            alt="Avatar"
-                            src={signIn?.signIn?.user?.avatar_url}
-                            className="avatar avatar-sm"
-                            width={20}
-                          />
-                        </Link>
-                      </div>
-                      <div>
-                        <Link
-                          to={
-                            "/profile/" +
-                            nftDetails?.getNftDetails?.creatorAddress
-                          }
-                        >
-                          <div>
-                            <p
-                              className="avatars_name color_black"
-                              style={{ margin: 0 }}
-                            >
-                              Artist
-                            </p>
-                            <p
-                              className="avatars_name"
-                              style={{ margin: 0, color: "#707070" }}
-                            >
-                              @{signIn?.signIn?.user?.username}
-                            </p>
-                          </div>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="d-flex justify-content-between" style={{ display: "flex", justifyContent: "center", alignItems: "center", alignItems: "center", flexWrap: "wrap" }}>
-                    <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "center" }}>
-                      <a
-                        target="_blank"
-                        href={getIPFSLink(metaData?.external_link)}
-                        rel="noreferrer"
-                        style={{
-                          border: "1px solid black",
-                          padding: "8px 20px",
-                          borderRadius: "999px",
-                          display: "flex",
-                          gap: "10px",
-                          alignItems: "center",
-                          margin: "10px 10px 10px 0"
-                        }}
+                    <div style={{ display: "flex", gap: "50px" }}>
+                      <div
+                        className="avatars space-x-5"
+                        style={{ marginBottom: 8 }}
                       >
-                        <div>
-                          <img
-                            width={30}
-                            src={
-                              process.env.PUBLIC_URL +
-                              "/img/icons/ipfs-share.svg"
+                        <div className="media">
+                          <Link
+                            to={
+                              "/profile/" +
+                              nftDetails?.getNftDetails?.ownerAddress
                             }
-                            alt="dashghg"
-                          />
-                        </div>
-                        <div style={{ fontBold: "10px", color: "black" }}>
-                          View On IPFS
-                        </div>
-                      </a>
-
-                      <a
-                        target="_blank"
-                        href={getIPFSLink(metaData?.extLink)}
-                        rel="noreferrer"
-                        style={{
-                          border: "1px solid black",
-                          padding: "8px 20px",
-                          borderRadius: "999px",
-                          display: "flex",
-                          gap: "10px",
-                          alignItems: "center",
-                        }}
-                      >
-                        <div>
-                          <img
-                            width={30}
-                            src={
-                              process.env.PUBLIC_URL +
-                              "/img/icons/ipfs-share.svg"
-                            }
-                            alt="dashghg"
-                          />
-                        </div>
-                        <div style={{ fontBold: "10px", color: "black" }}>
-                          External Link
-                        </div>
-                      </a>
-                    </div>
-                    {nftDetails?.getNftDetails?.ownerAddress === account && (
-                      <>
-                        {saleDetails.forSale ||
-                          auctionDetails.started ||
-                          auctionDetails.ended ? (
-                          saleDetails.forSale ? (
-                            <span
-                              onClick={() => {
-                                console.log(tokenId);
-                                showLoading();
-                                removeFromSale(tokenId)
-                                  .send({ from: account })
-                                  .then(async () => {
-                                    await nftListedFun(
-                                      false,
-                                      nftDetails?.getNftDetails?._id
-                                    );
-                                    await nftUpdateInfo(
-                                      0.0,
-                                      nftDetails?.getNftDetails?._id,
-                                      false
-                                    ).then(() => {
-                                      REMOVE_SALE_ALERT();
-                                    });
-                                    await transCreate(
-                                      "remove_on_sale",
-                                      signInWalletAddress?.signIn?.user?._id,
-                                      signInOwner?.signIn?.user?._id,
-                                      nftDetails?.getNftDetails?._id
-                                    );
-                                    hideLoading();
-                                  })
-                                  .catch(() => {
-                                    hideLoading();
-                                  });
-                              }}
-                              className=" btn btn-border  btn-grad btn-tran"
-                              style={{
-                                color: "#fff",
-                                borderRadius: "999px",
-                                height: "100%"
-                              }}
-                            >
-                              Remove From Sale
-                            </span>
-                          ) : (
-                            <>
-                              {auctionDetails.started && (
-                                <span
-                                  onClick={() => {
-                                    showLoading();
-                                    cancelAuction(tokenId)
-                                      .send({ from: account })
-                                      .then(async () => {
-                                        await nftListedFun(
-                                          false,
-                                          nftDetails?.getNftDetails?._id
-                                        );
-                                        await nftUpdateInfo(
-                                          0.0,
-                                          nftDetails?.getNftDetails?._id,
-                                          false
-                                        ).then(() => REMOVE_AUCTION_ALERT());
-                                        await transCreate(
-                                          "remove_on_auction",
-                                          signInWalletAddress?.signIn?.user
-                                            ?._id,
-                                          signInOwner?.signIn?.user?._id,
-                                          nftDetails?.getNftDetails?._id
-                                        );
-                                        hideLoading();
-                                      })
-                                      .catch(() => {
-                                        hideLoading();
-                                      });
-                                  }}
-                                  className=" btn btn-border  btn-grad btn-tran"
-                                  style={{
-                                    color: "#fff",
-                                    borderRadius: "999px",
-                                    height: "100%"
-                                  }}
-                                >
-                                  Remove From Auction
-                                </span>
-                              )}
-                              {auctionDetails.ended && (
-                                <span
-                                  onClick={() => {
-                                    showLoading();
-                                    cancelAuction(tokenId)
-                                      .send({ from: account })
-                                      .then(async () => {
-                                        await nftListedFun(
-                                          false,
-                                          nftDetails?.getNftDetails?._id
-                                        );
-                                        await nftUpdateInfo(
-                                          0.0,
-                                          nftDetails?.getNftDetails?._id,
-                                          false
-                                        ).then(() => REMOVE_AUCTION_ALERT());
-                                        await transCreate(
-                                          "remove_on_auction",
-                                          signInWalletAddress?.signIn?.user
-                                            ?._id,
-                                          signInOwner?.signIn?.user?._id,
-                                          nftDetails?.getNftDetails?._id
-                                        );
-                                        hideLoading();
-                                      })
-                                      .catch(() => {
-                                        hideLoading();
-                                      });
-                                  }}
-                                  className=" btn btn-border  btn-grad btn-tran"
-                                  style={{
-                                    color: "#fff",
-                                    borderRadius: "999px",
-                                    height: "100%"
-                                  }}
-                                >
-                                  Remove From Auction
-                                </span>
-                              )}
-                            </>
-                          )
-                        ) : (
-                          <>
-                            {" "}
-                            <div>
-                              <PutAuctionModal />
-                            </div>
-                            <div>
-                              <PutMarketplaceModal
-                                nftDetails={nftDetails?.getNftDetails}
+                          >
+                            <div className="badge">
+                              <img
+                                className="badge"
+                                src="https://gateway.ipfscdn.io/ipfs/QmQE4KLmCE7JqfFwgqDduH1i5Xmhmo4aoMb3xFHtnoFy8d/avatar_1.png"
+                                alt="ImgPreview"
                               />
                             </div>
-                          </>
-                        )}
-                      </>
-                    )}
+                            <img
+                              alt="Avatar"
+                              src={signInOwner?.signIn?.user?.avatar_url}
+                              className="avatar avatar-sm"
+                              width={20}
+                            />
+                          </Link>
+                        </div>
+                        <div>
+                          <Link
+                            to={
+                              "/profile/" +
+                              nftDetails?.getNftDetails?.ownerAddress
+                            }
+                          >
+                            <div>
+                              <p
+                                className="avatars_name color_black"
+                                style={{ margin: 0 }}
+                              >
+                                Owner
+                              </p>
+                              <p
+                                className="avatars_name"
+                                style={{ margin: 0, color: "#707070" }}
+                              >
+                                @{signInOwner?.signIn?.user?.username}
+                              </p>
+                            </div>
+                          </Link>
+                        </div>
+                      </div>
+                      <div
+                        className="avatars space-x-5"
+                        style={{ marginBottom: 8 }}
+                      >
+                        <div className="media">
+                          <Link
+                            to={
+                              "/profile/" +
+                              nftDetails?.getNftDetails?.creatorAddress
+                            }
+                          >
+                            <div className="badge">
+                              <img
+                                className="badge"
+                                src="https://gateway.ipfscdn.io/ipfs/QmQE4KLmCE7JqfFwgqDduH1i5Xmhmo4aoMb3xFHtnoFy8d/avatar_1.png"
+                                alt="ImgPreview"
+                              />
+                            </div>
 
-                    {nftDetails?.getNftDetails?.ownerAddress !== account && (
-                      <>
-                        {(saleDetails.forSale || auctionDetails.started) &&
-                          (saleDetails.forSale ? (
-                            <span
-                              onClick={async () => {
-                                if (active) {
+                            <img
+                              alt="Avatar"
+                              src={signIn?.signIn?.user?.avatar_url}
+                              className="avatar avatar-sm"
+                              width={20}
+                            />
+                          </Link>
+                        </div>
+                        <div>
+                          <Link
+                            to={
+                              "/profile/" +
+                              nftDetails?.getNftDetails?.creatorAddress
+                            }
+                          >
+                            <div>
+                              <p
+                                className="avatars_name color_black"
+                                style={{ margin: 0 }}
+                              >
+                                Artist
+                              </p>
+                              <p
+                                className="avatars_name"
+                                style={{ margin: 0, color: "#707070" }}
+                              >
+                                @{signIn?.signIn?.user?.username}
+                              </p>
+                            </div>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                      <div>
+                        <a
+                          target="_blank"
+                          href={getIPFSLink(metaData?.external_link)}
+                          rel="noreferrer"
+                          style={{
+                            border: "1px solid black",
+                            padding: "8px 20px",
+                            borderRadius: "999px",
+                            display: "flex",
+                            gap: "10px",
+                            alignItems: "center",
+                          }}
+                        >
+                          <div>
+                            <img
+                              width={30}
+                              src={
+                                process.env.PUBLIC_URL +
+                                "/img/icons/ipfs-share.svg"
+                              }
+                              alt="dashghg"
+                            />
+                          </div>
+                          <div style={{ fontBold: "10px", color: "black" }}>
+                            View On IPFS
+                          </div>
+                        </a>
+                      </div>
+                      {nftDetails?.getNftDetails?.ownerAddress === account && (
+                        <>
+                          {saleDetails.forSale ||
+                            auctionDetails.started ||
+                            auctionDetails.ended ? (
+                            saleDetails.forSale ? (
+                              <span
+                                onClick={() => {
+                                  console.log(tokenId);
                                   showLoading();
-                                  await purchaseNFT(
-                                    tokenId,
-                                    nftDetails?.getNftDetails?.price
-                                  )
-                                    .then(async (res) => {
+                                  removeFromSale(tokenId)
+                                    .send({ from: account })
+                                    .then(async () => {
                                       await nftListedFun(
                                         false,
                                         nftDetails?.getNftDetails?._id
@@ -1262,26 +1096,11 @@ const ItemDetails = () => {
                                         0.0,
                                         nftDetails?.getNftDetails?._id,
                                         false
-                                      ).then(() => REMOVE_AUCTION_ALERT());
-                                      await nftOwnerUpdate({
-                                        variables: {
-                                          ownerAddress: account,
-                                          nftId: nftDetails?.getNftDetails?._id,
-                                        },
-                                        refetchQueries: [
-                                          {
-                                            query: GetNftDetails,
-                                            variables: {
-                                              contractAddress: address,
-                                              tokenId: parseInt(tokenId),
-                                            },
-                                          },
-                                        ],
-                                      }).then((res) => {
-                                        BUY_NFT_ALERT();
+                                      ).then(() => {
+                                        REMOVE_SALE_ALERT();
                                       });
                                       await transCreate(
-                                        "purchase_nft",
+                                        "remove_on_sale",
                                         signInWalletAddress?.signIn?.user?._id,
                                         signInOwner?.signIn?.user?._id,
                                         nftDetails?.getNftDetails?._id
@@ -1291,71 +1110,227 @@ const ItemDetails = () => {
                                     .catch(() => {
                                       hideLoading();
                                     });
-                                } else {
-                                  WALLET_ALERT();
-                                }
-                              }}
-                              className=" btn btn-border  btn-grad btn-tran"
-                              style={{
-                                color: "#fff",
-                                borderRadius: "999px",
-                                height: "100%"
-                              }}
-                            >
-                              Buy Now
-                            </span>
+                                }}
+                                className=" btn btn-border  btn-grad btn-tran"
+                                style={{
+                                  color: "#fff",
+                                  borderRadius: "999px",
+                                }}
+                              >
+                                Remove From Sale
+                              </span>
+                            ) : (
+                              <>
+                                {auctionDetails.started && (
+                                  <span
+                                    onClick={() => {
+                                      showLoading();
+                                      cancelAuction(tokenId)
+                                        .send({ from: account })
+                                        .then(async () => {
+                                          await nftListedFun(
+                                            false,
+                                            nftDetails?.getNftDetails?._id
+                                          );
+                                          await nftUpdateInfo(
+                                            0.0,
+                                            nftDetails?.getNftDetails?._id,
+                                            false
+                                          ).then(() => REMOVE_AUCTION_ALERT());
+                                          await transCreate(
+                                            "remove_on_auction",
+                                            signInWalletAddress?.signIn?.user
+                                              ?._id,
+                                            signInOwner?.signIn?.user?._id,
+                                            nftDetails?.getNftDetails?._id
+                                          );
+                                          hideLoading();
+                                        })
+                                        .catch(() => {
+                                          hideLoading();
+                                        });
+                                    }}
+                                    className=" btn btn-border  btn-grad btn-tran"
+                                    style={{
+                                      color: "#fff",
+                                      borderRadius: "999px",
+                                    }}
+                                  >
+                                    Remove From Auction
+                                  </span>
+                                )}
+                                {auctionDetails.ended && (
+                                  <span
+                                    onClick={() => {
+                                      showLoading();
+                                      cancelAuction(tokenId)
+                                        .send({ from: account })
+                                        .then(async () => {
+                                          await nftListedFun(
+                                            false,
+                                            nftDetails?.getNftDetails?._id
+                                          );
+                                          await nftUpdateInfo(
+                                            0.0,
+                                            nftDetails?.getNftDetails?._id,
+                                            false
+                                          ).then(() => REMOVE_AUCTION_ALERT());
+                                          await transCreate(
+                                            "remove_on_auction",
+                                            signInWalletAddress?.signIn?.user
+                                              ?._id,
+                                            signInOwner?.signIn?.user?._id,
+                                            nftDetails?.getNftDetails?._id
+                                          );
+                                          hideLoading();
+                                        })
+                                        .catch(() => {
+                                          hideLoading();
+                                        });
+                                    }}
+                                    className=" btn btn-border  btn-grad btn-tran"
+                                    style={{
+                                      color: "#fff",
+                                      borderRadius: "999px",
+                                    }}
+                                  >
+                                    Remove From Auction
+                                  </span>
+                                )}
+                              </>
+                            )
                           ) : (
                             <>
-                              {AllBiddres.includes(account) ? (
-                                <span
-                                  className=" btn btn-border btn-grad btn-tran"
-                                  style={{
-                                    color: "#fff",
-                                    borderRadius: "999px",
-                                    height: "100%"
-                                  }}
-                                  onClick={() => {
+                              {" "}
+                              <div>
+                                <PutAuctionModal />
+                              </div>
+                              <div>
+                                <PutMarketplaceModal
+                                  nftDetails={nftDetails?.getNftDetails}
+                                />
+                              </div>
+                            </>
+                          )}
+                        </>
+                      )}
+
+                      {nftDetails?.getNftDetails?.ownerAddress !== account && (
+                        <>
+                          {(saleDetails.forSale || auctionDetails.started) &&
+                            (saleDetails.forSale ? (
+                              <span
+                                onClick={async () => {
+                                  if (active) {
                                     showLoading();
-                                    bidCancelByUser(tokenId)
-                                      .send({
-                                        from: account,
-                                      })
-                                      .then((res) => {
-                                        CANCEL_BID_ALERT();
+                                    await purchaseNFT(
+                                      tokenId,
+                                      nftDetails?.getNftDetails?.price
+                                    )
+                                      .then(async (res) => {
+                                        await nftListedFun(
+                                          false,
+                                          nftDetails?.getNftDetails?._id
+                                        );
+                                        await nftUpdateInfo(
+                                          0.0,
+                                          nftDetails?.getNftDetails?._id,
+                                          false
+                                        ).then(() => REMOVE_AUCTION_ALERT());
+                                        await nftOwnerUpdate({
+                                          variables: {
+                                            ownerAddress: account,
+                                            nftId:
+                                              nftDetails?.getNftDetails?._id,
+                                          },
+                                          refetchQueries: [
+                                            {
+                                              query: GetNftDetails,
+                                              variables: {
+                                                contractAddress: address,
+                                                tokenId: parseInt(tokenId),
+                                              },
+                                            },
+                                          ],
+                                        }).then((res) => {
+                                          BUY_NFT_ALERT();
+                                        });
+                                        await transCreate(
+                                          "purchase_nft",
+                                          signInWalletAddress?.signIn?.user
+                                            ?._id,
+                                          signInOwner?.signIn?.user?._id,
+                                          nftDetails?.getNftDetails?._id
+                                        );
                                         hideLoading();
                                       })
                                       .catch(() => {
                                         hideLoading();
-                                        SOMTHING_WENT_WRONG_ALERT();
                                       });
-                                  }}
-                                >
-                                  Cancel Bid
-                                </span>
-                              ) : (
-                                active && (
-                                  <PlaceBidModal
-                                    auctionDetails={auctionDetails}
-                                  />
-                                )
-                              )}
-                            </>
-                          ))}
-                      </>
-                    )}
-                  </div>
+                                  } else {
+                                    WALLET_ALERT();
+                                  }
+                                }}
+                                className=" btn btn-border  btn-grad btn-tran"
+                                style={{
+                                  color: "#fff",
+                                  borderRadius: "999px",
+                                }}
+                              >
+                                Buy Now
+                              </span>
+                            ) : (
+                              <>
+                                {AllBiddres.includes(account) ? (
+                                  <span
+                                    className=" btn btn-border btn-grad btn-tran"
+                                    style={{
+                                      color: "#fff",
+                                      borderRadius: "999px",
+                                    }}
+                                    onClick={() => {
+                                      showLoading();
+                                      bidCancelByUser(tokenId)
+                                        .send({
+                                          from: account,
+                                        })
+                                        .then((res) => {
+                                          CANCEL_BID_ALERT();
+                                          hideLoading();
+                                        })
+                                        .catch(() => {
+                                          hideLoading();
+                                          SOMTHING_WENT_WRONG_ALERT();
+                                        });
+                                    }}
+                                  >
+                                    Cancel Bid
+                                  </span>
+                                ) : (
+                                  active && (
+                                    <PlaceBidModal
+                                      auctionDetails={auctionDetails}
+                                    />
+                                  )
+                                )}
+                              </>
+                            ))}
+                        </>
+                      )}
+                    </div>
 
-                  <div style={{ marginTop: "80px" }}>
-                    <TabPanelFrom metaData={metaData} />
+                    <div style={{ marginTop: "80px" }}>
+                      <TabPanelFrom metaData={metaData} />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-      <Footer />
-    </div>
+      <Footer />;
+    </>
   );
 };
 

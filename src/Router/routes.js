@@ -5,7 +5,7 @@ import EditProfile from "../views/pages/account/EditProfile";
 import Login from "../views/pages/account/Login"; //notused
 import Profile from "../views/pages/account/Profile";
 import Register from "../views/pages/account/Register"; //notused
-
+import Footer from "../components/footer/Footer";
 //  Blog inner pages
 import Blog from "../views/pages/blog/Blog"; //notused
 import Article from "../views/pages/blog/Article"; //notused
@@ -45,6 +45,7 @@ const Routes = () => {
         <Switch>
           <Route exact path="/" component={Home1} />
           <Route exact path="/explore" component={Marketplace} />
+          <Route exact path="/explore/:cat" component={Marketplace} />
           <Route path="/success" component={Success} />
           <Route path="/login" component={Login} />
           <Route path="/user-profile" component={UserProfile} />

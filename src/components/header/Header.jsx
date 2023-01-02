@@ -15,7 +15,8 @@ import { ChainsInfo } from "../../config/config-chains";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { SearchNft } from "../../graphql/query";
 import { useHistory } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { setNftData } from "../../Redux/reducers/nftReducer";
 const icons = {
   80001: {
     icon: polygon,
@@ -32,10 +33,13 @@ const icons = {
 };
 
 const Header = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [isActive, setActive] = useState(false);
   const [searchData, setSearchData] = useState([]);
   const [searchNft] = useLazyQuery(SearchNft);
+  const [searchContent, setSearchContent] = useState("");
+  console.log({ searchData, searchNft });
   const toggleClass = () => {
     setActive(!isActive);
   };
@@ -55,6 +59,7 @@ const Header = () => {
       document.removeEventListener("click", handleClickOutside, true);
     };
   }, []);
+
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
       setIsVisible(false);
@@ -74,9 +79,11 @@ const Header = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("form submitted");
-    if(searchData.length)
+    if (searchData.length < 1) return;
+    dispatch(setNftData(searchData));
     history.push("/explore");
   };
+
   return (
     <div>
       <header
@@ -111,7 +118,7 @@ const Header = () => {
                   >
                     Explore
                   </Link>
-                </li>{" "}
+                </li>
                 <li className="has_popup">
                   <Link
                     className="color_black "
@@ -165,7 +172,10 @@ const Header = () => {
               className="d-none  header__search position-relative"
               style={{ display: "flex" }}
             >
-              <form onSubmit={handleSubmit}>
+              <form
+                onSubmit={handleSubmit}
+                style={{ height: "100%", width: "100%" }}
+              >
                 <input
                   type="text"
                   placeholder="Search"
@@ -179,6 +189,7 @@ const Header = () => {
                   onChange={(e) => {
                     setIsVisible(true);
                     console.log(e.target.value);
+                    setSearchContent(e.target.value);
                     e.target.value.trim() !== ""
                       ? Search(e.target.value, searchNft)
                       : setSearchData([]);
@@ -190,6 +201,7 @@ const Header = () => {
               </form>
 
               <div
+                onClick={handleSubmit}
                 className="btn-grad"
                 style={{
                   width: "60px",
