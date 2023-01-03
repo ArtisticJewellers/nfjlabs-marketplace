@@ -41,6 +41,27 @@ const UploadComponent = () => {
   const [certf, setCertf] = useState([{ title: "", image: "" }]);
 
 
+  let jewelleryCat = [
+    { label: "Necklace", value: "necklaces" },
+    { label: "Pendant", value: "pendant" },
+    { label: "Rings", value: "rings" },
+    { label: "Brooch", value: "brooch" },
+    { label: "Earrings", value: "earrings" },
+    { label: "Watch Charm", value: "watch_charm" },
+    { label: "Bracelet", value: "bracelet" },
+    { label: "Chain", value: "chain" },
+  ];
+
+  let gemsCat = [
+    { label: "Pearl", value: "pearl" },
+    { label: "Opal", value: "opal" },
+    { label: "Ruby", value: "ruby" },
+    { label: "Sapphire", value: "sapphire" },
+    { label: "Diamond", value: "diamond" },
+    { label: "Emrald", value: "emrald" },
+  ];
+
+
 
   let exampleName = "Polygon";
   if (chainId == "5" || chainId == "1") {
@@ -211,7 +232,7 @@ const UploadComponent = () => {
                           },
                         ]}
                       >
-                        <Upload.Dragger name="image" accept="image/*">
+                        <Upload.Dragger name="image" accept="">
                           <div className="space-y-20">
                             <img
                               className="icon"
@@ -219,7 +240,7 @@ const UploadComponent = () => {
                               alt="upload"
                             />
                             <h5>Drag and drop your file</h5>
-                            <p className="color_text">PNG, GIF, JPEG.</p>
+                            <p className="color_text">PNG, GIF, JPEG, MP4.</p>
                           </div>
                           <div className="space-y-20">
                             <p className="color_text">or choose a file</p>
@@ -363,20 +384,14 @@ const UploadComponent = () => {
                                 { label: "Brooch", value: "brooch" },
                                 { label: "Earrings", value: "earrings" },
                                 { label: "Watch Charm", value: "watch_charm" },
-                                {
-                                  label: "Natural Pearl",
-                                  value: "natural_pearl",
-                                },
-                                {
-                                  label: "Cultured Pearl",
-                                  value: "cultured_pearl",
-                                },
-                                {
-                                  label: "Natural Diamond",
-                                  value: "natural_diamond",
-                                },
+                                { label: "Bracelet", value: "bracelet" },
+                                { label: "Chain", value: "chain" },
+
+                                { label: "Pearl", value: "pearl" },
+                                { label: "Opal", value: "opal" },
                                 { label: "Ruby", value: "ruby" },
                                 { label: "Sapphire", value: "sapphire" },
+                                { label: "Diamond", value: "diamond" },
                                 { label: "Emrald", value: "emrald" },
                               ]}
                             ></Select>

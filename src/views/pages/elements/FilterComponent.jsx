@@ -19,12 +19,6 @@ function getItem(label, key, icon, children, type) {
 }
 const category = [
   { label: "All", value: "" },
-  // { label: "Necklace", value: "necklaces" },
-  // { label: "Pendant", value: "pendant" },
-  // { label: "Rings", value: "rings" },
-  // { label: "Brooch", value: "brooch" },
-  // { label: "Earrings", value: "earrings" },
-  // { label: "Watch Charm", value: "watch_charm" },
   { label: "Jewellery", value: "jewellery" },
   { label: "Gems", value: "gems" },
 ];
@@ -36,14 +30,16 @@ let jewelleryCat = [
   { label: "Brooch", value: "brooch" },
   { label: "Earrings", value: "earrings" },
   { label: "Watch Charm", value: "watch_charm" },
+  { label: "Bracelet", value: "bracelet" },
+  { label: "Chain", value: "chain" },
 ];
 
 let gemsCat = [
-  { label: "Natural Pearl", value: "natural_pearl" },
-  { label: "Cultured Pearl", value: "cultured_pearl" },
-  { label: "Natural Diamond", value: "natural_diamond" },
+  { label: "Pearl", value: "pearl" },
+  { label: "Opal", value: "opal" },
   { label: "Ruby", value: "ruby" },
   { label: "Sapphire", value: "sapphire" },
+  { label: "Diamond", value: "diamond" },
   { label: "Emrald", value: "emrald" },
 ];
 
@@ -55,11 +51,13 @@ let allCat = [
   { label: "Brooch", value: "brooch" },
   { label: "Earrings", value: "earrings" },
   { label: "Watch Charm", value: "watch_charm" },
-  { label: "Natural Pearl", value: "natural_pearl" },
-  { label: "Cultured Pearl", value: "cultured_pearl" },
-  { label: "Natural Diamond", value: "natural_diamond" },
+  { label: "Bracelet", value: "bracelet" },
+  { label: "Chain", value: "chain" },
+  { label: "Pearl", value: "pearl" },
+  { label: "Opal", value: "opal" },
   { label: "Ruby", value: "ruby" },
   { label: "Sapphire", value: "sapphire" },
+  { label: "Diamond", value: "diamond" },
   { label: "Emrald", value: "emrald" },
 ];
 
