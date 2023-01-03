@@ -36,8 +36,11 @@ const UploadComponent = () => {
   const { showLoading, hideLoading } = useLoading();
   const { checkVerification, isVerify } = useWalletValidation();
   const [createNft] = useMutation(CreateNft);
+  const [certi, showCerti] = useState(false);
   // const [tags, setTags] = useState([]);
   const [certf, setCertf] = useState([{ title: "", image: "" }]);
+
+
 
   let exampleName = "Polygon";
   if (chainId == "5" || chainId == "1") {
@@ -163,6 +166,7 @@ const UploadComponent = () => {
     values.splice(index, 1);
     setCertf(values);
   };
+
 
   return (
     <>
@@ -383,9 +387,10 @@ const UploadComponent = () => {
                         <span className="variationInput">Properties</span>
                         <PropertiesForm />
 
-                        <div>
+                        <div style={{ display: "flex", flexDirection: "column" }}>
                           <span className="variationInput">Certificates</span>
-                          <div style={{ marginTop: "15px", width: "100%" }}>
+                          <button onClick={() => showCerti(true)} style={{ padding: "10px 15px", borderRadius: "5px", border: "none", backgroundColor: "#8c52ff", color: "white", width: "170px", marginTop: "10px", fontSize: "16px", fontWeight: "500" }}>Add Certificates</button>
+                          {certi && <div style={{ marginTop: "15px", width: "100%" }}>
                             {certf.map((inputField, index) => (
                               <div
                                 key={index}
@@ -459,7 +464,7 @@ const UploadComponent = () => {
                               </div>
                             ))}
                             {/* <button type="button" onClick={handleSubmit}>send</button> */}
-                          </div>
+                          </div>}
                         </div>
 
                         <div className="space-y-10">
@@ -551,7 +556,7 @@ const UploadComponent = () => {
                 <div className="text-center">
                   <div
                     className="text-center"
-                    // onClick={update}
+                  // onClick={update}
                   >
                     <div className="btn  btn-grad">Connect Wallet</div>
                   </div>

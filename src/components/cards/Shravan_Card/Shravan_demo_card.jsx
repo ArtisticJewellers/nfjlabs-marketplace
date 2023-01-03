@@ -9,7 +9,7 @@ function SearchNFTData({ searchNFTData }) {
       <div className="row mb-30_reset InnerDivCards">
         <div
           className="col-lg-3 col-md-6 col-sm-6"
-          style={{ maxWidth: "25rem", width: "100%" }}
+          style={{ minWidth: "25rem", maxWidth: "25rem", width: "100%" }}
         >
           <div className="card__item two">
             <div className="card_body space-y-10">
@@ -17,9 +17,8 @@ function SearchNFTData({ searchNFTData }) {
 
               <div className="card_head">
                 <Link
-                  to={`/item/${searchNFTData.network}/${
-                    ChainsInfo[searchNFTData.chainId].NFT_ADDRESS
-                  }/${searchNFTData.tokenId}`}
+                  to={`/item/${searchNFTData.network}/${ChainsInfo[searchNFTData.chainId].NFT_ADDRESS
+                    }/${searchNFTData.tokenId}`}
                 >
                   <img src={searchNFTData.imageUrl} alt="nftimage" />
                 </Link>

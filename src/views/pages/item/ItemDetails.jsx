@@ -158,7 +158,7 @@ const ItemDetails = () => {
       setAuctionDetails(data);
     });
     SaleDataset(tokenId, network).then((data) => {
-      console.log(data);
+      // console.log(data);
       setSaleDetails(data);
     });
 
@@ -819,12 +819,12 @@ const ItemDetails = () => {
                             <div>Royalty:</div>
                             <span className="capitalize">5%</span>{" "}
                           </li>
-                          <li className="d-flex justify-content-between mr-4">
+                          {/* <li className="d-flex justify-content-between mr-4">
                             <div>External Link:</div>
                             <a href={metaData?.extLink} target="_blank">
                               {metaData?.extLink?.slice(0, 10)}...
                             </a>
-                          </li>
+                          </li> */}
                         </ul>
                       </div>
                     </div>
@@ -1045,11 +1045,39 @@ const ItemDetails = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="d-flex justify-content-between">
-                      <div>
+                    <div className="d-flex justify-content-between" style={{ display: "flex", justifyContent: "center", alignItems: "center", alignItems: "center", flexWrap: "wrap" }}>
+                      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "center" }}>
                         <a
                           target="_blank"
                           href={getIPFSLink(metaData?.external_link)}
+                          rel="noreferrer"
+                          style={{
+                            border: "1px solid black",
+                            padding: "8px 20px",
+                            borderRadius: "999px",
+                            display: "flex",
+                            gap: "10px",
+                            alignItems: "center",
+                            margin: "10px 10px 10px 0"
+                          }}
+                        >
+                          <div>
+                            <img
+                              width={30}
+                              src={
+                                process.env.PUBLIC_URL +
+                                "/img/icons/ipfs-share.svg"
+                              }
+                              alt="dashghg"
+                            />
+                          </div>
+                          <div style={{ fontBold: "10px", color: "black" }}>
+                            View On IPFS
+                          </div>
+                        </a>
+                        <a
+                          target="_blank"
+                          href={getIPFSLink(metaData?.extLink)}
                           rel="noreferrer"
                           style={{
                             border: "1px solid black",
@@ -1071,7 +1099,7 @@ const ItemDetails = () => {
                             />
                           </div>
                           <div style={{ fontBold: "10px", color: "black" }}>
-                            View On IPFS
+                            External Link
                           </div>
                         </a>
                       </div>
@@ -1083,7 +1111,7 @@ const ItemDetails = () => {
                             saleDetails.forSale ? (
                               <span
                                 onClick={() => {
-                                  console.log(tokenId);
+                                  // console.log(tokenId);
                                   showLoading();
                                   removeFromSale(tokenId)
                                     .send({ from: account })

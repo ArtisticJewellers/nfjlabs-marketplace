@@ -13,10 +13,10 @@ function MenuCategoriesMarket({ cat }) {
   const dispatch = useDispatch();
   const { nftData } = useSelector((state) => state.nftData);
   const { filterNFTData } = useSelector((state) => state.nftData);
-  console.log({ filterNFTData });
+  // console.log({ filterNFTData });
 
-  console.log(nftData);
-  console.log({ cat });
+  // console.log(nftData);
+  // console.log({ cat });
 
   const [FilterData, setFilterData] = useState({
     price: {
@@ -134,14 +134,14 @@ function MenuCategoriesMarket({ cat }) {
   ];
 
   const onFilterChange = (data) => {
-    console.log({ data });
+    // console.log({ data });
     dispatch(setNftData([]));
     setFilterData(data);
   };
 
   return (
     <div className="w-100">
-      {FilterData.category}
+      {/* {FilterData.category} */}
       <Tabs className=" border-b">
         <div style={{ paddingBottom: "50px" }}>
           <TabPanel>
@@ -153,11 +153,11 @@ function MenuCategoriesMarket({ cat }) {
                 />
               </div>
               <div className="cardStyle">
-                <div className="cardStyle">
+                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "left", alignItems: "center" }}>
                   {nftData &&
                     nftData.map((e) => {
                       return (
-                        <div>
+                        <div style={{ margin: "10px" }}>
                           <Shravan_demo_card searchNFTData={e} />
                         </div>
                       );

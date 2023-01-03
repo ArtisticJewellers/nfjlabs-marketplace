@@ -13,7 +13,7 @@ function CardMarketplace({ FilterData, searchNFTData }) {
               <div
                 className="col-lg-3 col-md-6 col-sm-6"
                 key={i}
-                style={{ maxWidth: "25rem", width: "100%" }}
+                style={{ minWidth: "25rem", maxWidth: "25rem", width: "100%" }}
               >
                 <div className="card__item two">
                   <div className="card_body space-y-10">
@@ -21,9 +21,8 @@ function CardMarketplace({ FilterData, searchNFTData }) {
 
                     <div className="card_head">
                       <Link
-                        to={`/item/${val.network}/${
-                          ChainsInfo[val.chainId].NFT_ADDRESS
-                        }/${val.tokenId}`}
+                        to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS
+                          }/${val.tokenId}`}
                       >
                         <img
                           src={val.imageUrl || searchNFTData.imageUrl}

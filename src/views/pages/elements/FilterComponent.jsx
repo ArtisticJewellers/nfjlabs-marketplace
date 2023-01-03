@@ -190,8 +190,8 @@ const FilterComponent = ({ onFilterChange, defaultCat }) => {
             categorys == ""
               ? allCat
               : categorys == "jewellery"
-              ? jewelleryCat
-              : gemsCat
+                ? jewelleryCat
+                : gemsCat
           }
           onChange={onChangeSubCategory}
           value={subCategorys}
@@ -250,7 +250,7 @@ const FilterComponent = ({ onFilterChange, defaultCat }) => {
 
   return (
     <>
-      {defaultCategory}
+      {/* {defaultCategory} */}
       <Menu
         style={{
           width: 256,
