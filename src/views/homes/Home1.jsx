@@ -252,7 +252,7 @@ const Marketplace = () => {
         >
           <div>
             <div className="py-2 mb-2" style={{ margin: "0 30px" }}>
-              <h3 style={{ color: "#8C52FF" }}>Featured Gems</h3>
+              <h3 style={{ color: "#8C52FF" }}>Featured Gems Collections</h3>
               <p style={{ color: "white" }}>
                 Top quality gems are featured on NFJ Marketplace
               </p>
@@ -328,6 +328,11 @@ const FeaturedNfts = () => {
     },
     {
       name: "Pearl",
+      image:
+        "https://gateway.ipfscdn.io/ipfs/QmT1ehB7jUA2eZJFv4vEhhV5Q6Rh8X5kwJ2337Urw7iiny/Pearl.gif",
+    },
+    {
+      name: "Opal",
       image:
         "https://gateway.ipfscdn.io/ipfs/QmT1ehB7jUA2eZJFv4vEhhV5Q6Rh8X5kwJ2337Urw7iiny/Pearl.gif",
     }
