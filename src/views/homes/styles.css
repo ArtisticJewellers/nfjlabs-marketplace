@@ -51,6 +51,11 @@ body {
 
 /* hero styling  */
 
+.sectionMa {
+  height: 300px;
+  width: 700px;
+}
+
 .mainHeroDiv {
   display: flex;
   justify-content: center;
@@ -153,7 +158,52 @@ body {
   width: 50%;
 }
 
+@media only screen and (max-width: 1400px) {
+  .sectionMa {
+    width: 500px;
+  }
+
+  .img1Div {
+    height: 240px;
+    width: 230px;
+  }
+
+  .img2Div {
+    height: 120px;
+    width: 120px;
+  }
+
+  .img3Div {
+    height: 120px;
+    width: 120px;
+  }
+}
+
+@media only screen and (max-width: 1020px) {
+  .sectionMa {
+    width: 700px;
+  }
+
+  .img1Div {
+    height: 310px;
+    width: 310px;
+  }
+
+  .img2Div {
+    height: 150px;
+    width: 150px;
+  }
+
+  .img3Div {
+    height: 150px;
+    width: 150px;
+  }
+}
+
 @media only screen and (max-width: 800px) {
+  .sectionMa {
+    width: 700px;
+  }
   .mainHeroDiv {
     margin-left: 0;
   }

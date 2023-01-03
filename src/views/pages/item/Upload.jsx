@@ -389,7 +389,7 @@ const UploadComponent = () => {
 
                         <div style={{ display: "flex", flexDirection: "column" }}>
                           <span className="variationInput">Certificates</span>
-                          <button onClick={() => showCerti(true)} style={{ padding: "10px 15px", borderRadius: "5px", border: "none", backgroundColor: "#8c52ff", color: "white", width: "170px", marginTop: "10px", fontSize: "16px", fontWeight: "500" }}>Add Certificates</button>
+                          <button type="button" onClick={() => showCerti(true)} style={{ padding: "10px 15px", borderRadius: "5px", border: "none", backgroundColor: "#8c52ff", color: "white", width: "170px", marginTop: "10px", fontSize: "16px", fontWeight: "500" }}>Add Certificates</button>
                           {certi && <div style={{ marginTop: "15px", width: "100%" }}>
                             {certf.map((inputField, index) => (
                               <div

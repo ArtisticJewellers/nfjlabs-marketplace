@@ -34,12 +34,14 @@ import jhumka from "../../assets/nfts/jhumka.gif";
 import dolce from "../../assets/nfts/alessio/dolce.gif";
 import ring2 from "../../assets/nfts/ring2.gif";
 import Alert from "react-bootstrap/Alert";
+import Sub_Cat_Card from "../../components/subCatCard/Sub_Cat_Card";
 
 const Marketplace = () => {
   const [show, setShow] = useState(true);
   const { data: banner_nft } = useQuery(BannerNft, {
     variables: { popularCollection: "banner_nft" },
   });
+
   return (
     <div>
       <Header />
@@ -138,8 +140,7 @@ const Marketplace = () => {
                       </div>
                     </div>
                     <div
-                      className="col-lg-6 align-items-center"
-                      style={{ height: "300px", width: "700px" }}
+                      className="col-lg-6 align-items-center sectionMa"
                     >
                       <div className="mainHeroDiv">
                         <div className="mainImg1Div">
@@ -304,6 +305,33 @@ const FeaturedNfts = () => {
   const { data: featured_nft } = useQuery(FeatureNft, {
     variables: { popularCollection: "featured_nft" },
   });
+  const subCatList = [
+    {
+      name: "Ruby",
+      image:
+        "https://gateway.ipfscdn.io/ipfs/QmcXb3RuFYNJksGsu12L5d32NqBZmkTEPCMSzbJzmaYig6/gp106823-3-041122.webp",
+    },
+    {
+      name: "Sapphire",
+      image:
+        "https://gateway.ipfscdn.io/ipfs/QmPHNhv5SJ9AfFakG9xY1bZte1GCfW6XbZ2jTjavCVBK8D/Graphics.gif",
+    },
+    {
+      name: "Emrald",
+      image:
+        "https://gateway.ipfscdn.io/ipfs/QmXFLTNy5f2HwFbXaJBsTZUx7etrZpjvqdJFvpRmZKxGDq/gp94696-3-160222%20(1).webp",
+    },
+    {
+      name: "Diamond",
+      image:
+        "https://i.pinimg.com/736x/ce/1a/d9/ce1ad9fd2a1d0d54a30262cd25fe776c.jpg",
+    },
+    {
+      name: "Pearl",
+      image:
+        "https://gateway.ipfscdn.io/ipfs/QmT1ehB7jUA2eZJFv4vEhhV5Q6Rh8X5kwJ2337Urw7iiny/Pearl.gif",
+    }
+  ];
   return (
     <>
       <div>
@@ -320,18 +348,28 @@ const FeaturedNfts = () => {
           modules={[Pagination, Navigation]}
           className="mySwiper"
         >
-          {featured_nft?.allFeatureNft?.featuredNft?.map((val, index) => (
-            <>
-              <SwiperSlide index={index}>
-                <NftCard val={val} />
-              </SwiperSlide>
-            </>
-          ))}
+          <Swiper
+            slidesPerView={3}
+            spaceBetween={70}
+            slidesPerGroup={3}
+            loop={false}
+            modules={[Pagination, Navigation]}
+            className="mySwiper"
+          >
+            {subCatList.map((val, index) => (
+              <>
+                <SwiperSlide index={index}>
+                  <SubCategoryCard val={val} />
+                </SwiperSlide>
+              </>
+            ))}
+          </Swiper>
         </Swiper>
       </div>
     </>
   );
 };
+
 const TrendingNfts = () => {
   const { data: trending_nft } = useQuery(TrendingNft, {
     variables: { popularCollection: "trending_nft" },
@@ -481,7 +519,6 @@ const ArtistCard = ({ index, val }) => {
                   style={{ fontSize: "10px" }}
                 >
                   <span>
-                    {" "}
                     <span style={{ fontWeight: "bold" }}>
                       {val?.nfts?.length}
                     </span>{" "}
@@ -584,6 +621,36 @@ const ArtistCard = ({ index, val }) => {
     </>
   );
 };
+
+function SubCategoryCard({ val }) {
+  return (
+    <div>
+      <Link to={`/explore/gems/${val.name}`}>
+        <div className="row mb-30_reset">
+          <>
+            <div
+              className="col-lg-3 col-md-6 col-sm-6"
+              style={{ maxWidth: "25rem", width: "100%" }}
+            >
+              <div className="card__item two">
+                <div className="card_body space-y-10">
+                  {/* =============== */}
+
+                  <div className="card_head">
+                    <img src={val.image} alt="nftimage" />
+                  </div>
+                  {/* =============== */}
+                  <h6 className="card_title">{val.name}</h6>
+                </div>
+              </div>
+            </div>
+          </>
+        </div>
+      </Link>
+    </div>
+  );
+}
+
 function NftCard({ val }) {
   const { data: userInfo } = useQuery(SignIn, {
     variables: { walletAddress: val.ownerAddress },
