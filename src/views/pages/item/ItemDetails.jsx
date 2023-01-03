@@ -125,7 +125,7 @@ const ItemDetails = () => {
   });
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
 
     if (nftDetails?.getNftDetails?.chainId) {
       fetch(

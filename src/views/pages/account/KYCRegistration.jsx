@@ -6,7 +6,11 @@ import { completeKYC } from "../../../graphql/mutations";
 import { useWeb3React } from "@web3-react/core";
 import Header from "../../../components/header/Header";
 import { kyc } from "../../../graphql/query";
+import { useHistory } from "react-router-dom";
+import Alert from "react-bootstrap/Alert";
+
 const KYCRegistration = () => {
+  const history = useHistory();
   const { account } = useWeb3React();
   const [data, setData] = useState({
     wallet: account,
@@ -20,6 +24,8 @@ const KYCRegistration = () => {
     identity: "",
   });
   const [kyc] = useMutation(completeKYC);
+  const [showAlert, setShowAlert] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
   console.log(account);
 
   const onChange = (e) => {
@@ -41,28 +47,34 @@ const KYCRegistration = () => {
       identity,
     } = data;
 
-    const res = await kyc({
-      variables: {
-        wallet,
-        fname,
-        lname,
-        dob,
-        email,
-        phone,
-        address,
-        country,
-        identity,
-      },
-      refetchQueries: [
-        {
-          query: kyc,
-          variables: {
-            walletAddress: account,
-          },
-        },
-      ],
-    });
-    console.log({ res });
+    setShowLoading(true);
+    setShowAlert(true);
+    setTimeout(() => {
+      history.push("/");
+    }, 3000);
+
+    // const res = await kyc({
+    //   variables: {
+    //     wallet,
+    //     fname,
+    //     lname,
+    //     dob,
+    //     email,
+    //     phone,
+    //     address,
+    //     country,
+    //     identity,
+    //   },
+    //   refetchQueries: [
+    //     {
+    //       query: kyc,
+    //       variables: {
+    //         walletAddress: account,
+    //       },
+    //     },
+    //   ],
+    // });
+    // console.log({ res });
   };
 
   useEffect(() => {
@@ -72,6 +84,12 @@ const KYCRegistration = () => {
   return (
     <div>
       <Header />
+      {showAlert && (
+        <Alert variant={"success"}>
+          Your KYC has been successfully submitted
+        </Alert>
+      )}
+
       <h1 style={{ textAlign: "center", marginTop: "22px" }}>
         Complete Your KYC
       </h1>
@@ -175,7 +193,7 @@ const KYCRegistration = () => {
             </Form.Group>
           </div>
           <Button variant="primary" type="submit">
-            Submit
+            {showLoading ? "Loading..." : "Submit"}
           </Button>
         </Form>
       </div>

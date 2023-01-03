@@ -34,12 +34,14 @@ import jhumka from "../../assets/nfts/jhumka.gif";
 import dolce from "../../assets/nfts/alessio/dolce.gif";
 import ring2 from "../../assets/nfts/ring2.gif";
 import Alert from "react-bootstrap/Alert";
+import Sub_Cat_Card from "../../components/subCatCard/Sub_Cat_Card";
 
 const Marketplace = () => {
   const [show, setShow] = useState(true);
   const { data: banner_nft } = useQuery(BannerNft, {
     variables: { popularCollection: "banner_nft" },
   });
+
   return (
     <div>
       <Header />
@@ -388,6 +390,48 @@ const FeaturedNfts = () => {
   const { data: featured_nft } = useQuery(FeatureNft, {
     variables: { popularCollection: "featured_nft" },
   });
+  const subCatList = [
+    {
+      name: "ruby",
+      image:
+        "https://cdn.shopify.com/s/files/1/1223/0734/products/moonlit-luxury-necklace-set-necklace-sets-blingvine-671213_750x.jpg?v=1641410724",
+    },
+    {
+      name: "pendant",
+      image:
+        "https://rukminim1.flixcart.com/image/832/832/l1b1oy80/necklace-chain/x/1/2/1-dbdbh-necklace-luxury-brings-original-imagcwk7ytusprqy.jpeg?q=70",
+    },
+    {
+      name: "earring",
+      image:
+        "http://res.cloudinary.com/blingvine1/image/fetch/w_1200,h_628,c_pad,b_auto/http://cdn.shopify.com/s/files/1/1223/0734/products/kesha-luxury-danglers-white-earrings-blingvine-395403.jpg?v=1636524911",
+    },
+    {
+      name: "charm",
+      image:
+        "https://i.pinimg.com/736x/ce/1a/d9/ce1ad9fd2a1d0d54a30262cd25fe776c.jpg",
+    },
+    {
+      name: "ring",
+      image:
+        "https://i.pinimg.com/736x/ce/1a/d9/ce1ad9fd2a1d0d54a30262cd25fe776c.jpg",
+    },
+    {
+      name: "bracelet",
+      image:
+        "https://i.pinimg.com/736x/ce/1a/d9/ce1ad9fd2a1d0d54a30262cd25fe776c.jpg",
+    },
+    {
+      name: "brooch",
+      image:
+        "https://i.pinimg.com/736x/ce/1a/d9/ce1ad9fd2a1d0d54a30262cd25fe776c.jpg",
+    },
+    {
+      name: "chain",
+      image:
+        "https://i.pinimg.com/736x/ce/1a/d9/ce1ad9fd2a1d0d54a30262cd25fe776c.jpg",
+    },
+  ];
   return (
     <>
       <div>
@@ -404,18 +448,28 @@ const FeaturedNfts = () => {
           modules={[Pagination, Navigation]}
           className="mySwiper"
         >
-          {featured_nft?.allFeatureNft?.featuredNft?.map((val, index) => (
-            <>
-              <SwiperSlide index={index}>
-                <NftCard val={val} />
-              </SwiperSlide>
-            </>
-          ))}
+          <Swiper
+            slidesPerView={3}
+            spaceBetween={70}
+            slidesPerGroup={3}
+            loop={false}
+            modules={[Pagination, Navigation]}
+            className="mySwiper"
+          >
+            {subCatList.map((val, index) => (
+              <>
+                <SwiperSlide index={index}>
+                  <SubCategoryCard val={val} />
+                </SwiperSlide>
+              </>
+            ))}
+          </Swiper>
         </Swiper>
       </div>
     </>
   );
 };
+
 const TrendingNfts = () => {
   const { data: trending_nft } = useQuery(TrendingNft, {
     variables: { popularCollection: "trending_nft" },
@@ -565,7 +619,6 @@ const ArtistCard = ({ index, val }) => {
                   style={{ fontSize: "10px" }}
                 >
                   <span>
-                    {" "}
                     <span style={{ fontWeight: "bold" }}>
                       {val?.nfts?.length}
                     </span>{" "}
@@ -668,6 +721,36 @@ const ArtistCard = ({ index, val }) => {
     </>
   );
 };
+
+function SubCategoryCard({ val }) {
+  return (
+    <div>
+      <Link to={`/explore/gems/${val.name}`}>
+        <div className="row mb-30_reset">
+          <>
+            <div
+              className="col-lg-3 col-md-6 col-sm-6"
+              style={{ maxWidth: "25rem", width: "100%" }}
+            >
+              <div className="card__item two">
+                <div className="card_body space-y-10">
+                  {/* =============== */}
+
+                  <div className="card_head">
+                    <img src={val.image} alt="nftimage" />
+                  </div>
+                  {/* =============== */}
+                  <h6 className="card_title">{val.name}</h6>
+                </div>
+              </div>
+            </div>
+          </>
+        </div>
+      </Link>
+    </div>
+  );
+}
+
 function NftCard({ val }) {
   const { data: userInfo } = useQuery(SignIn, {
     variables: { walletAddress: val.ownerAddress },

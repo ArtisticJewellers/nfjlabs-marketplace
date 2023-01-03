@@ -7,7 +7,8 @@ import MenuCategoriesMarket from "../elements/MenuCategoriesMarket";
 import { useParams } from "react-router-dom";
 const Marketplace = () => {
   const param = useParams();
-  const { cat } = param;
+  const { cat, subcat } = param;
+  console.log({ subcat });
   useDocumentTitle("NFJ Labs - Marketplace");
 
   useEffect(() => {
@@ -19,7 +20,7 @@ const Marketplace = () => {
       <Header />
       {/* <HeroMarketplace /> */}
       <div className="d-flex justify-content-center">
-        <MenuCategoriesMarket cat={cat} />
+        <MenuCategoriesMarket cat={cat} subcat={subcat} />
       </div>
       <Footer />
     </div>

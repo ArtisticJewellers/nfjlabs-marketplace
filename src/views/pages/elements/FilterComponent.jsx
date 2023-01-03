@@ -75,14 +75,19 @@ const listing = [
   { label: "Not Listed", value: false },
 ];
 
-const FilterComponent = ({ onFilterChange, defaultCat }) => {
+const FilterComponent = ({ onFilterChange, defaultCat, defaultSubCat }) => {
   const dispatch = useDispatch();
   const [networks, setNetworks] = useState("");
   const [defaultCategory, setDefaultCategory] = useState();
+  const [defaultSubCategory, setSubDefaultCategory] = useState();
+
+  console.log({ defaultSubCat });
+
   const [price, setPrice] = useState({
     min: null,
     max: null,
   });
+
   const [isList, setListed] = useState(true);
   const [categorys, setCategory] = useState("");
   const [subCategorys, setSubCategory] = useState("");
@@ -109,19 +114,33 @@ const FilterComponent = ({ onFilterChange, defaultCat }) => {
       network: networks,
       isListed: isList,
     });
-    dispatch(
-      filterNFT({
-        price: price,
-        // category: e.target.value,
-        category: defaultCategory,
-        subcategory: subCategorys,
-        network: networks,
-        isListed: isList,
-      })
-    );
+  };
+
+  const onChangeSubCategory = (e) => {
+    setSubCategory(e.target.value);
+    setSubDefaultCategory(e.target.value);
+    onFilterChange({
+      price: price,
+      category: categorys,
+      subcategory: e.target.value,
+      network: networks,
+      isListed: isList,
+    });
   };
 
   useEffect(() => {
+    // if (defaultCat || defaultSubCat) {
+    //   setCategory(defaultCat);
+    //   setSubDefaultCategory(defaultSubCat);
+    //   onFilterChange({
+    //     price: price,
+    //     // category: e.target.value,
+    //     category: defaultCategory,
+    //     subcategory: defaultSubCat,
+    //     network: networks,
+    //     isListed: isList,
+    //   });
+    // }
     if (defaultCat) {
       setCategory(defaultCat);
       onFilterChange({
@@ -133,18 +152,19 @@ const FilterComponent = ({ onFilterChange, defaultCat }) => {
         isListed: isList,
       });
     }
-  }, []);
 
-  const onChangeSubCategory = (e) => {
-    setSubCategory(e.target.value);
-    onFilterChange({
-      price: price,
-      category: categorys,
-      subcategory: e.target.value,
-      network: networks,
-      isListed: isList,
-    });
-  };
+    if (defaultSubCat) {
+      setSubCategory(defaultCat);
+      onFilterChange({
+        price: price,
+        // category: e.target.value,
+        category: defaultCategory,
+        subcategory: defaultSubCat,
+        network: networks,
+        isListed: isList,
+      });
+    }
+  }, []);
 
   const onChangeListed = (e) => {
     setListed(e.target.value);
@@ -250,7 +270,6 @@ const FilterComponent = ({ onFilterChange, defaultCat }) => {
 
   return (
     <>
-      {defaultCategory}
       <Menu
         style={{
           width: 256,

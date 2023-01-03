@@ -9,7 +9,8 @@ import { useSelector } from "react-redux";
 import Shravan_demo_card from "../../../components/cards/Shravan_Card/Shravan_demo_card";
 import { useDispatch } from "react-redux";
 import { setNftData } from "../../../Redux/reducers/nftReducer";
-function MenuCategoriesMarket({ cat }) {
+
+function MenuCategoriesMarket({ cat, subcat }) {
   const dispatch = useDispatch();
   const { nftData } = useSelector((state) => state.nftData);
   const { filterNFTData } = useSelector((state) => state.nftData);
@@ -39,6 +40,9 @@ function MenuCategoriesMarket({ cat }) {
       isListed: FilterData.isListed,
     },
   });
+
+  console.log({ data });
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [filterNFTData]);
@@ -134,14 +138,12 @@ function MenuCategoriesMarket({ cat }) {
   ];
 
   const onFilterChange = (data) => {
-    console.log({ data });
     dispatch(setNftData([]));
     setFilterData(data);
   };
 
   return (
     <div className="w-100">
-      {FilterData.category}
       <Tabs className=" border-b">
         <div style={{ paddingBottom: "50px" }}>
           <TabPanel>
@@ -150,6 +152,7 @@ function MenuCategoriesMarket({ cat }) {
                 <FilterComponent
                   onFilterChange={onFilterChange}
                   defaultCat={cat}
+                  defaultSubCat={subcat}
                 />
               </div>
               <div className="cardStyle">
@@ -169,14 +172,13 @@ function MenuCategoriesMarket({ cat }) {
           </TabPanel>
 
           {/* //Arts Collection */}
-
           {CateoryData.map((val, i) => (
             <TabPanel key={i}>
               <div className="container">
                 <div className="section mt-100">
                   <div className="section__head">
                     <div className="d-flex justify-content-between align-items-center">
-                      <h2 className="section__title"> {val.title}</h2>
+                      <h2 className="section__title">{val.title}</h2>
                     </div>
                   </div>
                   <CardMarketCategory category={val.category} />
