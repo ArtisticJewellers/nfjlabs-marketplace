@@ -28,7 +28,9 @@ import polygon from "../../../assets/icon/polygon.png";
 import ethereum from "../../../assets/icon/eth.svg";
 import binance from "../../../assets/icon/bnb.svg";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
+
 const UploadComponent = () => {
+  const [categoryValue, setCategoryValue] = useState("");
   const { mintNFT } = useNFT();
   const history = useHistory();
   const { uploadOnIpfs, downloadJSONOnIpfs } = useStorage();
@@ -39,7 +41,6 @@ const UploadComponent = () => {
   const [certi, showCerti] = useState(false);
   // const [tags, setTags] = useState([]);
   const [certf, setCertf] = useState([{ title: "", image: "" }]);
-
 
   let jewelleryCat = [
     { label: "Necklace", value: "necklaces" },
@@ -60,8 +61,6 @@ const UploadComponent = () => {
     { label: "Diamond", value: "diamond" },
     { label: "Emrald", value: "emrald" },
   ];
-
-
 
   let exampleName = "Polygon";
   if (chainId == "5" || chainId == "1") {
@@ -172,12 +171,6 @@ const UploadComponent = () => {
     setCertf(values);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const res = await uploadOnIpfs(certf);
-    console.log({ res });
-  };
-
   const handleAddFileds = () => {
     setCertf([...certf, { title: "", image: "" }]);
   };
@@ -187,7 +180,6 @@ const UploadComponent = () => {
     values.splice(index, 1);
     setCertf(values);
   };
-
 
   return (
     <>
@@ -338,7 +330,6 @@ const UploadComponent = () => {
                             </Form.Item>
                           </div>
                         </div>
-
                         {/* categories  */}
                         <div className="space-y-10">
                           <Form.Item
@@ -352,6 +343,7 @@ const UploadComponent = () => {
                             ]}
                           >
                             <Select
+                              onChange={(e) => setCategoryValue(e.value)}
                               isSearchable={false}
                               placeholder="Category"
                               options={[
@@ -377,23 +369,28 @@ const UploadComponent = () => {
                             <Select
                               isSearchable={false}
                               placeholder="Sub Category"
-                              options={[
-                                { label: "Necklace", value: "necklaces" },
-                                { label: "Pendant", value: "pendant" },
-                                { label: "Rings", value: "rings" },
-                                { label: "Brooch", value: "brooch" },
-                                { label: "Earrings", value: "earrings" },
-                                { label: "Watch Charm", value: "watch_charm" },
-                                { label: "Bracelet", value: "bracelet" },
-                                { label: "Chain", value: "chain" },
+                              options={
+                                categoryValue == "jewellery"
+                                  ? jewelleryCat
+                                  : gemsCat
+                              }
+                              // options={[
+                              //   { label: "Necklace", value: "necklaces" },
+                              //   { label: "Pendant", value: "pendant" },
+                              //   { label: "Rings", value: "rings" },
+                              //   { label: "Brooch", value: "brooch" },
+                              //   { label: "Earrings", value: "earrings" },
+                              //   { label: "Watch Charm", value: "watch_charm" },
+                              //   { label: "Bracelet", value: "bracelet" },
+                              //   { label: "Chain", value: "chain" },
 
-                                { label: "Pearl", value: "pearl" },
-                                { label: "Opal", value: "opal" },
-                                { label: "Ruby", value: "ruby" },
-                                { label: "Sapphire", value: "sapphire" },
-                                { label: "Diamond", value: "diamond" },
-                                { label: "Emrald", value: "emrald" },
-                              ]}
+                              //   { label: "Pearl", value: "pearl" },
+                              //   { label: "Opal", value: "opal" },
+                              //   { label: "Ruby", value: "ruby" },
+                              //   { label: "Sapphire", value: "sapphire" },
+                              //   { label: "Diamond", value: "diamond" },
+                              //   { label: "Emrald", value: "emrald" },
+                              // ]}
                             ></Select>
                           </Form.Item>
                         </div>
@@ -402,84 +399,104 @@ const UploadComponent = () => {
                         <span className="variationInput">Properties</span>
                         <PropertiesForm />
 
-                        <div style={{ display: "flex", flexDirection: "column" }}>
+                        <div
+                          style={{ display: "flex", flexDirection: "column" }}
+                        >
                           <span className="variationInput">Certificates</span>
-                          <button type="button" onClick={() => showCerti(true)} style={{ padding: "10px 15px", borderRadius: "5px", border: "none", backgroundColor: "#8c52ff", color: "white", width: "170px", marginTop: "10px", fontSize: "16px", fontWeight: "500" }}>Add Certificates</button>
-                          {certi && <div style={{ marginTop: "15px", width: "100%" }}>
-                            {certf.map((inputField, index) => (
-                              <div
-                                key={index}
-                                style={{
-                                  display: "flex",
-                                  // flexDirection: "column",
-                                  flexWrap: "wrap",
-                                  width: "100%",
-                                  marginBottom: "20px",
-                                  justifyContent: "space-between",
-                                }}
-                              >
-                                <input
-                                  type="text"
-                                  name="title"
-                                  placeholder="Certificate Name"
-                                  value={inputField.title}
-                                  style={{
-                                    width: "200px",
-                                    height: "30px",
-                                    marginRight: "25px",
-                                    marginBottom: "25px",
-                                  }}
-                                  onChange={(e) => {
-                                    handleChangeInput(index, e);
-                                  }}
-                                />
-                                <div>
-                                  <input
-                                    type="file"
-                                    name="image"
-                                    style={{ width: "200px" }}
-                                    onChange={(e) => {
-                                      handleChangeInput(
-                                        index,
-                                        e,
-                                        e.target.files[0]
-                                      );
-                                    }}
-                                  />
-                                </div>
+                          <button
+                            type="button"
+                            onClick={() => showCerti(true)}
+                            style={{
+                              padding: "10px 15px",
+                              borderRadius: "5px",
+                              border: "none",
+                              backgroundColor: "#8c52ff",
+                              color: "white",
+                              width: "170px",
+                              marginTop: "10px",
+                              fontSize: "16px",
+                              fontWeight: "500",
+                            }}
+                          >
+                            Add Certificates
+                          </button>
+                          {certi && (
+                            <div style={{ marginTop: "15px", width: "100%" }}>
+                              {certf.map((inputField, index) => (
                                 <div
+                                  key={index}
                                   style={{
                                     display: "flex",
-                                    marginRight: "20px",
+                                    // flexDirection: "column",
+                                    flexWrap: "wrap",
+                                    width: "100%",
+                                    marginBottom: "20px",
+                                    justifyContent: "space-between",
                                   }}
                                 >
-                                  <button
-                                    type="button"
+                                  <input
+                                    type="text"
+                                    name="title"
+                                    placeholder="Certificate Name"
+                                    value={inputField.title}
                                     style={{
-                                      marginRight: "4px",
+                                      width: "200px",
                                       height: "30px",
-                                      width: "30px",
+                                      marginRight: "25px",
+                                      marginBottom: "25px",
                                     }}
-                                    onClick={() => handleRemoveFileds(index)}
-                                  >
-                                    -
-                                  </button>
-                                  <button
+                                    onChange={(e) => {
+                                      handleChangeInput(index, e);
+                                    }}
+                                  />
+                                  <div>
+                                    <input
+                                      type="file"
+                                      name="image"
+                                      style={{ width: "200px" }}
+                                      onChange={(e) => {
+                                        handleChangeInput(
+                                          index,
+                                          e,
+                                          e.target.files[0]
+                                        );
+                                      }}
+                                    />
+                                  </div>
+                                  <div
                                     style={{
-                                      marginRight: "4px",
-                                      height: "30px",
-                                      width: "30px",
+                                      display: "flex",
+                                      marginRight: "20px",
                                     }}
-                                    type="button"
-                                    onClick={() => handleAddFileds()}
                                   >
-                                    +
-                                  </button>
+                                    <button
+                                      type="button"
+                                      style={{
+                                        marginRight: "4px",
+                                        height: "30px",
+                                        width: "30px",
+                                      }}
+                                      onClick={() => handleRemoveFileds(index)}
+                                    >
+                                      -
+                                    </button>
+                                    <button
+                                      style={{
+                                        marginRight: "4px",
+                                        height: "30px",
+                                        width: "30px",
+                                      }}
+                                      type="button"
+                                      onClick={() => handleAddFileds()}
+                                    >
+                                      +
+                                    </button>
+                                  </div>
                                 </div>
-                              </div>
-                            ))}
-                            {/* <button type="button" onClick={handleSubmit}>send</button> */}
-                          </div>}
+                              ))}
+                              {/* <button type="button" onClick={handleSubmit}>send</button> */}
+                            </div>
+                          )}
                         </div>
 
                         <div className="space-y-10">
@@ -571,7 +588,7 @@ const UploadComponent = () => {
                 <div className="text-center">
                   <div
                     className="text-center"
-                  // onClick={update}
+                    // onClick={update}
                   >
                     <div className="btn  btn-grad">Connect Wallet</div>
                   </div>
