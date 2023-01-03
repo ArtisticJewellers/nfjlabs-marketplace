@@ -93,6 +93,8 @@ const ItemDetails = () => {
 
   const { downloadJSONOnIpfs } = useStorage();
   const [metaData, setMetaData] = useState({});
+  console.log({ metaData });
+
   const { account, active } = useWeb3React();
   const [nftUpdate] = useMutation(NftUpdate);
   const [nftOwnerUpdate] = useMutation(NftOwnerUpdate);
@@ -100,6 +102,7 @@ const ItemDetails = () => {
   const [nftListed] = useMutation(NftListed);
   const [UsdPrice, setUsdPrice] = useState(0);
   const [readMore, setReadMore] = useState(false);
+  const [isVideo, setIsVideo] = useState(false);
 
   const { data: nftDetails } = useQuery(GetNftDetails, {
     variables: { contractAddress: address, tokenId: parseInt(tokenId) },
@@ -127,11 +130,17 @@ const ItemDetails = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
 
+    if (metaData.external_link?.includes(".mp4")) {
+      setIsVideo(true);
+    } else {
+      setIsVideo(false);
+    }
+
     if (nftDetails?.getNftDetails?.chainId) {
       fetch(
         "https://cex.io/api/last_price/" +
-        ChainsInfo[nftDetails?.getNftDetails?.chainId]?.CURRENCY_SYMBOL +
-        "/USD"
+          ChainsInfo[nftDetails?.getNftDetails?.chainId]?.CURRENCY_SYMBOL +
+          "/USD"
       )
         .then((res) => res.json())
         .then((data) => {
@@ -235,7 +244,7 @@ const ItemDetails = () => {
                                   width="40px"
                                   height="40px"
                                   style={{ borderRadius: "999px" }}
-                                />{" "}
+                                />
                                 {val?.buyerId?.username}
                               </span>
                             </a>
@@ -530,7 +539,7 @@ const ItemDetails = () => {
                           placeholder={"0.0001 WMATIC"}
                           className="form-control"
                           type="number"
-                        // min={MIN_PRICE}
+                          // min={MIN_PRICE}
                         ></Input>
                       </Form.Item>{" "}
                       <Form.Item style={{ marginTop: "20px" }}>
@@ -587,7 +596,7 @@ const ItemDetails = () => {
                       if (active) {
                         if (
                           parseInt(auctionDetails.highestBid) /
-                          Math.pow(10, 18) <
+                            Math.pow(10, 18) <
                           parseFloat(value.price)
                         ) {
                           showLoading();
@@ -659,7 +668,7 @@ const ItemDetails = () => {
                           placeholder={"0.0001 WMATIC"}
                           className="form-control"
                           type="number"
-                        // min={MIN_PRICE}
+                          // min={MIN_PRICE}
                         ></Input>
                       </Form.Item>{" "}
                       <Form.Item style={{ marginTop: "20px" }}>
@@ -759,11 +768,20 @@ const ItemDetails = () => {
                 <div className="col-md-4">
                   <div>
                     <div className="shadow-lg item_img p-3">
-                      <img
-                        className="item_img"
-                        src={metaData?.external_link}
-                        alt={metaData?.title}
-                      />
+                      {isVideo ? (
+                        <video
+                          className="item_img"
+                          src={metaData?.external_link}
+                          autoPlay="autoplay"
+                          loop="true"
+                        ></video>
+                      ) : (
+                        <img
+                          className="item_img"
+                          src={metaData?.external_link}
+                          alt={metaData?.title}
+                        />
+                      )}
                     </div>
                     <div className="my-4">
                       <div>
@@ -884,7 +902,7 @@ const ItemDetails = () => {
                         >
                           {auctionDetails.started &&
                             decimalToInt(auctionDetails.highestBid).toFixed(4) +
-                            " "}
+                              " "}
                           {saleDetails.forSale &&
                             decimalToInt(saleDetails.price).toFixed(4) + " "}
                           {
@@ -1045,8 +1063,24 @@ const ItemDetails = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="d-flex justify-content-between" style={{ display: "flex", justifyContent: "center", alignItems: "center", alignItems: "center", flexWrap: "wrap" }}>
-                      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "center" }}>
+                    <div
+                      className="d-flex justify-content-between"
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        alignItems: "center",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
                         <a
                           target="_blank"
                           href={getIPFSLink(metaData?.external_link)}
@@ -1058,7 +1092,7 @@ const ItemDetails = () => {
                             display: "flex",
                             gap: "10px",
                             alignItems: "center",
-                            margin: "10px 10px 10px 0"
+                            margin: "10px 10px 10px 0",
                           }}
                         >
                           <div>
@@ -1106,8 +1140,8 @@ const ItemDetails = () => {
                       {nftDetails?.getNftDetails?.ownerAddress === account && (
                         <>
                           {saleDetails.forSale ||
-                            auctionDetails.started ||
-                            auctionDetails.ended ? (
+                          auctionDetails.started ||
+                          auctionDetails.ended ? (
                             saleDetails.forSale ? (
                               <span
                                 onClick={() => {
