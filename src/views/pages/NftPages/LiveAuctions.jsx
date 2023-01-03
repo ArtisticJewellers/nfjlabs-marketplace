@@ -138,60 +138,38 @@ const LiveAuctions = () => {
       <Header />
       <HeroAuctions />
       <div className="mt-50  pb-5">
-        <div className="container">
-          <div className="section__head">
-            <div className="">
-              <h2 className="section__title text-left">Hot-bids 🔥</h2>
-            </div>
-          </div>
-          <div className="w-100">
-            <Tabs className=" border-b">
-              <div style={{ paddingBottom: "50px" }}>
-                <TabPanel>
-                  <div className="container">
-                    <div className="section mt-50">
-                      <div>
-                        {/* <h2 className="section__title mb-20"> All NFTs</h2> */}
-                        <div className="d-flex flex-column flex-row gap-4">
-                          <div>
-                            <FilterComponent onFilterChange={onFilterChange} />
-                          </div>
-                          <div>
-                            <div className="d-flex align-items-center">
-                              <Tabs>
-                                <div className="row justify-content-between align-items-center">
-                                  <div className="col-lg-auto"></div>
-                                </div>
+        <div className="w-100">
+          <Tabs className=" border-b">
+            <div style={{ paddingBottom: "50px" }}>
+              <TabPanel>
+                <div className="marketplaceStyle">
+                  <div className="filterStyle">
+                    <FilterComponent onFilterChange={onFilterChange} />
+                  </div>
+                  <div className="cardStyle">
+                    <CardAuctions FilterData={data} />
+                  </div>
+                </div>
+              </TabPanel>
 
-                                <CardAuctions FilterData={data} />
-                              </Tabs>
-                            </div>
-                          </div>
+              {/* //Arts Collection */}
+
+              {CateoryData.map((val, i) => (
+                <TabPanel key={i}>
+                  <div className="container">
+                    <div className="section mt-100">
+                      <div className="section__head">
+                        <div className="d-flex justify-content-between align-items-center">
+                          <h2 className="section__title"> {val.title}</h2>
                         </div>
                       </div>
+                      <CardMarketCategory category={val.category} />
                     </div>
                   </div>
                 </TabPanel>
-
-                {/* //Arts Collection */}
-
-                {CateoryData.map((val, i) => (
-                  <TabPanel key={i}>
-                    <div className="container">
-                      <div className="section mt-100">
-                        <div className="section__head">
-                          <div className="d-flex justify-content-between align-items-center">
-                            <h2 className="section__title"> {val.title}</h2>
-                          </div>
-                        </div>
-                        <CardMarketCategory category={val.category} />
-                      </div>
-                    </div>
-                  </TabPanel>
-                ))}
-              </div>
-            </Tabs>
-          </div>
+              ))}
+            </div>
+          </Tabs>
         </div>
       </div>
 

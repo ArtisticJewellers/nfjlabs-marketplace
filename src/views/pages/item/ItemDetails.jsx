@@ -130,8 +130,8 @@ const ItemDetails = () => {
     if (nftDetails?.getNftDetails?.chainId) {
       fetch(
         "https://cex.io/api/last_price/" +
-          ChainsInfo[nftDetails?.getNftDetails?.chainId]?.CURRENCY_SYMBOL +
-          "/USD"
+        ChainsInfo[nftDetails?.getNftDetails?.chainId]?.CURRENCY_SYMBOL +
+        "/USD"
       )
         .then((res) => res.json())
         .then((data) => {
@@ -530,7 +530,7 @@ const ItemDetails = () => {
                           placeholder={"0.0001 WMATIC"}
                           className="form-control"
                           type="number"
-                          // min={MIN_PRICE}
+                        // min={MIN_PRICE}
                         ></Input>
                       </Form.Item>{" "}
                       <Form.Item style={{ marginTop: "20px" }}>
@@ -587,7 +587,7 @@ const ItemDetails = () => {
                       if (active) {
                         if (
                           parseInt(auctionDetails.highestBid) /
-                            Math.pow(10, 18) <
+                          Math.pow(10, 18) <
                           parseFloat(value.price)
                         ) {
                           showLoading();
@@ -659,7 +659,7 @@ const ItemDetails = () => {
                           placeholder={"0.0001 WMATIC"}
                           className="form-control"
                           type="number"
-                          // min={MIN_PRICE}
+                        // min={MIN_PRICE}
                         ></Input>
                       </Form.Item>{" "}
                       <Form.Item style={{ marginTop: "20px" }}>
@@ -884,7 +884,7 @@ const ItemDetails = () => {
                         >
                           {auctionDetails.started &&
                             decimalToInt(auctionDetails.highestBid).toFixed(4) +
-                              " "}
+                            " "}
                           {saleDetails.forSale &&
                             decimalToInt(saleDetails.price).toFixed(4) + " "}
                           {
@@ -1078,8 +1078,8 @@ const ItemDetails = () => {
                       {nftDetails?.getNftDetails?.ownerAddress === account && (
                         <>
                           {saleDetails.forSale ||
-                          auctionDetails.started ||
-                          auctionDetails.ended ? (
+                            auctionDetails.started ||
+                            auctionDetails.ended ? (
                             saleDetails.forSale ? (
                               <span
                                 onClick={() => {
