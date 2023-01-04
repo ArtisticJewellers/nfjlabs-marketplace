@@ -322,7 +322,7 @@ const FeaturedNfts = () => {
     {
       name: "Diamond",
       image:
-        "https://i.pinimg.com/736x/ce/1a/d9/ce1ad9fd2a1d0d54a30262cd25fe776c.jpg",
+        "https://gateway.ipfscdn.io/ipfs/QmdLnQLGNFeTaDQ3jQMBaPCsz8GJq6xBzcDCN5ppCGcTAs/diamond.gif",
     },
     {
       name: "Pearl",
@@ -332,7 +332,7 @@ const FeaturedNfts = () => {
     {
       name: "Opal",
       image:
-        "https://gateway.ipfscdn.io/ipfs/QmT1ehB7jUA2eZJFv4vEhhV5Q6Rh8X5kwJ2337Urw7iiny/Pearl.gif",
+        "https://gateway.ipfscdn.io/ipfs/QmXFY5WXqxJZD7aeyypPvDjs1TTcmMBtmwRttduLgdRFJ9/opal.jpg",
     },
   ];
   return (
