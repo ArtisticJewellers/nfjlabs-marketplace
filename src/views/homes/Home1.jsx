@@ -139,9 +139,7 @@ const Marketplace = () => {
                         </div>
                       </div>
                     </div>
-                    <div
-                      className="col-lg-6 align-items-center sectionMa"
-                    >
+                    <div className="col-lg-6 align-items-center sectionMa">
                       <div className="mainHeroDiv">
                         <div className="mainImg1Div">
                           <div className="img1Div">
@@ -307,7 +305,7 @@ const FeaturedNfts = () => {
   });
   const subCatList = [
     {
-      name: "Ruby",
+      name: "ruby",
       image:
         "https://gateway.ipfscdn.io/ipfs/QmcXb3RuFYNJksGsu12L5d32NqBZmkTEPCMSzbJzmaYig6/gp106823-3-041122.webp",
     },
@@ -335,7 +333,7 @@ const FeaturedNfts = () => {
       name: "Opal",
       image:
         "https://gateway.ipfscdn.io/ipfs/QmT1ehB7jUA2eZJFv4vEhhV5Q6Rh8X5kwJ2337Urw7iiny/Pearl.gif",
-    }
+    },
   ];
   return (
     <>
@@ -675,8 +673,9 @@ function NftCard({ val }) {
 
                 <div className="card_head">
                   <Link
-                    to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS
-                      }/${val.tokenId}`}
+                    to={`/item/${val.network}/${
+                      ChainsInfo[val.chainId].NFT_ADDRESS
+                    }/${val.tokenId}`}
                   >
                     <img src={val.imageUrl} alt="nftimage" />
                   </Link>

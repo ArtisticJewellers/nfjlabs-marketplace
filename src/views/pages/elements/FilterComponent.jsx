@@ -127,9 +127,32 @@ const FilterComponent = ({ onFilterChange, defaultCat, defaultSubCat }) => {
   };
 
   useEffect(() => {
-    // if (defaultCat || defaultSubCat) {
+    if (defaultCat || defaultSubCat) {
+      setCategory(defaultCat);
+      setSubDefaultCategory(defaultSubCat);
+      onFilterChange({
+        price: price,
+        // category: e.target.value,
+        category: defaultCat,
+        subcategory: defaultSubCat,
+        network: networks,
+        isListed: isList,
+      });
+    }
+    // if (defaultCat) {
     //   setCategory(defaultCat);
-    //   setSubDefaultCategory(defaultSubCat);
+    //   onFilterChange({
+    //     price: price,
+    //     // category: e.target.value,
+    //     category: defaultCategory,
+    //     subcategory: subCategorys,
+    //     network: networks,
+    //     isListed: isList,
+    //   });
+    // }
+
+    // if (defaultSubCat) {
+    //   setSubCategory(defaultCat);
     //   onFilterChange({
     //     price: price,
     //     // category: e.target.value,
@@ -139,29 +162,6 @@ const FilterComponent = ({ onFilterChange, defaultCat, defaultSubCat }) => {
     //     isListed: isList,
     //   });
     // }
-    if (defaultCat) {
-      setCategory(defaultCat);
-      onFilterChange({
-        price: price,
-        // category: e.target.value,
-        category: defaultCategory,
-        subcategory: subCategorys,
-        network: networks,
-        isListed: isList,
-      });
-    }
-
-    if (defaultSubCat) {
-      setSubCategory(defaultCat);
-      onFilterChange({
-        price: price,
-        // category: e.target.value,
-        category: defaultCategory,
-        subcategory: defaultSubCat,
-        network: networks,
-        isListed: isList,
-      });
-    }
   }, []);
 
   const onChangeListed = (e) => {
@@ -208,8 +208,8 @@ const FilterComponent = ({ onFilterChange, defaultCat, defaultSubCat }) => {
             categorys == ""
               ? allCat
               : categorys == "jewellery"
-                ? jewelleryCat
-                : gemsCat
+              ? jewelleryCat
+              : gemsCat
           }
           onChange={onChangeSubCategory}
           value={subCategorys}

@@ -14,10 +14,7 @@ function MenuCategoriesMarket({ cat, subcat }) {
   const dispatch = useDispatch();
   const { nftData } = useSelector((state) => state.nftData);
   const { filterNFTData } = useSelector((state) => state.nftData);
-  // console.log({ filterNFTData });
-
-  // console.log(nftData);
-  // console.log({ cat });
+  console.log({ subcat });
 
   const [FilterData, setFilterData] = useState({
     price: {
@@ -150,6 +147,7 @@ function MenuCategoriesMarket({ cat, subcat }) {
   ];
 
   const onFilterChange = (data) => {
+    console.log({ filterChange: data });
     dispatch(setNftData([]));
     setFilterData(data);
   };
@@ -168,7 +166,14 @@ function MenuCategoriesMarket({ cat, subcat }) {
                 />
               </div>
               <div className="cardStyle">
-                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "left", alignItems: "center" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    justifyContent: "left",
+                    alignItems: "center",
+                  }}
+                >
                   {nftData &&
                     nftData.map((e) => {
                       return (
