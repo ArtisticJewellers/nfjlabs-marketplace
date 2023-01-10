@@ -39,7 +39,6 @@ const Header = () => {
   const [searchData, setSearchData] = useState([]);
   const [searchNft] = useLazyQuery(SearchNft);
   const [searchContent, setSearchContent] = useState("");
-  console.log({ searchData, searchNft });
   const toggleClass = () => {
     setActive(!isActive);
   };
