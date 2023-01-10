@@ -26,7 +26,18 @@ const CardAuctions = ({ FilterData }) => {
                       to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS
                         }/${val.tokenId}`}
                     >
-                      <img src={val.imageUrl} alt="nftimage" />
+                      {val.imageUrl?.includes(".mp4") ? (<video
+                        // className="item_img"
+                        style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                        src={val.imageUrl || searchNFTData.imageUrl}
+                        autoPlay="autoplay"
+                        loop="true"
+                      ></video>) :
+                        (<img
+                          src={val.imageUrl || searchNFTData.imageUrl}
+                          alt="nftimage"
+                        />)
+                      }
                     </Link>
                     {/*
                      */}

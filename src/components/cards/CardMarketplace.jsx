@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "reactjs-popup/dist/index.css";
 import { ChainsInfo } from "../../config/config-chains";
 
+
 function CardMarketplace({ FilterData, searchNFTData }) {
   return (
     <div style={{ width: "100%" }}>
@@ -24,10 +25,18 @@ function CardMarketplace({ FilterData, searchNFTData }) {
                         to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS
                           }/${val.tokenId}`}
                       >
-                        <img
+                        {val.imageUrl?.includes(".mp4") ? (<video
+                          // className="item_img"
+                          style={{ objectFit: "cover", width: "100%", height: "100%" }}
                           src={val.imageUrl || searchNFTData.imageUrl}
-                          alt="nftimage"
-                        />
+                          autoPlay="autoplay"
+                          loop="true"
+                        ></video>) :
+                          (<img
+                            src={val.imageUrl || searchNFTData.imageUrl}
+                            alt="nftimage"
+                          />)
+                        }
                       </Link>
                       {/*
                        */}
