@@ -40,38 +40,101 @@ const UpdateProfile = gql`
   }
 `;
 
+const GetCollectionsById = gql`
+  mutation getCollectionsById($username: String) {
+    getCollectionsById(username: $username) {
+      collections {
+        avatarImage
+        bannerImageUrl
+        chain
+        collectionAddress
+        collectionName
+        _id
+        nfts {
+          chainId
+          creatorAddress
+          imageUrl
+          ipfsUrl
+          isApproved
+          isListed
+          name
+          network
+          ownerAddress
+          price
+        }
+      }
+    }
+  }
+`;
+
 const completeKYC = gql`
-  mutation KYC(
-    $wallet: String
-    $fname: String
-    $lname: String
-    $dob: String
-    $email: String
-    $phone: String
-    $address: String
-    $country: String
-    $identity: String
+  mutation createKyc(
+    $username: String!
+    $fname: String!
+    $lname: String!
+    $dob: String!
+    $email: String!
+    $phone: String!
+    $address: String!
+    $country: String!
+    $identity: String!
   ) {
-    kyc(
-      wallet: String
-      fname: String
-      lname: String
-      dob: String
-      email: String
-      phone: String
-      address: String
-      country: String
-      identity: String
+    createKyc(
+      username: $username
+      fname: $fname
+      lname: $lname
+      dob: $dob
+      email: $email
+      phone: $phone
+      address: $address
+      country: $country
+      identity: $identity
     ) {
-      wallet
-      fname
-      lname
-      dob
-      email
-      phone
-      address
-      country
-      identity
+      username
+      firstname
+      lastname
+      kyc {
+        address
+        country
+        dob
+        email
+        fname
+        identity
+        isApproved
+        lname
+        phone
+      }
+    }
+  }
+`;
+
+const CreateCollections = gql`
+  mutation createCollection(
+    $collectionName: String
+    $collectionDesc: String
+    $collectionAddress: String
+    $avatarUrl: String
+    $bannerImageUrl: String
+    $chain: String
+    $username: String
+    $nfts: [String]
+  ) {
+    createCollection(
+      collectionName: $collectionName
+      collectionDesc: $collectionDesc
+      collectionAddress: $collectionAddress
+      avatarUrl: $avatarUrl
+      bannerImageUrl: $bannerImageUrl
+      chain: $chain
+      username: $username
+      nfts: $nfts
+    ) {
+      username
+      collections {
+        collectionName
+        collectionAddress
+        collectionDesc
+      }
     }
   }
 `;
@@ -239,4 +302,6 @@ export {
   CreateTrans,
   NftListed,
   completeKYC,
+  CreateCollections,
+  GetCollectionsById,
 };

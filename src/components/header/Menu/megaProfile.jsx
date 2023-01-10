@@ -23,6 +23,11 @@ const RightMenu = [
     title: "Complete KYC",
     link: "/kyc",
   },
+  {
+    icon: "user",
+    title: "My Collections",
+    link: "/collections",
+  },
 ];
 
 function MegaProfile() {

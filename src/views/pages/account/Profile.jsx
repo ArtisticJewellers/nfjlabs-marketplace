@@ -57,6 +57,7 @@ const Profile = () => {
     </div>
   );
 };
+
 const HeroProfile = ({ address, creatorData }) => {
   console.log(creatorData);
 
@@ -78,10 +79,20 @@ const HeroProfile = ({ address, creatorData }) => {
                       alt="avatar"
                     />
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
                     <h5>@{creatorData?.username}</h5>
                     {creatorData?.isVerified && (
-                      <MdVerified color="#009eee" size={20} style={{ marginBottom: "10px", marginLeft: "10px" }} />
+                      <MdVerified
+                        color="#009eee"
+                        size={20}
+                        style={{ marginBottom: "10px", marginLeft: "10px" }}
+                      />
                     )}
                   </div>
                 </div>
@@ -190,7 +201,6 @@ const SidebarProfile = ({ creatorData }) => {
     </div>
   );
 };
-
 const CardProfile = ({ creatorData }) => {
   return (
     <div className="row mb-30_reset">
@@ -208,13 +218,14 @@ const CardProfile = ({ creatorData }) => {
 
                   <div className="card_head">
                     <Link
-                      to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS
-                        }/${val.tokenId}`}
+                      to={`/item/${val.network}/${
+                        ChainsInfo[val.chainId].NFT_ADDRESS
+                      }/${val.tokenId}`}
                     >
                       <img alt="nftimage" src={val.imageUrl} />
                     </Link>
                     {/*
-                   */}
+                     */}
                   </div>
                   {/* =============== */}
                   <h6 className="card_title">{val.name}</h6>

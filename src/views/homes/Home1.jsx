@@ -661,107 +661,113 @@ function NftCard({ val }) {
 
   return (
     <div>
-      <div className="row mb-30_reset">
-        <>
-          <div
-            className="col-lg-3 col-md-6 col-sm-6"
-            style={{ maxWidth: "25rem", width: "100%" }}
-          >
-            <div className="card__item two">
-              <div className="card_body space-y-10">
-                {/* =============== */}
+      <Link
+        to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS}/${
+          val.tokenId
+        }`}
+      >
+        <div className="row mb-30_reset">
+          <>
+            <div
+              className="col-lg-3 col-md-6 col-sm-6"
+              style={{ maxWidth: "25rem", width: "100%" }}
+            >
+              <div className="card__item two">
+                <div className="card_body space-y-10">
+                  {/* =============== */}
 
-                <div className="card_head">
-                  <Link
+                  <div className="card_head">
+                    {/* <Link
                     to={`/item/${val.network}/${
                       ChainsInfo[val.chainId].NFT_ADDRESS
                     }/${val.tokenId}`}
-                  >
+                  > */}
                     <img src={val.imageUrl} alt="nftimage" />
-                  </Link>
-                </div>
-                {/* =============== */}
-                <h6 className="card_title">{val.name}</h6>
-                <span
-                  className="txt_sm"
-                  style={{
-                    color: "#000",
-                    fontSize: "10px",
-                  }}
-                >
-                  {val.category}
-                </span>
+                    {/* </Link> */}
+                  </div>
+                  {/* =============== */}
+                  <h6 className="card_title">{val.name}</h6>
+                  <span
+                    className="txt_sm"
+                    style={{
+                      color: "#000",
+                      fontSize: "10px",
+                    }}
+                  >
+                    {val.category}
+                  </span>
 
-                <div className="card_footer d-block space-y-10">
                   <div className="card_footer d-block space-y-10">
-                    <div className="card_footer justify-content-between">
-                      <div className="">
-                        <p
-                          className="txt_sm d-flex flex-column"
-                          style={{ margin: 0 }}
-                        >
-                          <span
-                            style={{
-                              color: "#000",
-                              fontSize: "12px",
-                              fontWeight: "bold",
-                            }}
+                    <div className="card_footer d-block space-y-10">
+                      <div className="card_footer justify-content-between">
+                        <div className="">
+                          <p
+                            className="txt_sm d-flex flex-column"
+                            style={{ margin: 0 }}
                           >
-                            Price:
-                          </span>
-                          <span
-                            className="txt_sm"
-                            style={{
-                              color: "#000",
-                              fontSize: "10px",
-                            }}
-                          >
-                            {val.price}{" "}
-                            {ChainsInfo[val.chainId].CURRENCY_SYMBOL}
-                          </span>
-                        </p>
-                      </div>
-                      <div>
-                        <div
-                          className="py-2  gap-2"
-                          style={{ alignItems: "center" }}
-                        >
-                          <div
-                            style={{ display: "flex", justifyContent: "end" }}
-                          >
-                            <img
-                              src={userInfo?.signIn?.user?.avatar_url}
-                              alt=""
+                            <span
                               style={{
-                                borderRadius: "100%",
-                                width: "44px",
-                                height: "42px",
-                                marginRight: "12px",
-                                objectFit: "cover",
+                                color: "#000",
+                                fontSize: "12px",
+                                fontWeight: "bold",
                               }}
-                            ></img>
+                            >
+                              Price:
+                            </span>
+                            <span
+                              className="txt_sm"
+                              style={{
+                                color: "#000",
+                                fontSize: "10px",
+                              }}
+                            >
+                              {val.price}{" "}
+                              {ChainsInfo[val.chainId].CURRENCY_SYMBOL}
+                            </span>
+                          </p>
+                        </div>
+                        <div>
+                          <div
+                            className="py-2  gap-2"
+                            style={{ alignItems: "center" }}
+                          >
+                            <div
+                              style={{ display: "flex", justifyContent: "end" }}
+                            >
+                              <img
+                                src={userInfo?.signIn?.user?.avatar_url}
+                                alt=""
+                                style={{
+                                  borderRadius: "100%",
+                                  width: "44px",
+                                  height: "42px",
+                                  marginRight: "12px",
+                                  objectFit: "cover",
+                                }}
+                              ></img>
 
-                            <Link to={"/profile/" + val.ownerAddress}>
-                              <div>
-                                <div
-                                  style={{
-                                    color: "#000",
-                                    fontSize: "12px",
-                                    fontWeight: "bold",
-                                  }}
-                                >
-                                  Artist
+                              <Link to={"/profile/" + val.ownerAddress}>
+                                <div>
+                                  <div
+                                    style={{
+                                      color: "#000",
+                                      fontSize: "12px",
+                                      fontWeight: "bold",
+                                    }}
+                                  >
+                                    Artist
+                                  </div>
+                                  <div
+                                    style={{
+                                      color: "#000",
+                                      fontSize: "10px",
+                                    }}
+                                  >
+                                    @{userInfo?.signIn?.user?.username}
+                                  </div>
                                 </div>
-                                <div
-                                  style={{
-                                    color: "#000",
-                                    fontSize: "10px",
-                                  }}
-                                >
-                                  @{userInfo?.signIn?.user?.username}
-                                </div>
-                              </div>
-                            </Link>
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -770,10 +776,11 @@ function NftCard({ val }) {
                 </div>
               </div>
             </div>
-          </div>
-        </>
-      </div>
+          </>
+        </div>
+      </Link>
     </div>
   );
 }
+
 export default Marketplace;

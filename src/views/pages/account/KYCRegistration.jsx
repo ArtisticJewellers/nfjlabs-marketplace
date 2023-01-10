@@ -8,12 +8,12 @@ import Header from "../../../components/header/Header";
 import { kyc } from "../../../graphql/query";
 import { useHistory } from "react-router-dom";
 import Alert from "react-bootstrap/Alert";
+import { UserDetails } from "../../../graphql/query";
 
 const KYCRegistration = () => {
-  const history = useHistory();
   const { account } = useWeb3React();
   const [data, setData] = useState({
-    wallet: account,
+    username: "",
     fname: "",
     lname: "",
     dob: "",
@@ -23,10 +23,18 @@ const KYCRegistration = () => {
     country: "India",
     identity: "",
   });
-  const [kyc] = useMutation(completeKYC);
+  const [createKyc, { error }] = useMutation(completeKYC);
   const [showAlert, setShowAlert] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   console.log(account);
+
+  const { data: user } = useQuery(UserDetails, {
+    variables: {
+      walletAddress: account,
+    },
+  });
+
+  console.log({ user: user?.user?.username });
 
   const onChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -35,27 +43,36 @@ const KYCRegistration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const {
-      wallet,
-      fname,
-      lname,
-      dob,
-      email,
-      phone,
-      address,
-      country,
-      identity,
-    } = data;
+    const { fname, lname, address, country, dob, email, identity, phone } =
+      data;
 
-    setShowLoading(true);
+    const res = await createKyc({
+      variables: {
+        username: user?.user?.username,
+        fname,
+        lname,
+        dob,
+        email,
+        phone,
+        address,
+        country,
+        identity,
+      },
+    });
+
+    if (error) {
+      console.log({ error });
+    }
+
+    console.log({ res });
+
+    setShowLoading(false);
     setShowAlert(true);
-    setTimeout(() => {
-      history.push("/");
-    }, 3000);
   };
 
   useEffect(() => {
-    setData({ ...data, wallet: account });
+    setData({ ...data, username: user?.user?.username });
+    console.log(data);
   }, [account]);
 
   return (
@@ -74,7 +91,7 @@ const KYCRegistration = () => {
         style={{
           display: "flex",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
         <Form
