@@ -660,113 +660,121 @@ function NftCard({ val }) {
 
   return (
     <div>
-      <Link
-        to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS}/${
-          val.tokenId
-        }`}
-      >
-        <div className="row mb-30_reset">
-          <>
-            <div
-              className="col-lg-3 col-md-6 col-sm-6"
-              style={{ maxWidth: "25rem", width: "100%" }}
-            >
-              <div className="card__item two">
-                <div className="card_body space-y-10">
-                  {/* =============== */}
+      <div className="row mb-30_reset">
+        <>
+          <div
+            className="col-lg-3 col-md-6 col-sm-6"
+            style={{ maxWidth: "25rem", width: "100%" }}
+          >
+            <div className="card__item two">
+              <div className="card_body space-y-10">
+                {/* =============== */}
 
-                  <div className="card_head">
-                    {/* <Link
+                <div className="card_head">
+                  <Link
                     to={`/item/${val.network}/${
                       ChainsInfo[val.chainId].NFT_ADDRESS
                     }/${val.tokenId}`}
-                  > */}
-                    <img src={val.imageUrl} alt="nftimage" />
-                    {/* </Link> */}
-                  </div>
-                  {/* =============== */}
-                  <h6 className="card_title">{val.name}</h6>
-                  <span
-                    className="txt_sm"
-                    style={{
-                      color: "#000",
-                      fontSize: "10px",
-                    }}
                   >
-                    {val.category}
-                  </span>
+                    {val.imageUrl?.includes(".mp4") ? (
+                      <video
+                        // className="item_img"
+                        style={{
+                          objectFit: "cover",
+                          width: "100%",
+                          height: "100%",
+                        }}
+                        src={val.imageUrl}
+                        autoPlay="autoplay"
+                        loop="true"
+                      ></video>
+                    ) : (
+                      <img src={val.imageUrl} alt="nftimage" />
+                    )}
+                  </Link>
+                </div>
+                {/* =============== */}
+                <h6 className="card_title">{val.name}</h6>
+                <span
+                  className="txt_sm"
+                  style={{
+                    color: "#000",
+                    fontSize: "10px",
+                  }}
+                >
+                  {val.category}
+                </span>
 
+                <div className="card_footer d-block space-y-10">
                   <div className="card_footer d-block space-y-10">
-                    <div className="card_footer d-block space-y-10">
-                      <div className="card_footer justify-content-between">
-                        <div className="">
-                          <p
-                            className="txt_sm d-flex flex-column"
-                            style={{ margin: 0 }}
+                    <div className="card_footer justify-content-between">
+                      <div className="">
+                        <p
+                          className="txt_sm d-flex flex-column"
+                          style={{ margin: 0 }}
+                        >
+                          <span
+                            style={{
+                              color: "#000",
+                              fontSize: "12px",
+                              fontWeight: "bold",
+                            }}
                           >
-                            <span
-                              style={{
-                                color: "#000",
-                                fontSize: "12px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              Price:
-                            </span>
-                            <span
-                              className="txt_sm"
-                              style={{
-                                color: "#000",
-                                fontSize: "10px",
-                              }}
-                            >
-                              {val.price}{" "}
-                              {ChainsInfo[val.chainId].CURRENCY_SYMBOL}
-                            </span>
-                          </p>
-                        </div>
-                        <div>
+                            Price:
+                          </span>
+                          <span
+                            className="txt_sm"
+                            style={{
+                              color: "#000",
+                              fontSize: "10px",
+                            }}
+                          >
+                            {val.price}{" "}
+                            {ChainsInfo[val.chainId].CURRENCY_SYMBOL}
+                          </span>
+                        </p>
+                      </div>
+                      <div>
+                        <div
+                          className="py-2  gap-2"
+                          style={{ alignItems: "center" }}
+                        >
                           <div
-                            className="py-2  gap-2"
-                            style={{ alignItems: "center" }}
+                            style={{ display: "flex", justifyContent: "end" }}
                           >
-                            <div
-                              style={{ display: "flex", justifyContent: "end" }}
-                            >
-                              <img
-                                src={userInfo?.signIn?.user?.avatar_url}
-                                alt=""
-                                style={{
-                                  borderRadius: "100%",
-                                  width: "44px",
-                                  height: "42px",
-                                  marginRight: "12px",
-                                  objectFit: "cover",
-                                }}
-                              ></img>
+                            <img
+                              src={userInfo?.signIn?.user?.avatar_url}
+                              alt=""
+                              style={{
+                                borderRadius: "100%",
+                                width: "44px",
+                                height: "42px",
+                                marginRight: "12px",
+                                objectFit: "cover",
+                              }}
+                            ></img>
 
-                              <Link to={"/profile/" + val.ownerAddress}>
-                                <div>
-                                  <div
-                                    style={{
-                                      color: "#000",
-                                      fontSize: "12px",
-                                      fontWeight: "bold",
-                                    }}
-                                  >
-                                    Artist
-                                  </div>
-                                  <div
-                                    style={{
-                                      color: "#000",
-                                      fontSize: "10px",
-                                    }}
-                                  >
-                                    @{userInfo?.signIn?.user?.username}
-                                  </div>
+                            <Link to={"/profile/" + val.ownerAddress}>
+                              <div>
+                                <div
+                                  style={{
+                                    color: "#000",
+                                    fontSize: "12px",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  Artist
                                 </div>
-                              </Link>
-                            </div>
+                                <div
+                                  style={{
+                                    color: "#000",
+                                    fontSize: "10px",
+                                  }}
+                                >
+                                  @{userInfo?.signIn?.user?.username}
+                                </div>
+                              </div>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -775,11 +783,10 @@ function NftCard({ val }) {
                 </div>
               </div>
             </div>
-          </>
-        </div>
-      </Link>
+          </div>
+        </>
+      </div>
     </div>
   );
 }
-
 export default Marketplace;

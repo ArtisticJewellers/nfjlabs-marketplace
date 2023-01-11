@@ -222,7 +222,18 @@ const CardProfile = ({ creatorData }) => {
                         ChainsInfo[val.chainId].NFT_ADDRESS
                       }/${val.tokenId}`}
                     >
-                      <img alt="nftimage" src={val.imageUrl} />
+                      {val.imageUrl?.includes(".mp4") ? (<video
+                        // className="item_img"
+                        style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                        src={val.imageUrl }
+                        autoPlay="autoplay"
+                        loop="true"
+                      ></video>) :
+                        (<img
+                          src={val.imageUrl }
+                          alt="nftimage"
+                        />)
+                      }
                     </Link>
                     {/*
                      */}

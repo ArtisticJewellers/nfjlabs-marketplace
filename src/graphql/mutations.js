@@ -39,7 +39,33 @@ const UpdateProfile = gql`
     }
   }
 `;
-
+const GetIndividualCollection = gql`
+  mutation getIndividualCollection($collectionId: String) {
+    getIndividualCollection(collectionId: $collectionId) {
+      _id
+      avatarImage
+      bannerImageUrl
+      chain
+      collectionAddress
+      collectionDesc
+      collectionName
+      nfts {
+        _id
+        chainId
+        creatorAddress
+        imageUrl
+        ipfsUrl
+        isApproved
+        name
+        network
+        ownerAddress
+        price
+        tags
+        tokenId
+      }
+    }
+  }
+`;
 const GetCollectionsById = gql`
   mutation getCollectionsById($username: String) {
     getCollectionsById(username: $username) {
@@ -49,6 +75,7 @@ const GetCollectionsById = gql`
         chain
         collectionAddress
         collectionName
+        collectionDesc
         _id
         nfts {
           chainId
@@ -304,4 +331,5 @@ export {
   completeKYC,
   CreateCollections,
   GetCollectionsById,
+  GetIndividualCollection,
 };

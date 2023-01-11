@@ -15,7 +15,7 @@ import { VERIFY_ALERT } from "../../../config/constant/alert";
 import { useHistory } from "react-router-dom";
 
 const UserProfile = () => {
-  useDocumentTitle("NFJ Labs-Marketplace");
+  useDocumentTitle("NFJ Labs - Artist Profile");
   const history = useHistory();
   const { active, account } = useWeb3React();
   const { checkVerification, isVerify } = useWalletValidation();
@@ -73,7 +73,7 @@ const UserProfile = () => {
               <div className="text-center">
                 <div
                   className="text-center"
-                  // onClick={update}
+                // onClick={update}
                 >
                   <div className="btn btn-dark">Connect Wallet</div>
                 </div>

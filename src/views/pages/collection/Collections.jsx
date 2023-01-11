@@ -45,12 +45,16 @@ const Collections = () => {
             sell
           </p>
           <Link to={"/collection/create"}>
-            <Button>Create a collection</Button>
+            <Button>Create a new collection</Button>
           </Link>
         </div>
         <div style={{ marginTop: "70px", display: "flex" }}>
           {userCollections.map((e) => {
-            console.log(e._id);
+            let ipfsURL = e.bannerImageUrl;
+            let ipfsNewURL = ipfsURL.replace(
+              "ipfs://",
+              "https://gateway.ipfscdn.io/ipfs/"
+            );
             return (
               <Link to={`/collection/${e._id}`} key={e._id}>
                 <div
@@ -61,6 +65,7 @@ const Collections = () => {
                     background: "",
                     borderRadius: "12px",
                     boxShadow: "10px 10px 5px lightBlue",
+                    margin: "5px 25px 5px 25px",
                   }}
                 >
                   <img
@@ -69,14 +74,24 @@ const Collections = () => {
                     style={{
                       objectFit: "cover",
                       objectPosition: "center",
-                      borderRadius: "12px",
+                      borderRadius: "12px 12px 0 0",
                     }}
-                    src={e.bannerImageUrl}
-                    alt=""
+                    src={ipfsNewURL}
+                    alt="bannerImg"
                   />
-                  <div style={{ padding: "5px 10px", textAlign: "center" }}>
-                    <h4>{e.collectionName}</h4>
-                    <p>{e.chain}</p>
+                  <div
+                    style={{
+                      padding: "5px 10px",
+                      textAlign: "center",
+                      width: "100%",
+                    }}
+                  >
+                    <h4 style={{ margin: "5px 10px", fontSize: "24px" }}>
+                      {e.collectionName}
+                    </h4>
+                    <p style={{ fontSize: "17px", width: "100%" }}>
+                      {e.collectionDesc}{" "}
+                    </p>
                   </div>
                 </div>
               </Link>

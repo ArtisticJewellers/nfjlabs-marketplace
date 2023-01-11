@@ -30,6 +30,7 @@ import binance from "../../../assets/icon/bnb.svg";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
 
 const UploadComponent = () => {
+  const [collections, setCollections] = useState([]);
   const [categoryValue, setCategoryValue] = useState("");
   const { mintNFT } = useNFT();
   const history = useHistory();
@@ -48,15 +49,13 @@ const UploadComponent = () => {
     },
   });
 
-  console.log({ user: user?.user?.username });
+  // console.log({ user: user?.user?.username });
 
-  const { data } = useMutation(GetCollectionsById, {
+  const [getCollectionsById] = useMutation(GetCollectionsById, {
     variables: {
       username: "ritik.chhipa",
     },
   });
-
-  console.log({ data });
 
   let jewelleryCat = [
     { label: "Necklace", value: "necklaces" },
@@ -87,7 +86,17 @@ const UploadComponent = () => {
     exampleName = "polygon";
   }
 
+  const fetchUserCollections = async () => {
+    const { data } = await getCollectionsById({
+      variables: { username: user?.user?.username },
+    });
+
+    console.log(data.getCollectionsById.collections);
+    setCollections(data.getCollectionsById.collections);
+  };
+
   useEffect(() => {
+    fetchUserCollections();
     if (active) {
       checkVerification().then((data) => {
         if (data === null) {
@@ -386,24 +395,21 @@ const UploadComponent = () => {
                                   ? jewelleryCat
                                   : gemsCat
                               }
-                              // options={[
-                              //   { label: "Necklace", value: "necklaces" },
-                              //   { label: "Pendant", value: "pendant" },
-                              //   { label: "Rings", value: "rings" },
-                              //   { label: "Brooch", value: "brooch" },
-                              //   { label: "Earrings", value: "earrings" },
-                              //   { label: "Watch Charm", value: "watch_charm" },
-                              //   { label: "Bracelet", value: "bracelet" },
-                              //   { label: "Chain", value: "chain" },
-
-                              //   { label: "Pearl", value: "pearl" },
-                              //   { label: "Opal", value: "opal" },
-                              //   { label: "Ruby", value: "ruby" },
-                              //   { label: "Sapphire", value: "sapphire" },
-                              //   { label: "Diamond", value: "diamond" },
-                              //   { label: "Emrald", value: "emrald" },
-                              // ]}
                             ></Select>
+                          </Form.Item>
+                        </div>
+
+                        {/* select collection  */}
+                        <div className="space-y-10">
+                          <Form.Item label="Collection" name="collection">
+                            <Select
+                              isSearchable={false}
+                              placeholder="collection"
+                            >
+                              {collections.map((e) => (
+                                <option>{e}</option>
+                              ))}
+                            </Select>
                           </Form.Item>
                         </div>
 
