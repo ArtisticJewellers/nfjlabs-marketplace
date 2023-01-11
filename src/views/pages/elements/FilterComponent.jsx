@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import "antd/dist/antd.css";
 import { useDispatch } from "react-redux";
 import { filterNFT } from "../../../Redux/reducers/nftReducer";
+import { useParams } from "react-router-dom";
 function getItem(label, key, icon, children, type) {
   return {
     key,
@@ -73,13 +74,11 @@ const listing = [
   { label: "Not Listed", value: false },
 ];
 
-const FilterComponent = ({ onFilterChange, defaultCat, defaultSubCat }) => {
+const FilterComponent = ({ onFilterChange, defaultCat }) => {
+  const { subcat } = useParams();
   const dispatch = useDispatch();
   const [networks, setNetworks] = useState("");
   const [defaultCategory, setDefaultCategory] = useState();
-  const [defaultSubCategory, setSubDefaultCategory] = useState();
-
-  console.log({ defaultSubCat });
 
   const [price, setPrice] = useState({
     min: null,
@@ -88,7 +87,7 @@ const FilterComponent = ({ onFilterChange, defaultCat, defaultSubCat }) => {
 
   const [isList, setListed] = useState(true);
   const [categorys, setCategory] = useState("");
-  const [subCategorys, setSubCategory] = useState("");
+  const [subCategorys, setSubCategory] = useState(subcat?.toLowerCase());
 
   const onChangeNetwork = (e) => {
     setNetworks(e.target.value);
@@ -116,7 +115,6 @@ const FilterComponent = ({ onFilterChange, defaultCat, defaultSubCat }) => {
 
   const onChangeSubCategory = (e) => {
     setSubCategory(e.target.value);
-    setSubDefaultCategory(e.target.value);
     onFilterChange({
       price: price,
       category: categorys,
@@ -127,41 +125,16 @@ const FilterComponent = ({ onFilterChange, defaultCat, defaultSubCat }) => {
   };
 
   useEffect(() => {
-    if (defaultCat || defaultSubCat) {
+    if (defaultCat) {
       setCategory(defaultCat);
-      setSubDefaultCategory(defaultSubCat);
       onFilterChange({
         price: price,
-        // category: e.target.value,
         category: defaultCat,
-        subcategory: defaultSubCat,
+        subcategory: subcat,
         network: networks,
         isListed: isList,
       });
     }
-    // if (defaultCat) {
-    //   setCategory(defaultCat);
-    //   onFilterChange({
-    //     price: price,
-    //     // category: e.target.value,
-    //     category: defaultCategory,
-    //     subcategory: subCategorys,
-    //     network: networks,
-    //     isListed: isList,
-    //   });
-    // }
-
-    // if (defaultSubCat) {
-    //   setSubCategory(defaultCat);
-    //   onFilterChange({
-    //     price: price,
-    //     // category: e.target.value,
-    //     category: defaultCategory,
-    //     subcategory: defaultSubCat,
-    //     network: networks,
-    //     isListed: isList,
-    //   });
-    // }
   }, []);
 
   const onChangeListed = (e) => {

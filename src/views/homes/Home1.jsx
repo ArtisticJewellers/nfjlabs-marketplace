@@ -305,7 +305,7 @@ const FeaturedNfts = () => {
   });
   const subCatList = [
     {
-      name: "ruby",
+      name: "Ruby",
       image:
         "https://gateway.ipfscdn.io/ipfs/QmcXb3RuFYNJksGsu12L5d32NqBZmkTEPCMSzbJzmaYig6/gp106823-3-041122.webp",
     },
@@ -377,7 +377,6 @@ const TrendingNfts = () => {
   const { data: trending_nft } = useQuery(TrendingNft, {
     variables: { popularCollection: "trending_nft" },
   });
-  console.log(trending_nft?.allTrendingNft);
   return (
     <>
       <div>

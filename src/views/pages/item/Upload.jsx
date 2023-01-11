@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../../../components/header/Header";
 
 import Select from "react-select";
-
+import { GetCollectionsById } from "../../../graphql/mutations";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import Loading from "../../../components/Loading/Loading";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
@@ -42,6 +42,22 @@ const UploadComponent = () => {
   // const [tags, setTags] = useState([]);
   const [certf, setCertf] = useState([{ title: "", image: "" }]);
 
+  const { data: user } = useQuery(UserDetails, {
+    variables: {
+      walletAddress: account,
+    },
+  });
+
+  console.log({ user: user?.user?.username });
+
+  const { data } = useMutation(GetCollectionsById, {
+    variables: {
+      username: "ritik.chhipa",
+    },
+  });
+
+  console.log({ data });
+
   let jewelleryCat = [
     { label: "Necklace", value: "necklaces" },
     { label: "Pendant", value: "pendant" },
@@ -73,12 +89,9 @@ const UploadComponent = () => {
 
   useEffect(() => {
     if (active) {
-      console.log(isVerify);
       checkVerification().then((data) => {
-        console.log(data);
         if (data === null) {
           VERIFY_ALERT().then(() => {
-            console.log(data);
             history.push("/edit-profile");
           });
         }
@@ -108,7 +121,6 @@ const UploadComponent = () => {
           from: account,
         })
         .then(async (res) => {
-          console.log({ res });
           createNft({
             variables: {
               name: value.title.trim(),

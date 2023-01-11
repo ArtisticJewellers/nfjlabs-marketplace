@@ -10,11 +10,10 @@ import Shravan_demo_card from "../../../components/cards/Shravan_Card/Shravan_de
 import { useDispatch } from "react-redux";
 import { setNftData } from "../../../Redux/reducers/nftReducer";
 
-function MenuCategoriesMarket({ cat, subcat }) {
+function MenuCategoriesMarket({ cat }) {
   const dispatch = useDispatch();
   const { nftData } = useSelector((state) => state.nftData);
   const { filterNFTData } = useSelector((state) => state.nftData);
-  console.log({ subcat });
 
   const [FilterData, setFilterData] = useState({
     price: {
@@ -37,8 +36,6 @@ function MenuCategoriesMarket({ cat, subcat }) {
       isListed: FilterData.isListed,
     },
   });
-
-  console.log({ data });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -147,7 +144,7 @@ function MenuCategoriesMarket({ cat, subcat }) {
   ];
 
   const onFilterChange = (data) => {
-    console.log({ filterChange: data });
+    console.log({ data });
     dispatch(setNftData([]));
     setFilterData(data);
   };
@@ -162,7 +159,6 @@ function MenuCategoriesMarket({ cat, subcat }) {
                 <FilterComponent
                   onFilterChange={onFilterChange}
                   defaultCat={cat}
-                  defaultSubCat={subcat}
                 />
               </div>
               <div className="cardStyle">
