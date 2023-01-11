@@ -5,6 +5,8 @@ import CollectionProfile from "../../../components/hero/CollectionProfile";
 import { useMutation, useQuery } from "@apollo/client";
 import { UserDetails } from "../../../graphql/query";
 import { useWeb3React } from "@web3-react/core";
+import { Tabs } from "react-tabs";
+import CollectionCard from "../../../components/cards/CollectionCard";
 import {
   GetCollectionsById,
   GetIndividualCollection,
@@ -47,12 +49,35 @@ const CollectionPage = () => {
     if (!account) return;
     fetchUser();
     fetchCollectionDetail();
-  }, [user, account]);
+  }, [user, account, collectionDetail]);
+
 
   return (
     <div>
       <Header />
-      <CollectionProfile collectionDetail={collectionDetail} />
+      {
+        collectionDetail && collectionDetail.bannerImageUrl && <CollectionProfile collectionDetail={collectionDetail} />
+      }
+
+      <div className="container">
+        <div className="row justify-content-center">
+          {/* <div className="col-lg-3 col-md-7 order-md-0 order-1">
+            <SidebarProfile userProfile={profile?.user} />
+          </div> */}
+          <div className="col-lg-9 col-md-12 order-md-1 order-0">
+            <div className="profile?.user__content">
+              <div className="d-flex justify-content-between">
+                <Tabs className="space-x-10">
+                  <div className="d-flex justify-content-between"></div>
+                  <div className="tab-content">
+                    <CollectionCard creatorData={user?.user} />
+                  </div>
+                </Tabs>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

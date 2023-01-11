@@ -48,7 +48,7 @@ const Collections = () => {
             <Button>Create a new collection</Button>
           </Link>
         </div>
-        <div style={{ marginTop: "70px", display: "flex" }}>
+        <div style={{ marginTop: "70px", display: "flex", flexWrap: "Wrap" }}>
           {userCollections.map((e) => {
             let ipfsURL = e.bannerImageUrl;
             let ipfsNewURL = ipfsURL.replace(
@@ -65,7 +65,7 @@ const Collections = () => {
                     background: "",
                     borderRadius: "12px",
                     boxShadow: "10px 10px 5px lightBlue",
-                    margin: "5px 25px 5px 25px",
+                    margin: "15px 25px 15px 25px",
                   }}
                 >
                   <img
