@@ -49,6 +49,7 @@ const GetCollectionsById = gql`
         chain
         collectionAddress
         collectionName
+        collectionDesc
         _id
         nfts {
           chainId

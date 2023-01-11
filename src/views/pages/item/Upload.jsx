@@ -374,23 +374,25 @@ const UploadComponent = () => {
                                   ? jewelleryCat
                                   : gemsCat
                               }
-                              // options={[
-                              //   { label: "Necklace", value: "necklaces" },
-                              //   { label: "Pendant", value: "pendant" },
-                              //   { label: "Rings", value: "rings" },
-                              //   { label: "Brooch", value: "brooch" },
-                              //   { label: "Earrings", value: "earrings" },
-                              //   { label: "Watch Charm", value: "watch_charm" },
-                              //   { label: "Bracelet", value: "bracelet" },
-                              //   { label: "Chain", value: "chain" },
+                            ></Select>
+                          </Form.Item>
+                        </div>
 
-                              //   { label: "Pearl", value: "pearl" },
-                              //   { label: "Opal", value: "opal" },
-                              //   { label: "Ruby", value: "ruby" },
-                              //   { label: "Sapphire", value: "sapphire" },
-                              //   { label: "Diamond", value: "diamond" },
-                              //   { label: "Emrald", value: "emrald" },
-                              // ]}
+                        {/* select collection  */}
+                        <div className="space-y-10">
+                          <Form.Item
+                            label="Collection"
+                            name="collection"
+
+                          >
+                            <Select
+                              isSearchable={false}
+                              placeholder="collection"
+                              options={
+                                [
+                                  { label: "Default Collection", value: "default" },
+                                ]
+                              }
                             ></Select>
                           </Form.Item>
                         </div>
@@ -588,7 +590,7 @@ const UploadComponent = () => {
                 <div className="text-center">
                   <div
                     className="text-center"
-                    // onClick={update}
+                  // onClick={update}
                   >
                     <div className="btn  btn-grad">Connect Wallet</div>
                   </div>

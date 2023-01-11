@@ -95,7 +95,7 @@ const CreateCollection = () => {
             />
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">Banner Image</label>
+            <label for="exampleInputEmail1">Collection Cover</label>
             <input
               required
               onChange={(e) =>
@@ -108,7 +108,7 @@ const CreateCollection = () => {
             />
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">Avatar Image</label>
+            <label for="exampleInputEmail1">Collection Logo</label>
             <input
               required
               onChange={(e) =>
@@ -120,7 +120,7 @@ const CreateCollection = () => {
               aria-describedby="emailHelp"
             />
           </div>
-          <div>
+          <div style={{ display: "none" }}>
             <label htmlFor="form-control">Select Chain</label>
             <select
               required

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../../../components/header/Header";
+import CollectionProfile from "../../../components/hero/CollectionProfile";
 import { useMutation, useQuery } from "@apollo/client";
 import { UserDetails } from "../../../graphql/query";
 import { useWeb3React } from "@web3-react/core";
@@ -24,9 +25,9 @@ const CollectionPage = () => {
         username: user?.user?.username,
       },
     });
-    console.log({ nfts });
+    console.log({ nftdatahaiye: user.collections });
   };
-  
+
   useEffect(() => {
     if (!account) return;
     fetchUser();
@@ -35,6 +36,7 @@ const CollectionPage = () => {
   return (
     <div>
       <Header />
+      <CollectionProfile userProfile={user?.user} />
       <div></div>
     </div>
   );
