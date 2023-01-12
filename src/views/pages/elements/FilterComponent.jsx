@@ -129,14 +129,16 @@ const FilterComponent = ({ onFilterChange, defaultCat }) => {
   };
 
   useEffect(() => {
-    setCategory(defaultCat);
-    onFilterChange({
-      price: price,
-      category: defaultCat,
-      subcategory: "",
-      network: networks,
-      isListed: isList,
-    });
+    if (defaultCat) {
+      setCategory(defaultCat);
+      onFilterChange({
+        price: price,
+        category: defaultCat,
+        subcategory: "",
+        network: networks,
+        isListed: isList,
+      });
+    }
   }, []);
 
   const onChangeListed = (e) => {
