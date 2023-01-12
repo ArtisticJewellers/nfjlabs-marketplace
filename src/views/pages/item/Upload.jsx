@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../../components/header/Header";
 
+import { AddNFToCollection } from "../../../graphql/mutations";
 import Select from "react-select";
 import { GetCollectionsById } from "../../../graphql/mutations";
 import { IoCloseCircleOutline } from "react-icons/io5";
@@ -30,7 +31,10 @@ import binance from "../../../assets/icon/bnb.svg";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
 
 const UploadComponent = () => {
-  const [collections, setCollections] = useState([]);
+  const [collections, setCollections] = useState([
+    { label: "", value: "", id: "" },
+  ]);
+
   const [categoryValue, setCategoryValue] = useState("");
   const { mintNFT } = useNFT();
   const history = useHistory();
@@ -49,11 +53,10 @@ const UploadComponent = () => {
     },
   });
 
-  // console.log({ user: user?.user?.username });
-
+  const [addNFToCollection] = useMutation(AddNFToCollection);
   const [getCollectionsById] = useMutation(GetCollectionsById, {
     variables: {
-      username: "ritik.chhipa",
+      username: user?.user?.username,
     },
   });
 
@@ -90,12 +93,16 @@ const UploadComponent = () => {
     const { data } = await getCollectionsById({
       variables: { username: user?.user?.username },
     });
-
-    console.log(data.getCollectionsById.collections);
-    setCollections(data.getCollectionsById.collections);
+    let obj = [];
+    data.getCollectionsById.collections.map((e) =>
+      obj.push({ label: e.collectionName, value: e.collectionName, id: e._id })
+    );
+    setCollections(obj);
   };
 
   useEffect(() => {
+    if (!account) return;
+
     fetchUserCollections();
     if (active) {
       checkVerification().then((data) => {
@@ -106,10 +113,11 @@ const UploadComponent = () => {
         }
       });
     }
-  }, [active, account]);
+  }, [active, account, user]);
+
+  let selectedCollection;
 
   const handleSubmitNFT = async (value) => {
-    console.log("NFT MINTING STARTED");
     if (!active) {
       WALLET_ALERT();
     } else {
@@ -125,6 +133,8 @@ const UploadComponent = () => {
       showLoading();
       let uri = await uploadOnIpfs(metadata);
       let url = await downloadJSONOnIpfs(uri);
+      selectedCollection = value.collection.id;
+
       mintNFT(uri)
         .send({
           from: account,
@@ -154,8 +164,22 @@ const UploadComponent = () => {
               },
             ],
           })
-            .then((data) => {
-              console.log({ data });
+            .then(async (data) => {
+              let obj = {
+                username: user?.user?.username,
+                collectionId: selectedCollection,
+                nftId: data.data.createNft._id,
+              };
+              // console.log(data.data);
+              // console.log({ nftId: data.data.createNft._id });
+              const resp = await addNFToCollection({
+                variables: {
+                  username: obj.username,
+                  collectionId: obj.collectionId,
+                  nftId: obj.nftId,
+                },
+              });
+              console.log({ resp });
               MINT_ALERT();
               hideLoading();
             })
@@ -171,24 +195,10 @@ const UploadComponent = () => {
     }
   };
 
-  // const selectTags = (newTag) => {
-  //   if (tags.includes(newTag)) {
-  //     setTags((state) =>
-  //       tags.filter((item) => {
-  //         return newTag !== item;
-  //       })
-  //     );
-  //   } else {
-  //     setTags([...tags, newTag]);
-  //     console.log(tags);
-  //   }
-  // };
-
   const handleChangeInput = async (index, e, file) => {
     const values = [...certf];
     values[index][e.target.name] = e.target.value;
     values[index]["image"] = file;
-    console.log(values);
     setCertf(values);
   };
 
@@ -223,7 +233,6 @@ const UploadComponent = () => {
           <Form
             layout="vertical"
             onFinish={(value) => {
-              console.log(value);
               handleSubmitNFT(value);
             }}
             initialValues={{
@@ -374,7 +383,6 @@ const UploadComponent = () => {
                             ></Select>
                           </Form.Item>
                         </div>
-
                         {/* sub categroies  */}
                         <div className="space-y-10">
                           <Form.Item
@@ -398,25 +406,19 @@ const UploadComponent = () => {
                             ></Select>
                           </Form.Item>
                         </div>
-
                         {/* select collection  */}
                         <div className="space-y-10">
                           <Form.Item label="Collection" name="collection">
                             <Select
                               isSearchable={false}
                               placeholder="collection"
-                            >
-                              {collections.map((e) => (
-                                <option>{e}</option>
-                              ))}
-                            </Select>
+                              options={collections}
+                            ></Select>
                           </Form.Item>
                         </div>
-
                         {/* properties  */}
                         <span className="variationInput">Properties</span>
                         <PropertiesForm />
-
                         <div
                           style={{ display: "flex", flexDirection: "column" }}
                         >
@@ -516,7 +518,6 @@ const UploadComponent = () => {
                             </div>
                           )}
                         </div>
-
                         <div className="space-y-10">
                           {/* tags  */}
                           {/* <span className="variationInput">Tags</span>

@@ -39,6 +39,24 @@ const UpdateProfile = gql`
     }
   }
 `;
+
+const AddNFToCollection = gql`
+  mutation addNFToCollection(
+    $username: String
+    $collectionId: String
+    $nftId: String
+  ) {
+    addNFToCollection(
+      username: $username
+      collectionId: $collectionId
+      nftId: $nftId
+    ) {
+      _id
+      name
+    }
+  }
+`;
+
 const GetIndividualCollection = gql`
   mutation getIndividualCollection($collectionId: String) {
     getIndividualCollection(collectionId: $collectionId) {
@@ -332,4 +350,5 @@ export {
   CreateCollections,
   GetCollectionsById,
   GetIndividualCollection,
+  AddNFToCollection,
 };

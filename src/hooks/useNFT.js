@@ -19,10 +19,8 @@ function useNFT(address) {
       id: "6392d510872ea2fc23f19e55",
     },
   });
-  console.log(getRole?.getRole?.royalty, getRole?.getRole?.royaltyAddress);
 
   const mintNFT = (metadata) => {
-    console.log(getRole?.getRole?.royalty, getRole?.getRole?.royaltyAddress);
     return getErc721Contract(
       ChainsInfo[chainId].NFT_ADDRESS,
       library.provider
@@ -33,7 +31,6 @@ function useNFT(address) {
       getRole?.getRole?.royaltyAddress
     );
   };
-
   const getTokenBalance = (network, tokenAddress) => {
     return getErc720Contract(
       tokenAddress,
@@ -117,7 +114,6 @@ function useNFT(address) {
 
   const purchaseNFT = async (tokenId, price) => {
     let finalPrice = await getNFTFinalRate(tokenId, price);
-    console.log(finalPrice);
     return getErc1155Contract(
       ChainsInfo[chainId].NFT_MARKETPLACE_ADDRESS,
       library.provider
@@ -168,7 +164,6 @@ function useNFT(address) {
   // NFT purchanse logic
   const nftPurchased = (NFTOwner, network, NFTData, NFTAuction, NFTSeller) => {
     // eslint-disable-next-line no-lone-blocks
-    console.log(NFTOwner, account, network, NFTData, NFTAuction, NFTSeller);
 
     return active
       ? NFTOwner ===
@@ -204,7 +199,7 @@ function useNFT(address) {
     approveToken,
     getAllBidders,
     bidCancelByUser,
-    getTokenBalance
+    getTokenBalance,
   };
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../../components/header/Navbar/Navbar";
 import Header from "../../../components/header/Header";
 import { useMutation, useQuery } from "@apollo/client";
@@ -12,7 +12,7 @@ import { Spinner } from "react-bootstrap";
 const CreateCollection = () => {
   const history = useHistory();
   const [createCollection, { loading, error }] = useMutation(CreateCollections);
-  const { account } = useWeb3React();
+  const { account, chainId } = useWeb3React();
   const { uploadOnIpfs } = useStorage();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -35,26 +35,21 @@ const CreateCollection = () => {
 
   const onChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
-    console.log(data);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     if (!account) return alert("Please Connect Your Wallet");
-    console.log({ data });
-    let avatarUrl = await uploadOnIpfs(data.avatarUrl);
-    let bannerImageUrl = await uploadOnIpfs(data.bannerImageUrl);
-    console.log({ username: user?.user?.username });
 
     const resp = await createCollection({
       variables: {
         username: user?.user?.username,
         collectionName: data.collectionName,
         collectionDesc: data.collectionDesc,
-        bannerImageUrl,
-        avatarUrl,
-        chain: data.chain,
+        bannerImageUrl: data.bannerImageUrl,
+        avatarUrl: data.avatarUrl,
+        chain: data.chain.toString(),
         nfts: data.nfts,
       },
     });
@@ -62,6 +57,11 @@ const CreateCollection = () => {
     console.log({ resp });
     history.goBack();
   };
+
+  useEffect(() => {
+    if (!chainId) return;
+    setData({ ...data, chain: chainId });
+  }, [chainId]);
   return (
     <div>
       <Header />
@@ -98,9 +98,12 @@ const CreateCollection = () => {
             <label for="exampleInputEmail1">Collection Cover</label>
             <input
               required
-              onChange={(e) =>
-                setData({ ...data, bannerImageUrl: e.target.files[0] })
-              }
+              onChange={async (e) => {
+                setIsLoading(true);
+                let image = await uploadOnIpfs(e.target.files[0]);
+                setData({ ...data, bannerImageUrl: image });
+                setIsLoading(false);
+              }}
               type="file"
               class="form-control"
               id="bannerImage"
@@ -111,9 +114,12 @@ const CreateCollection = () => {
             <label for="exampleInputEmail1">Collection Logo</label>
             <input
               required
-              onChange={(e) =>
-                setData({ ...data, avatarUrl: e.target.files[0] })
-              }
+              onChange={async (e) => {
+                setIsLoading(true);
+                let image = await uploadOnIpfs(e.target.files[0]);
+                setData({ ...data, avatarUrl: image });
+                setIsLoading(false);
+              }}
               type="file"
               class="form-control"
               id="avatarImage"
@@ -134,7 +140,7 @@ const CreateCollection = () => {
             </select>
           </div>
           <button
-            disabled={isLoading}
+            disabled={isLoading || !account}
             type="submit"
             class="btn btn-primary"
             style={{ marginTop: "22px" }}

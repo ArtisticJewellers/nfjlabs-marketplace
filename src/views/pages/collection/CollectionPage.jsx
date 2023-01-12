@@ -31,9 +31,6 @@ const CollectionPage = () => {
         collectionId: id,
       },
     });
-
-    console.log(data.getIndividualCollection);
-
     setCollectionDetail(data.getIndividualCollection);
   };
 
@@ -46,19 +43,13 @@ const CollectionPage = () => {
   };
 
   useEffect(() => {
-    if (!account) return;
-    fetchUser();
     fetchCollectionDetail();
-  }, [user, account, collectionDetail]);
-
+  }, [user]);
 
   return (
     <div>
       <Header />
-      {
-        collectionDetail && collectionDetail.bannerImageUrl && <CollectionProfile collectionDetail={collectionDetail} />
-      }
-
+      <CollectionProfile collectionDetail={collectionDetail} />
       <div className="container">
         <div className="row justify-content-center">
           {/* <div className="col-lg-3 col-md-7 order-md-0 order-1">
@@ -70,7 +61,7 @@ const CollectionPage = () => {
                 <Tabs className="space-x-10">
                   <div className="d-flex justify-content-between"></div>
                   <div className="tab-content">
-                    <CollectionCard creatorData={user?.user} />
+                    <CollectionCard nfts={collectionDetail?.nfts} />
                   </div>
                 </Tabs>
               </div>
