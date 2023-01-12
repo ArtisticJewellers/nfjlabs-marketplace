@@ -87,7 +87,11 @@ const FilterComponent = ({ onFilterChange, defaultCat }) => {
 
   const [isList, setListed] = useState(true);
   const [categorys, setCategory] = useState("");
-  const [subCategorys, setSubCategory] = useState(subcat?.toLowerCase());
+  // const [subCategorys, setSubCategory] = useState("");
+  const [subCategorys, setSubCategory] = useState((state) => {
+    if (subcat) return subcat?.toLowerCase();
+    return "";
+  });
 
   const onChangeNetwork = (e) => {
     setNetworks(e.target.value);
@@ -125,16 +129,14 @@ const FilterComponent = ({ onFilterChange, defaultCat }) => {
   };
 
   useEffect(() => {
-    if (defaultCat) {
-      setCategory(defaultCat);
-      onFilterChange({
-        price: price,
-        category: defaultCat,
-        subcategory: subcat,
-        network: networks,
-        isListed: isList,
-      });
-    }
+    setCategory(defaultCat);
+    onFilterChange({
+      price: price,
+      category: defaultCat,
+      subcategory: "",
+      network: networks,
+      isListed: isList,
+    });
   }, []);
 
   const onChangeListed = (e) => {

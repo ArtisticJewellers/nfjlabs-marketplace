@@ -39,7 +39,7 @@ function CardMarketplace({ FilterData, searchNFTData }) {
                           ></video>
                         ) : (
                           <img
-                            src={val?.imageUrl || searchNFTData.imageUrl}
+                            src={val?.imageUrl || searchNFTData?.imageUrl}
                             alt="nftimage"
                           />
                         )}
