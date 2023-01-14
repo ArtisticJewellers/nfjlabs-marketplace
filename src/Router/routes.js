@@ -33,7 +33,7 @@ import Contact from "../views/pages/Support/Contact";
 // import collection from "../views/pages/NftPages/Collections";
 
 // Route Specific
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import UploadComponent from "../views/pages/item/Upload";
 import UserProfile from "../views/pages/account/UserProfile";
 import Success from "../views/pages/Success";
@@ -44,7 +44,7 @@ import CollectionPage from "../views/pages/collection/CollectionPage";
 const Routes = () => {
   return (
     <>
-      <Router basename="http://nfjlabs.io/">
+      <Router>
         <Switch>
           <Route exact path="/" component={Home1} />
           <Route exact path="/explore" component={Marketplace} />
