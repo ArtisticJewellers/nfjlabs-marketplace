@@ -44,7 +44,7 @@ import CollectionPage from "../views/pages/collection/CollectionPage";
 const Routes = () => {
   return (
     <>
-      <Router>
+      <Router basename="http://nfjlabs.io/">
         <Switch>
           <Route exact path="/" component={Home1} />
           <Route exact path="/explore" component={Marketplace} />

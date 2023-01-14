@@ -21972,6 +21972,7 @@ select {
   width: 20%;
   display: flex;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
 .cardStyle {
@@ -22006,7 +22007,7 @@ select {
   }
   .filterStyle {
     width: 100%;
-    display: none;
+    /* display: none; */
   }
 
   .cardStyle {
@@ -22022,18 +22023,41 @@ select {
   }
 }
 
-#phoneHide{
+#phoneHide {
   display: block;
 }
-#phoneShow{
+#phoneShow {
   display: none;
 }
 
+#filterPhone {
+  display: none;
+  height: 100%;
+  width: 100%;
+  padding: 30px;
+  /* margin-left: 150px; */
+}
+
+#filterPhone button {
+  height: 100%;
+  width: 100%;
+}
+
+#filterDesktop {
+  display: block;
+}
+
 @media only screen and (max-width: 600px) {
-  #phoneHide{
+  #phoneHide {
     display: none;
   }
-  #phoneShow{
+  #phoneShow {
     display: block;
+  }
+  #filterPhone {
+    display: block;
+  }
+  #filterDesktop {
+    display: none;
   }
 }

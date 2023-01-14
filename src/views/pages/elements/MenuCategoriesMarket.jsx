@@ -9,11 +9,13 @@ import { useSelector } from "react-redux";
 import Shravan_demo_card from "../../../components/cards/Shravan_Card/Shravan_demo_card";
 import { useDispatch } from "react-redux";
 import { setNftData } from "../../../Redux/reducers/nftReducer";
+import { Button } from "antd";
 
 function MenuCategoriesMarket({ cat }) {
   const dispatch = useDispatch();
   const { nftData } = useSelector((state) => state.nftData);
   const { filterNFTData } = useSelector((state) => state.nftData);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const [FilterData, setFilterData] = useState({
     price: {
@@ -155,12 +157,28 @@ function MenuCategoriesMarket({ cat }) {
         <div style={{ paddingBottom: "50px" }}>
           <TabPanel>
             <div className="marketplaceStyle">
+
               <div className="filterStyle">
-                <FilterComponent
-                  onFilterChange={onFilterChange}
-                  defaultCat={cat}
-                />
+                <div id="filterDesktop">
+                  <FilterComponent
+                    onFilterChange={onFilterChange}
+                    defaultCat={cat}
+                  />
+                </div>
               </div>
+
+              <div id="filterPhone">
+                <Button onClick={() => { setIsFilterOpen(!isFilterOpen) }} >Filter NFTs</Button>
+              </div>
+              {isFilterOpen && <>
+                <div className="filterStyle">
+                  <FilterComponent
+                    onFilterChange={onFilterChange}
+                    defaultCat={cat}
+                  />
+                </div>
+              </>}
+
               <div className="cardStyle">
                 <div
                   style={{

@@ -339,14 +339,15 @@ const FeaturedNfts = () => {
     <>
       <div>
         <Swiper
-          slidesPerView={6}
+          slidesPerView="auto"
+          mousewheel={true}
           spaceBetween={70}
-          slidesPerGroup={6}
+          slidesPerGroup={2}
           loop={false}
           loopFillGroupWithBlank={false}
-          pagination={{
-            clickable: true,
-          }}
+          // pagination={{
+          //   clickable: true,
+          // }}
           navigation={true}
           modules={[Pagination, Navigation]}
           className="mySwiper"
@@ -381,14 +382,15 @@ const TrendingNfts = () => {
     <>
       <div>
         <Swiper
-          slidesPerView={6}
+          slidesPerView="auto"
+          mousewheel={true}
           spaceBetween={70}
-          slidesPerGroup={6}
+          slidesPerGroup={2}
           loop={false}
-          loopFillGroupWithBlank={false}
-          pagination={{
-            clickable: true,
-          }}
+          loopFillGroupWithBlank={true}
+          // pagination={{
+          //   clickable: true,
+          // }}
           navigation={true}
           modules={[Pagination, Navigation]}
           className="mySwiper"
@@ -414,14 +416,15 @@ const TopArtist = () => {
     <>
       <div>
         <Swiper
-          slidesPerView={4}
-          spaceBetween={80}
-          slidesPerGroup={4}
+          slidesPerView="auto"
+          mousewheel={true}
+          spaceBetween={70}
+          slidesPerGroup={2}
           loop={false}
           loopFillGroupWithBlank={false}
-          pagination={{
-            clickable: true,
-          }}
+          // pagination={{
+          //   clickable: true,
+          // }}
           navigation={true}
           modules={[Pagination, Navigation]}
           className="mySwiper"

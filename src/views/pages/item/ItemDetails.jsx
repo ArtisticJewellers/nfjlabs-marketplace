@@ -337,7 +337,7 @@ const ItemDetails = () => {
       setIsModalOpen(false);
     };
     return (
-      <>
+      <div>
         <span
           onClick={showModal}
           className=" btn btn-border  btn-grad btn-tran"
@@ -449,7 +449,7 @@ const ItemDetails = () => {
             </div>
           </div>
         </Modal>
-      </>
+      </div>
     );
   };
   const PutMarketplaceModal = () => {
@@ -1144,7 +1144,7 @@ const ItemDetails = () => {
                             padding: "8px 20px",
                             borderRadius: "999px",
                             display: "flex",
-                            gap: "10px",
+                            gap: "5px",
                             alignItems: "center",
                             margin: "10px 10px 10px 0",
                           }}
@@ -1172,7 +1172,7 @@ const ItemDetails = () => {
                             padding: "8px 20px",
                             borderRadius: "999px",
                             display: "flex",
-                            gap: "10px",
+                            gap: "5px",
                             alignItems: "center",
                           }}
                         >
@@ -1315,7 +1315,7 @@ const ItemDetails = () => {
                               </>
                             )
                           ) : (
-                            <>
+                            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "center" }}>
                               {" "}
                               <div>
                                 <PutAuctionModal />
@@ -1325,7 +1325,7 @@ const ItemDetails = () => {
                                   nftDetails={nftDetails?.getNftDetails}
                                 />
                               </div>
-                            </>
+                            </div>
                           )}
                         </>
                       )}
