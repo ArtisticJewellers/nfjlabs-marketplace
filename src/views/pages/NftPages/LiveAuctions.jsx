@@ -34,7 +34,7 @@ const LiveAuctions = () => {
       isListed: FilterData.isListed,
     },
   });
-  console.log(data);
+  // console.log(data);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -131,7 +131,7 @@ const LiveAuctions = () => {
 
   const onFilterChange = (data) => {
     setFilterData(data);
-    console.log(data);
+    // console.log(data);
   };
   return (
     <div>

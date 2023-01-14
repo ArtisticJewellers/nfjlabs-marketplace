@@ -101,7 +101,7 @@ function CardMarketMusic() {
       <div className="row mb-30_reset">
         {NftsData.map((val, i) => (
           <div className="col-lg-4 col-md-6 col-sm-6" key={i}>
-            {console.log(val)}
+            {/* {console.log(val)} */}
             <div className="card__item four">
               <div className="card_body space-y-10">
                 {/* =============== */}

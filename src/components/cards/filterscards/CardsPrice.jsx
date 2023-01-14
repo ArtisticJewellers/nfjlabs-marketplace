@@ -28,7 +28,7 @@ function CardsPrice() {
       .then((data) => setNftsData(data.nfts))
       .catch((err) => console.log(err));
   }, [selectedOption]);
-  console.log(selectedOption);
+  // console.log(selectedOption);
   return (
     <div>
       <div className="mb-30">

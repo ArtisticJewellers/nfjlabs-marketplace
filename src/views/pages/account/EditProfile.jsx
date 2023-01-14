@@ -14,7 +14,7 @@ import Swal from "sweetalert2";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { Register, UpdateProfile } from "../../../graphql/mutations";
 import { SignIn, UserDetails } from "../../../graphql/query";
-  import { useWeb3React } from "@web3-react/core";
+import { useWeb3React } from "@web3-react/core";
 import { Link, useHistory } from "react-router-dom";
 import {
   ACCOUNT_CREATE_ALERT,
@@ -91,7 +91,7 @@ const EditProfile = () => {
                       },
                     ],
                   }).then((res) => {
-                    console.log(res);
+                    // console.log(res);
                     ACCOUNT_UPDATE_ALERT().then(() =>
                       history.push("/user-profile")
                     );
@@ -123,7 +123,7 @@ const EditProfile = () => {
                     .catch((res) => console.log(res));
                 }
               } else {
-                console.log(data.error.issues);
+                // console.log(data.error.issues);
                 Swal.fire("Fill Correct information", "warning");
               }
             }}
@@ -331,7 +331,7 @@ const ImageModal = ({ text }) => {
             name="logo"
             listType="picture"
             onChange={(e) => {
-              console.log(e);
+              // console.log(e);
               setPreviewUrl(e.fileList[0].originFileObj);
             }}
           >

@@ -165,7 +165,8 @@ const ArtistCard = ({ index, val }) => {
                               },
                             },
                           ],
-                        }).then((res) => console.log(res.data));
+                        });
+                        // }).then((res) => console.log(res.data));
                       } else {
                         WALLET_ALERT();
                       }
@@ -204,7 +205,8 @@ const ArtistCard = ({ index, val }) => {
                               },
                             },
                           ],
-                        }).then((res) => console.log(res.data));
+                        });
+                        // }).then((res) => console.log(res.data));
                       } else {
                         WALLET_ALERT();
                       }

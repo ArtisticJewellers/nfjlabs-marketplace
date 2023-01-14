@@ -26,7 +26,7 @@ const KYCRegistration = () => {
   const [createKyc, { error }] = useMutation(completeKYC);
   const [showAlert, setShowAlert] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
-  console.log(account);
+  // console.log(account);
 
   const { data: user } = useQuery(UserDetails, {
     variables: {
@@ -34,11 +34,11 @@ const KYCRegistration = () => {
     },
   });
 
-  console.log({ user: user?.user?.username });
+  // console.log({ user: user?.user?.username });
 
   const onChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
-    console.log(data);
+    // console.log(data);
   };
 
   const handleSubmit = async (e) => {
@@ -64,7 +64,7 @@ const KYCRegistration = () => {
       console.log({ error });
     }
 
-    console.log({ res });
+    // console.log({ res });
 
     setShowLoading(false);
     setShowAlert(true);
@@ -72,7 +72,7 @@ const KYCRegistration = () => {
 
   useEffect(() => {
     setData({ ...data, username: user?.user?.username });
-    console.log(data);
+    // console.log(data);
   }, [account]);
 
   return (
@@ -97,7 +97,7 @@ const KYCRegistration = () => {
         <Form
           onSubmit={(e) => {
             handleSubmit(e);
-            console.log(data);
+            // console.log(data);
           }}
           style={{
             marginTop: "22px",

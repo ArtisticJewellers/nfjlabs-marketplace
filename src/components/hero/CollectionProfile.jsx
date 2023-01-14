@@ -9,6 +9,13 @@ const CollectionProfile = ({ collectionDetail }) => {
   let ipfsNewBannerURL = ipfBannersURL
     ?.toString()
     .replace("ipfs://", "https://gateway.ipfscdn.io/ipfs/");
+
+  let deafaultURL = "https://gateway.ipfscdn.io/ipfs/QmdLnQLGNFeTaDQ3jQMBaPCsz8GJq6xBzcDCN5ppCGcTAs/diamond.gif";
+
+  let ipfAvatarsURL = collectionDetail.avatarImage;
+  let ipfsNewAvatarURL = ipfAvatarsURL
+    ?.toString()
+    .replace("ipfs://", "https://gateway.ipfscdn.io/ipfs/");
   return (
     <div className="mb-100">
       <div className="hero__profile">
@@ -27,7 +34,7 @@ const CollectionProfile = ({ collectionDetail }) => {
                   <div className="avatar_wrap">
                     <img
                       className="avatar avatar-lg"
-                      src={collectionDetail.avatarImage}
+                      src={deafaultURL}
                       alt="avatar"
                     />
                   </div>

@@ -54,7 +54,7 @@ const CreateCollection = () => {
       },
     });
     setIsLoading(false);
-    console.log({ resp });
+    // console.log({ resp });
     history.goBack();
   };
 

@@ -22021,3 +22021,19 @@ select {
     align-items: center;
   }
 }
+
+#phoneHide{
+  display: block;
+}
+#phoneShow{
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  #phoneHide{
+    display: none;
+  }
+  #phoneShow{
+    display: block;
+  }
+}

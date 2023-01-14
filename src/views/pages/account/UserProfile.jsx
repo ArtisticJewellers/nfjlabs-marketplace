@@ -28,10 +28,10 @@ const UserProfile = () => {
   useEffect(() => {
     if (active) {
       checkVerification().then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data === null) {
           VERIFY_ALERT().then(() => {
-            console.log(data);
+            // console.log(data);
             history.push("/edit-profile");
           });
         }

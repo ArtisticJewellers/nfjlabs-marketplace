@@ -101,6 +101,8 @@ const ItemDetails = () => {
   const [UsdPrice, setUsdPrice] = useState(0);
   const [readMore, setReadMore] = useState(false);
   const [isVideo, setIsVideo] = useState(false);
+  const [display, setDisplay] = useState(false);
+
 
   const { data: nftDetails } = useQuery(GetNftDetails, {
     variables: { contractAddress: address, tokenId: parseInt(tokenId) },
@@ -125,6 +127,10 @@ const ItemDetails = () => {
     },
   });
 
+  setTimeout(() => {
+    setDisplay(true);
+  }, 1000);
+
   useEffect(() => {
     window.scrollTo(0, 0);
 
@@ -137,12 +143,12 @@ const ItemDetails = () => {
     if (nftDetails?.getNftDetails?.chainId) {
       fetch(
         "https://cex.io/api/last_price/" +
-          ChainsInfo[nftDetails?.getNftDetails?.chainId]?.CURRENCY_SYMBOL +
-          "/USD"
+        ChainsInfo[nftDetails?.getNftDetails?.chainId]?.CURRENCY_SYMBOL +
+        "/USD"
       )
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           setUsdPrice(parseFloat(data.lprice));
         })
         .catch((err) => console.log(err));
@@ -165,7 +171,6 @@ const ItemDetails = () => {
       setAuctionDetails(data);
     });
     SaleDataset(tokenId, network).then((data) => {
-      // console.log(data);
       setSaleDetails(data);
     });
 
@@ -537,7 +542,7 @@ const ItemDetails = () => {
                           placeholder={"0.0001 WMATIC"}
                           className="form-control"
                           type="number"
-                          // min={MIN_PRICE}
+                        // min={MIN_PRICE}
                         ></Input>
                       </Form.Item>{" "}
                       <Form.Item style={{ marginTop: "20px" }}>
@@ -594,7 +599,7 @@ const ItemDetails = () => {
                       if (active) {
                         if (
                           parseInt(auctionDetails.highestBid) /
-                            Math.pow(10, 18) <
+                          Math.pow(10, 18) <
                           parseFloat(value.price)
                         ) {
                           showLoading();
@@ -666,7 +671,7 @@ const ItemDetails = () => {
                           placeholder={"0.0001 WMATIC"}
                           className="form-control"
                           type="number"
-                          // min={MIN_PRICE}
+                        // min={MIN_PRICE}
                         ></Input>
                       </Form.Item>{" "}
                       <Form.Item style={{ marginTop: "20px" }}>
@@ -781,12 +786,10 @@ const ItemDetails = () => {
                         />
                       )}
                     </div>
+
                     <div className="my-4">
-                      <div>
-                        {/* <h3>Description:</h3>
-                      <p>{metaData?.description}</p> */}
-                      </div>
-                      <div className="my-4">
+                      {/* normal metadata  */}
+                      <div className="my-4" id="phoneHide">
                         <ul
                           style={{
                             fontWeight: "500",
@@ -835,12 +838,6 @@ const ItemDetails = () => {
                             <div>Royalty:</div>
                             <span className="capitalize">5%</span>{" "}
                           </li>
-                          {/* <li className="d-flex justify-content-between mr-4">
-                            <div>External Link:</div>
-                            <a href={metaData?.extLink} target="_blank">
-                              {metaData?.extLink?.slice(0, 10)}...
-                            </a>
-                          </li> */}
                         </ul>
                       </div>
                     </div>
@@ -900,7 +897,7 @@ const ItemDetails = () => {
                         >
                           {auctionDetails.started &&
                             decimalToInt(auctionDetails.highestBid).toFixed(4) +
-                              " "}
+                            " "}
                           {saleDetails.forSale &&
                             decimalToInt(saleDetails.price).toFixed(4) + " "}
                           {
@@ -908,7 +905,7 @@ const ItemDetails = () => {
                               .CURRENCY_SYMBOL
                           }
                         </span>
-                        <br />
+                        {/* <br /> */}
                         <span
                           style={{
                             fontSize: "18px",
@@ -916,7 +913,7 @@ const ItemDetails = () => {
                             color: "black",
                           }}
                         >
-                          $
+                          {" "}($
                           {auctionDetails.started &&
                             (
                               decimalToInt(auctionDetails.highestBid).toFixed(
@@ -928,7 +925,7 @@ const ItemDetails = () => {
                               decimalToInt(saleDetails.price).toFixed(4) *
                               UsdPrice.toFixed(2)
                             ).toFixed(2)}{" "}
-                          USD
+                          USD)
                         </span>
                       </p>
                     </div>
@@ -958,6 +955,60 @@ const ItemDetails = () => {
                       )}
                     </div>
 
+                    {/* metadata phone  */}
+                    <div className="my-4" style={{ paddingBottom: "20px" }} id="phoneShow">
+                      <ul
+                        style={{
+                          fontWeight: "500",
+                          color: "#766767",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "5px",
+                        }}
+                      >
+                        <li className="d-flex justify-content-between mr-4">
+                          <div>Metadata: </div>
+                          <a
+                            href={getIPFSLink(metaData?.ipfsLink)}
+                            target="_blank"
+                            alt="metadata"
+                          >
+                            https://ipfs.com/{metaData?.title?.slice(0, 5)}...
+                          </a>
+                        </li>
+                        <li className="d-flex justify-content-between mr-4">
+                          <div>Contract Address: </div>
+                          <a
+                            href={`${blockURL}address/${address}`}
+                            target="_blank"
+                          >
+                            {truncateAddress(address)}
+                          </a>
+                        </li>
+                        <li className="d-flex justify-content-between mr-4">
+                          <div>TokenID: </div>
+                          <a
+                            href={`${blockURL}token/${address}?a=${tokenId}`}
+                            target="_blank"
+                          >
+                            {tokenId}
+                          </a>
+                        </li>
+                        <li className="d-flex justify-content-between mr-4">
+                          <div>Token Standard:</div> <div>ERC-721</div>
+                        </li>
+                        <li className="d-flex justify-content-between mr-4">
+                          <div>Blockchain:</div>
+                          <span className="capitalize">{network}</span>{" "}
+                        </li>
+                        <li className="d-flex justify-content-between mr-4">
+                          <div>Royalty:</div>
+                          <span className="capitalize">5%</span>{" "}
+                        </li>
+                      </ul>
+                    </div>
+
+                    {/* owner comapny  */}
                     <div style={{ display: "flex", gap: "50px" }}>
                       <div
                         className="avatars space-x-5"
@@ -1048,7 +1099,7 @@ const ItemDetails = () => {
                                 className="avatars_name color_black"
                                 style={{ margin: 0 }}
                               >
-                                {}
+                                { }
                                 {nftDetails?.getNftDetails?.category === "gems"
                                   ? "Company"
                                   : "Artist"}
@@ -1064,6 +1115,8 @@ const ItemDetails = () => {
                         </div>
                       </div>
                     </div>
+
+                    {/* buy and sell btns */}
                     <div
                       className="d-flex justify-content-between"
                       style={{
@@ -1141,12 +1194,11 @@ const ItemDetails = () => {
                       {nftDetails?.getNftDetails?.ownerAddress === account && (
                         <>
                           {saleDetails.forSale ||
-                          auctionDetails.started ||
-                          auctionDetails.ended ? (
+                            auctionDetails.started ||
+                            auctionDetails.ended ? (
                             saleDetails.forSale ? (
                               <span
                                 onClick={() => {
-                                  // console.log(tokenId);
                                   showLoading();
                                   removeFromSale(tokenId)
                                     .send({ from: account })
@@ -1382,6 +1434,7 @@ const ItemDetails = () => {
                       )}
                     </div>
 
+                    {/* other details */}
                     <div style={{ marginTop: "80px" }}>
                       <TabPanelFrom metaData={metaData} />
                     </div>
@@ -1392,7 +1445,8 @@ const ItemDetails = () => {
           )}
         </div>
       </div>
-      <Footer />;
+      {display ? <Footer /> : ""}
+      {/* <Footer /> */}
     </>
   );
 };

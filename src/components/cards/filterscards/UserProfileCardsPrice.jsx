@@ -25,15 +25,15 @@ function UserProfileCardsPrice({ account, active }) {
       )
         .then((res) => res.json())
         .then((data) => {
-          console.log(data.nfts);
+          // console.log(data.nfts);
           setCreatorData(data.nfts);
         })
         .catch((err) => console.log(err));
       fetch(API_ENDPOINT + "/users/" + account)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
-          console.log(account);
+          // console.log(data);
+          // console.log(account);
           // setCreatorData(data.nfts);
           setProfile(data);
         })
@@ -41,7 +41,7 @@ function UserProfileCardsPrice({ account, active }) {
     }
   }, [active, account, selectedOption]);
 
-  console.log(selectedOption);
+  // console.log(selectedOption);
   return (
     <div>
       <div className="mb-30">

@@ -144,7 +144,7 @@ function MenuCategoriesMarket({ cat }) {
   ];
 
   const onFilterChange = (data) => {
-    console.log({ data });
+    // console.log({ data });
     dispatch(setNftData([]));
     setFilterData(data);
   };

@@ -72,12 +72,12 @@ const Header = () => {
       },
     });
     setSearchData(search?.data?.searchNfts);
-    console.log(search?.data?.searchNfts);
+    // console.log(search?.data?.searchNfts);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("form submitted");
+    // console.log("form submitted");
     if (searchData.length < 1) return;
     dispatch(setNftData(searchData));
     history.push("/explore");
@@ -187,7 +187,7 @@ const Header = () => {
                   }}
                   onChange={(e) => {
                     setIsVisible(true);
-                    console.log(e.target.value);
+                    // console.log(e.target.value);
                     setSearchContent(e.target.value);
                     e.target.value.trim() !== ""
                       ? Search(e.target.value, searchNft)
@@ -326,9 +326,8 @@ const Header = () => {
               onClick={toggleClass}
             />
             <div
-              className={` header__mobile js-header-mobile  ${
-                isActive ? "visible" : null
-              } `}
+              className={` header__mobile js-header-mobile  ${isActive ? "visible" : null
+                } `}
             >
               <MobileMenu />
             </div>

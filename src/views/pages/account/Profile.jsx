@@ -23,7 +23,7 @@ const Profile = () => {
         walletAddress: address,
       },
     }).then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.data.user !== null) setCreatorData(res.data.user);
     });
   }, []);
@@ -59,7 +59,7 @@ const Profile = () => {
 };
 
 const HeroProfile = ({ address, creatorData }) => {
-  console.log(creatorData);
+  // console.log(creatorData);
 
   return (
     <div className="mb-100">
@@ -120,7 +120,7 @@ const HeroProfile = ({ address, creatorData }) => {
   );
 };
 const SidebarProfile = ({ creatorData }) => {
-  console.log(creatorData);
+  // console.log(creatorData);
   return (
     <div className="profile__sidebar">
       <div className="space-y-40">
@@ -218,19 +218,18 @@ const CardProfile = ({ creatorData }) => {
 
                   <div className="card_head">
                     <Link
-                      to={`/item/${val.network}/${
-                        ChainsInfo[val.chainId].NFT_ADDRESS
-                      }/${val.tokenId}`}
+                      to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS
+                        }/${val.tokenId}`}
                     >
                       {val.imageUrl?.includes(".mp4") ? (<video
                         // className="item_img"
                         style={{ objectFit: "cover", width: "100%", height: "100%" }}
-                        src={val.imageUrl }
+                        src={val.imageUrl}
                         autoPlay="autoplay"
                         loop="true"
                       ></video>) :
                         (<img
-                          src={val.imageUrl }
+                          src={val.imageUrl}
                           alt="nftimage"
                         />)
                       }

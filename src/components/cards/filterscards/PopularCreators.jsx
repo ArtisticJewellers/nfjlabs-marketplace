@@ -72,7 +72,7 @@ function PopularCreators() {
     fetch(API_ENDPOINT + "/nft/getCreators")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.nfts);
+        // console.log(data.nfts);
         setCreatorData(data.nfts);
       });
   }, []);

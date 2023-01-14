@@ -179,7 +179,7 @@ const UploadComponent = () => {
                   nftId: obj.nftId,
                 },
               });
-              console.log({ resp });
+              // console.log({ resp });
               MINT_ALERT();
               hideLoading();
             })
@@ -607,7 +607,7 @@ const UploadComponent = () => {
                 <div className="text-center">
                   <div
                     className="text-center"
-                    // onClick={update}
+                  // onClick={update}
                   >
                     <div className="btn  btn-grad">Connect Wallet</div>
                   </div>

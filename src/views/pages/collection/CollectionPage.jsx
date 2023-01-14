@@ -46,6 +46,8 @@ const CollectionPage = () => {
     fetchCollectionDetail();
   }, [user]);
 
+  // console.log(collectionDetail);
+
   return (
     <div>
       <Header />

@@ -5,7 +5,7 @@ import { truncateAddress } from "../../utils/utility";
 
 const HeroProfile = ({ userProfile }) => {
   const { account } = useWeb3React();
-  console.log(userProfile);
+  // console.log(userProfile);
   return (
     <div className="mb-100">
       <div className="hero__profile">

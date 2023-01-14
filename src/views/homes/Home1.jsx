@@ -559,7 +559,7 @@ const ArtistCard = ({ index, val }) => {
                               },
                             },
                           ],
-                        }).then((res) => console.log(res.data));
+                        });
                       } else {
                         WALLET_ALERT();
                       }
@@ -599,7 +599,8 @@ const ArtistCard = ({ index, val }) => {
                               },
                             },
                           ],
-                        }).then((res) => console.log(res.data));
+                        });
+                        // }).then((res) => console.log(res.data));
                       } else {
                         WALLET_ALERT();
                       }
@@ -672,9 +673,8 @@ function NftCard({ val }) {
 
                 <div className="card_head">
                   <Link
-                    to={`/item/${val.network}/${
-                      ChainsInfo[val.chainId].NFT_ADDRESS
-                    }/${val.tokenId}`}
+                    to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS
+                      }/${val.tokenId}`}
                   >
                     {val.imageUrl?.includes(".mp4") ? (
                       <video
