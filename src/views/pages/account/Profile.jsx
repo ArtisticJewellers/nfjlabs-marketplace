@@ -18,6 +18,10 @@ const Profile = () => {
   const [userInfo] = useLazyQuery(UserDetails);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
+  useEffect(() => {
     userInfo({
       variables: {
         walletAddress: address,
@@ -27,6 +31,7 @@ const Profile = () => {
       if (res.data.user !== null) setCreatorData(res.data.user);
     });
   }, []);
+
   return (
     <div>
       <Header />
@@ -34,7 +39,7 @@ const Profile = () => {
         <HeroProfile address={address} creatorData={creatorData} />
         <div className="container">
           <div className="row justify-content-center">
-            <div className="col-lg-3 col-md-7 order-md-0 order-1">
+            <div className="col-lg-3 col-md-7 order-md-0">
               <SidebarProfile creatorData={creatorData} />
             </div>
             <div className="col-lg-9 col-md-12 order-md-1 order-0">
@@ -43,6 +48,7 @@ const Profile = () => {
                   <Tabs className="space-x-10">
                     <div className="d-flex  justify-content-between"></div>
                     <div className="mt-4  tab-content">
+                      <h5>My NFTs</h5>
                       <CardProfile creatorData={creatorData} />
                     </div>
                   </Tabs>
@@ -189,7 +195,7 @@ const SidebarProfile = ({ creatorData }) => {
                     rel="noreferrer"
                     target="_blank"
                   >
-                    <i className="ri-website" />
+                    <i className="ri-website-line" />
                     <span className="color_text">Website</span>
                   </a>
                 </li>
@@ -204,6 +210,7 @@ const SidebarProfile = ({ creatorData }) => {
 const CardProfile = ({ creatorData }) => {
   return (
     <div className="row mb-30_reset">
+      {/* <h5>My NFTs</h5> */}
       {creatorData?.nfts?.map((val, i) => (
         <>
           {val.isApproved && (

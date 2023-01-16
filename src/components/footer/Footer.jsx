@@ -11,7 +11,8 @@ function Footer() {
       }}
     >
       <footer className="footer__1" style={{ marginTop: "0" }}>
-        <div className="container px-5">
+
+        <div className="phoneHidden container px-5">
           <div className="row " style={{ marginBottom: "100px" }}>
             <div className="col-lg-6 space-y-20 ">
               <h2 style={{ color: "white", lineHeight: 1.4 }}>
@@ -35,15 +36,16 @@ function Footer() {
             </div>
           </div>
         </div>
+
         <div
-          className=""
+          className="phoneHidden"
           style={{
             padding: "5px",
             margin: "50px 0 ",
             background: "linear-gradient(90deg, #4B2BE9,#E70FD1, #F0F442)",
           }}
         >
-          {}{" "}
+          { }{" "}
         </div>
         <div className="container px-5">
           <div className="row">
@@ -133,6 +135,11 @@ function Footer() {
                 Company
               </h6>
               <ul className="footer__list">
+                <li>
+                  <a href="https://nfjlabs.com/" target="_blank" style={{ color: "white" }}>
+                    Official Website
+                  </a>
+                </li>
                 <li>
                   <Link to="/privacy" style={{ color: "white" }}>
                     Privacy Policy

@@ -26,6 +26,9 @@ const UserProfile = () => {
     },
   });
   useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+  useEffect(() => {
     if (active) {
       checkVerification().then((data) => {
         // console.log(data);
@@ -47,7 +50,7 @@ const UserProfile = () => {
           <HeroProfile userProfile={profile?.user} />
           <div className="container">
             <div className="row justify-content-center">
-              <div className="col-lg-3 col-md-7 order-md-0 order-1">
+              <div className="col-lg-3 col-md-7 order-md-0">
                 <SidebarProfile userProfile={profile?.user} />
               </div>
               <div className="col-lg-9 col-md-12 order-md-1 order-0">
@@ -55,7 +58,8 @@ const UserProfile = () => {
                   <div className="d-flex justify-content-between">
                     <Tabs className="space-x-10">
                       <div className="d-flex justify-content-between"></div>
-                      <div className="tab-content">
+                      <div className="tab-content" style={{ paddingTop: "20px" }}>
+                        <h5>My NFTs</h5>
                         <CardProfile creatorData={profile?.user} />
                       </div>
                     </Tabs>
