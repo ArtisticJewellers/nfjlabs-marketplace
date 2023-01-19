@@ -134,7 +134,7 @@ const FilterComponent = ({ onFilterChange, defaultCat }) => {
       onFilterChange({
         price: price,
         category: defaultCat,
-        subcategory: "",
+        subcategory: subCategorys,
         network: networks,
         isListed: isList,
       });

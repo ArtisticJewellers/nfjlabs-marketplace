@@ -5,6 +5,7 @@ import Header from "../../../components/header/Header";
 import useDocumentTitle from "../../../components/useDocumentTitle";
 import MenuCategoriesMarket from "../elements/MenuCategoriesMarket";
 import { useParams } from "react-router-dom";
+
 const Marketplace = () => {
   const param = useParams();
   const { cat } = param;
