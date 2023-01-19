@@ -145,8 +145,8 @@ const ItemDetails = () => {
     if (nftDetails?.getNftDetails?.chainId) {
       fetch(
         "https://cex.io/api/last_price/" +
-          ChainsInfo[nftDetails?.getNftDetails?.chainId]?.CURRENCY_SYMBOL +
-          "/USD"
+        ChainsInfo[nftDetails?.getNftDetails?.chainId]?.CURRENCY_SYMBOL +
+        "/USD"
       )
         .then((res) => res.json())
         .then((data) => {
@@ -546,7 +546,7 @@ const ItemDetails = () => {
                           placeholder={"0.0001 WMATIC"}
                           className="form-control"
                           type="number"
-                          // min={MIN_PRICE}
+                        // min={MIN_PRICE}
                         ></Input>
                       </Form.Item>{" "}
                       <Form.Item style={{ marginTop: "20px" }}>
@@ -603,7 +603,7 @@ const ItemDetails = () => {
                       if (active) {
                         if (
                           parseInt(auctionDetails.highestBid) /
-                            Math.pow(10, 18) <
+                          Math.pow(10, 18) <
                           parseFloat(value.price)
                         ) {
                           showLoading();
@@ -675,7 +675,7 @@ const ItemDetails = () => {
                           placeholder={"0.0001 WMATIC"}
                           className="form-control"
                           type="number"
-                          // min={MIN_PRICE}
+                        // min={MIN_PRICE}
                         ></Input>
                       </Form.Item>{" "}
                       <Form.Item style={{ marginTop: "20px" }}>
@@ -764,6 +764,7 @@ const ItemDetails = () => {
           }}
           height={400}
           width={400}
+          style={{ marginTop: "10%" }}
         />
       ) : (
         <>
@@ -924,7 +925,7 @@ const ItemDetails = () => {
                                 ) + " "}
                               {saleDetails.forSale &&
                                 decimalToInt(saleDetails.price).toFixed(4) +
-                                  " "}
+                                " "}
                               {
                                 ChainsInfo[getNetworkChainID(network)]
                                   .CURRENCY_SYMBOL
@@ -1130,9 +1131,9 @@ const ItemDetails = () => {
                                     className="avatars_name color_black"
                                     style={{ margin: 0 }}
                                   >
-                                    {}
+                                    { }
                                     {nftDetails?.getNftDetails?.category ===
-                                    "gems"
+                                      "gems"
                                       ? "Company"
                                       : "Artist"}
                                   </p>
@@ -1225,171 +1226,17 @@ const ItemDetails = () => {
                           </div>
                           {nftDetails?.getNftDetails?.ownerAddress ===
                             account && (
-                            <>
-                              {saleDetails.forSale ||
-                              auctionDetails.started ||
-                              auctionDetails.ended ? (
-                                saleDetails.forSale ? (
-                                  <span
-                                    onClick={() => {
-                                      showLoading();
-                                      removeFromSale(tokenId)
-                                        .send({ from: account })
-                                        .then(async () => {
-                                          await nftListedFun(
-                                            false,
-                                            nftDetails?.getNftDetails?._id
-                                          );
-                                          await nftUpdateInfo(
-                                            0.0,
-                                            nftDetails?.getNftDetails?._id,
-                                            false
-                                          ).then(() => {
-                                            REMOVE_SALE_ALERT();
-                                          });
-                                          await transCreate(
-                                            "remove_on_sale",
-                                            signInWalletAddress?.signIn?.user
-                                              ?._id,
-                                            signInOwner?.signIn?.user?._id,
-                                            nftDetails?.getNftDetails?._id
-                                          );
-                                          hideLoading();
-                                        })
-                                        .catch(() => {
-                                          hideLoading();
-                                        });
-                                    }}
-                                    className=" btn btn-border  btn-grad btn-tran"
-                                    style={{
-                                      color: "#fff",
-                                      borderRadius: "999px",
-                                    }}
-                                  >
-                                    Remove From Sale
-                                  </span>
-                                ) : (
-                                  <>
-                                    {auctionDetails.started && (
-                                      <span
-                                        onClick={() => {
-                                          showLoading();
-                                          cancelAuction(tokenId)
-                                            .send({ from: account })
-                                            .then(async () => {
-                                              await nftListedFun(
-                                                false,
-                                                nftDetails?.getNftDetails?._id
-                                              );
-                                              await nftUpdateInfo(
-                                                0.0,
-                                                nftDetails?.getNftDetails?._id,
-                                                false
-                                              ).then(() =>
-                                                REMOVE_AUCTION_ALERT()
-                                              );
-                                              await transCreate(
-                                                "remove_on_auction",
-                                                signInWalletAddress?.signIn
-                                                  ?.user?._id,
-                                                signInOwner?.signIn?.user?._id,
-                                                nftDetails?.getNftDetails?._id
-                                              );
-                                              hideLoading();
-                                            })
-                                            .catch(() => {
-                                              hideLoading();
-                                            });
-                                        }}
-                                        className=" btn btn-border  btn-grad btn-tran"
-                                        style={{
-                                          color: "#fff",
-                                          borderRadius: "999px",
-                                        }}
-                                      >
-                                        Remove From Auction
-                                      </span>
-                                    )}
-                                    {auctionDetails.ended && (
-                                      <span
-                                        onClick={() => {
-                                          showLoading();
-                                          cancelAuction(tokenId)
-                                            .send({ from: account })
-                                            .then(async () => {
-                                              await nftListedFun(
-                                                false,
-                                                nftDetails?.getNftDetails?._id
-                                              );
-                                              await nftUpdateInfo(
-                                                0.0,
-                                                nftDetails?.getNftDetails?._id,
-                                                false
-                                              ).then(() =>
-                                                REMOVE_AUCTION_ALERT()
-                                              );
-                                              await transCreate(
-                                                "remove_on_auction",
-                                                signInWalletAddress?.signIn
-                                                  ?.user?._id,
-                                                signInOwner?.signIn?.user?._id,
-                                                nftDetails?.getNftDetails?._id
-                                              );
-                                              hideLoading();
-                                            })
-                                            .catch(() => {
-                                              hideLoading();
-                                            });
-                                        }}
-                                        className=" btn btn-border  btn-grad btn-tran"
-                                        style={{
-                                          color: "#fff",
-                                          borderRadius: "999px",
-                                        }}
-                                      >
-                                        Remove From Auction
-                                      </span>
-                                    )}
-                                  </>
-                                )
-                              ) : (
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    flexWrap: "wrap",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  {" "}
-                                  <div>
-                                    <PutAuctionModal />
-                                  </div>
-                                  <div>
-                                    <PutMarketplaceModal
-                                      nftDetails={nftDetails?.getNftDetails}
-                                    />
-                                  </div>
-                                </div>
-                              )}
-                            </>
-                          )}
-
-                          {nftDetails?.getNftDetails?.ownerAddress !==
-                            account && (
-                            <>
-                              {(saleDetails.forSale ||
-                                auctionDetails.started) &&
-                                (saleDetails.forSale ? (
-                                  <span
-                                    onClick={async () => {
-                                      if (active) {
+                              <>
+                                {saleDetails.forSale ||
+                                  auctionDetails.started ||
+                                  auctionDetails.ended ? (
+                                  saleDetails.forSale ? (
+                                    <span
+                                      onClick={() => {
                                         showLoading();
-                                        await purchaseNFT(
-                                          tokenId,
-                                          nftDetails?.getNftDetails?.price
-                                        )
-                                          .then(async (res) => {
+                                        removeFromSale(tokenId)
+                                          .send({ from: account })
+                                          .then(async () => {
                                             await nftListedFun(
                                               false,
                                               nftDetails?.getNftDetails?._id
@@ -1398,30 +1245,11 @@ const ItemDetails = () => {
                                               0.0,
                                               nftDetails?.getNftDetails?._id,
                                               false
-                                            ).then(() =>
-                                              REMOVE_AUCTION_ALERT()
-                                            );
-                                            await nftOwnerUpdate({
-                                              variables: {
-                                                ownerAddress: account,
-                                                nftId:
-                                                  nftDetails?.getNftDetails
-                                                    ?._id,
-                                              },
-                                              refetchQueries: [
-                                                {
-                                                  query: GetNftDetails,
-                                                  variables: {
-                                                    contractAddress: address,
-                                                    tokenId: parseInt(tokenId),
-                                                  },
-                                                },
-                                              ],
-                                            }).then((res) => {
-                                              BUY_NFT_ALERT();
+                                            ).then(() => {
+                                              REMOVE_SALE_ALERT();
                                             });
                                             await transCreate(
-                                              "purchase_nft",
+                                              "remove_on_sale",
                                               signInWalletAddress?.signIn?.user
                                                 ?._id,
                                               signInOwner?.signIn?.user?._id,
@@ -1432,56 +1260,229 @@ const ItemDetails = () => {
                                           .catch(() => {
                                             hideLoading();
                                           });
-                                      } else {
-                                        WALLET_ALERT();
-                                      }
-                                    }}
-                                    className=" btn btn-border  btn-grad btn-tran"
+                                      }}
+                                      className=" btn btn-border  btn-grad btn-tran"
+                                      style={{
+                                        color: "#fff",
+                                        borderRadius: "999px",
+                                      }}
+                                    >
+                                      Remove From Sale
+                                    </span>
+                                  ) : (
+                                    <>
+                                      {auctionDetails.started && (
+                                        <span
+                                          onClick={() => {
+                                            showLoading();
+                                            cancelAuction(tokenId)
+                                              .send({ from: account })
+                                              .then(async () => {
+                                                await nftListedFun(
+                                                  false,
+                                                  nftDetails?.getNftDetails?._id
+                                                );
+                                                await nftUpdateInfo(
+                                                  0.0,
+                                                  nftDetails?.getNftDetails?._id,
+                                                  false
+                                                ).then(() =>
+                                                  REMOVE_AUCTION_ALERT()
+                                                );
+                                                await transCreate(
+                                                  "remove_on_auction",
+                                                  signInWalletAddress?.signIn
+                                                    ?.user?._id,
+                                                  signInOwner?.signIn?.user?._id,
+                                                  nftDetails?.getNftDetails?._id
+                                                );
+                                                hideLoading();
+                                              })
+                                              .catch(() => {
+                                                hideLoading();
+                                              });
+                                          }}
+                                          className=" btn btn-border  btn-grad btn-tran"
+                                          style={{
+                                            color: "#fff",
+                                            borderRadius: "999px",
+                                          }}
+                                        >
+                                          Remove From Auction
+                                        </span>
+                                      )}
+                                      {auctionDetails.ended && (
+                                        <span
+                                          onClick={() => {
+                                            showLoading();
+                                            cancelAuction(tokenId)
+                                              .send({ from: account })
+                                              .then(async () => {
+                                                await nftListedFun(
+                                                  false,
+                                                  nftDetails?.getNftDetails?._id
+                                                );
+                                                await nftUpdateInfo(
+                                                  0.0,
+                                                  nftDetails?.getNftDetails?._id,
+                                                  false
+                                                ).then(() =>
+                                                  REMOVE_AUCTION_ALERT()
+                                                );
+                                                await transCreate(
+                                                  "remove_on_auction",
+                                                  signInWalletAddress?.signIn
+                                                    ?.user?._id,
+                                                  signInOwner?.signIn?.user?._id,
+                                                  nftDetails?.getNftDetails?._id
+                                                );
+                                                hideLoading();
+                                              })
+                                              .catch(() => {
+                                                hideLoading();
+                                              });
+                                          }}
+                                          className=" btn btn-border  btn-grad btn-tran"
+                                          style={{
+                                            color: "#fff",
+                                            borderRadius: "999px",
+                                          }}
+                                        >
+                                          Remove From Auction
+                                        </span>
+                                      )}
+                                    </>
+                                  )
+                                ) : (
+                                  <div
                                     style={{
-                                      color: "#fff",
-                                      borderRadius: "999px",
+                                      display: "flex",
+                                      flexWrap: "wrap",
+                                      justifyContent: "center",
+                                      alignItems: "center",
                                     }}
                                   >
-                                    Buy Now
-                                  </span>
-                                ) : (
-                                  <>
-                                    {AllBiddres.includes(account) ? (
-                                      <span
-                                        className=" btn btn-border btn-grad btn-tran"
-                                        style={{
-                                          color: "#fff",
-                                          borderRadius: "999px",
-                                        }}
-                                        onClick={() => {
+                                    {" "}
+                                    <div>
+                                      <PutAuctionModal />
+                                    </div>
+                                    <div>
+                                      <PutMarketplaceModal
+                                        nftDetails={nftDetails?.getNftDetails}
+                                      />
+                                    </div>
+                                  </div>
+                                )}
+                              </>
+                            )}
+
+                          {nftDetails?.getNftDetails?.ownerAddress !==
+                            account && (
+                              <>
+                                {(saleDetails.forSale ||
+                                  auctionDetails.started) &&
+                                  (saleDetails.forSale ? (
+                                    <span
+                                      onClick={async () => {
+                                        if (active) {
                                           showLoading();
-                                          bidCancelByUser(tokenId)
-                                            .send({
-                                              from: account,
-                                            })
-                                            .then((res) => {
-                                              CANCEL_BID_ALERT();
+                                          await purchaseNFT(
+                                            tokenId,
+                                            nftDetails?.getNftDetails?.price
+                                          )
+                                            .then(async (res) => {
+                                              await nftListedFun(
+                                                false,
+                                                nftDetails?.getNftDetails?._id
+                                              );
+                                              await nftUpdateInfo(
+                                                0.0,
+                                                nftDetails?.getNftDetails?._id,
+                                                false
+                                              ).then(() =>
+                                                REMOVE_AUCTION_ALERT()
+                                              );
+                                              await nftOwnerUpdate({
+                                                variables: {
+                                                  ownerAddress: account,
+                                                  nftId:
+                                                    nftDetails?.getNftDetails
+                                                      ?._id,
+                                                },
+                                                refetchQueries: [
+                                                  {
+                                                    query: GetNftDetails,
+                                                    variables: {
+                                                      contractAddress: address,
+                                                      tokenId: parseInt(tokenId),
+                                                    },
+                                                  },
+                                                ],
+                                              }).then((res) => {
+                                                BUY_NFT_ALERT();
+                                              });
+                                              await transCreate(
+                                                "purchase_nft",
+                                                signInWalletAddress?.signIn?.user
+                                                  ?._id,
+                                                signInOwner?.signIn?.user?._id,
+                                                nftDetails?.getNftDetails?._id
+                                              );
                                               hideLoading();
                                             })
                                             .catch(() => {
                                               hideLoading();
-                                              SOMTHING_WENT_WRONG_ALERT();
                                             });
-                                        }}
-                                      >
-                                        Cancel Bid
-                                      </span>
-                                    ) : (
-                                      active && (
-                                        <PlaceBidModal
-                                          auctionDetails={auctionDetails}
-                                        />
-                                      )
-                                    )}
-                                  </>
-                                ))}
-                            </>
-                          )}
+                                        } else {
+                                          WALLET_ALERT();
+                                        }
+                                      }}
+                                      className=" btn btn-border  btn-grad btn-tran"
+                                      style={{
+                                        color: "#fff",
+                                        borderRadius: "999px",
+                                      }}
+                                    >
+                                      Buy Now
+                                    </span>
+                                  ) : (
+                                    <>
+                                      {AllBiddres.includes(account) ? (
+                                        <span
+                                          className=" btn btn-border btn-grad btn-tran"
+                                          style={{
+                                            color: "#fff",
+                                            borderRadius: "999px",
+                                          }}
+                                          onClick={() => {
+                                            showLoading();
+                                            bidCancelByUser(tokenId)
+                                              .send({
+                                                from: account,
+                                              })
+                                              .then((res) => {
+                                                CANCEL_BID_ALERT();
+                                                hideLoading();
+                                              })
+                                              .catch(() => {
+                                                hideLoading();
+                                                SOMTHING_WENT_WRONG_ALERT();
+                                              });
+                                          }}
+                                        >
+                                          Cancel Bid
+                                        </span>
+                                      ) : (
+                                        active && (
+                                          <PlaceBidModal
+                                            auctionDetails={auctionDetails}
+                                          />
+                                        )
+                                      )}
+                                    </>
+                                  ))}
+                              </>
+                            )}
                         </div>
 
                         {/* other details */}
