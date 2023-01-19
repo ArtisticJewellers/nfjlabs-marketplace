@@ -1446,7 +1446,6 @@ const ItemDetails = () => {
         </div>
       </div>
       {display ? <Footer /> : ""}
-      <Footer />
     </>
   );
 };
