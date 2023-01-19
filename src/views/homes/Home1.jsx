@@ -387,11 +387,16 @@ const TrendingNfts = () => {
           spaceBetween={70}
           slidesPerGroup={2}
           loop={false}
+          navigation={{
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+            enabled: true
+          }}
           loopFillGroupWithBlank={true}
           // pagination={{
           //   clickable: true,
           // }}
-          navigation={true}
+          // navigation={true}
           modules={[Pagination, Navigation]}
           className="mySwiper"
         >
