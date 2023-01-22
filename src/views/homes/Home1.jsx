@@ -388,9 +388,9 @@ const TrendingNfts = () => {
           slidesPerGroup={2}
           loop={false}
           navigation={{
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-            enabled: true
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+            enabled: true,
           }}
           loopFillGroupWithBlank={true}
           // pagination={{
@@ -681,8 +681,9 @@ function NftCard({ val }) {
 
                 <div className="card_head">
                   <Link
-                    to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS
-                      }/${val.tokenId}`}
+                    to={`/item/${val.network}/${
+                      ChainsInfo[val.chainId].NFT_ADDRESS
+                    }/${val.tokenId}`}
                   >
                     {val.imageUrl?.includes(".mp4") ? (
                       <video

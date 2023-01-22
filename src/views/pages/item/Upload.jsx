@@ -29,7 +29,6 @@ import polygon from "../../../assets/icon/polygon.png";
 import ethereum from "../../../assets/icon/eth.svg";
 import binance from "../../../assets/icon/bnb.svg";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
-
 const UploadComponent = () => {
   const [collections, setCollections] = useState([
     { label: "", value: "", id: "" },
@@ -118,6 +117,12 @@ const UploadComponent = () => {
   let selectedCollection;
 
   const handleSubmitNFT = async (value) => {
+    console.log({ value });
+    if (!value.collection) {
+      history.push("/collections");
+      return alert("Please Create A NFT Collection Before Minting Any NFT");
+    }
+
     if (!active) {
       WALLET_ALERT();
     } else {
@@ -131,9 +136,11 @@ const UploadComponent = () => {
         // unlock: value.unlock,
       };
       showLoading();
+      console.log({ metadata });
       let uri = await uploadOnIpfs(metadata);
       let url = await downloadJSONOnIpfs(uri);
-      selectedCollection = value.collection.id;
+      selectedCollection = "default" || value.collection.id;
+      console.log({ uri });
 
       mintNFT(uri)
         .send({
@@ -179,7 +186,7 @@ const UploadComponent = () => {
                   nftId: obj.nftId,
                 },
               });
-              // console.log({ resp });
+              console.log({ resp });
               MINT_ALERT();
               hideLoading();
             })
@@ -607,7 +614,7 @@ const UploadComponent = () => {
                 <div className="text-center">
                   <div
                     className="text-center"
-                  // onClick={update}
+                    // onClick={update}
                   >
                     <div className="btn  btn-grad">Connect Wallet</div>
                   </div>

@@ -76,7 +76,7 @@ const Routes = () => {
           <Route path="/collection/create" component={CreateCollection} />
           <Route path="/collections" component={Collections} />
           <Route path="/collection/:id" component={CollectionPage} />
-
+          
           <Route path="/contact" component={Contact} />
           <Route path="/faq" component={Faq} />
           <Route component={NotFound} />
