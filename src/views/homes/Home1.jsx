@@ -30,9 +30,9 @@ import { useWeb3React } from "@web3-react/core";
 import { ChainsInfo } from "../../config/config-chains";
 import Navbar from "../../components/header/Navbar/Navbar";
 import Typewriter from "typewriter-effect";
-import jhumka from "../../assets/nfts/jhumka.gif";
+import jhumka from "../../assets/nfts/golestan.gif";
 import dolce from "../../assets/nfts/alessio/dolce.gif";
-import ring2 from "../../assets/nfts/ring2.gif";
+import ring2 from "../../assets/nfts/tree.gif";
 import Alert from "react-bootstrap/Alert";
 import Sub_Cat_Card from "../../components/subCatCard/Sub_Cat_Card";
 
@@ -145,7 +145,7 @@ const Marketplace = () => {
                           <div className="img1Div">
                             <Link
                               to={
-                                "item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/5"
+                                "item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/13"
                               }
                             >
                               <img
@@ -156,10 +156,10 @@ const Marketplace = () => {
                             </Link>
                             <div className="hidden1Div">
                               <h2>
-                                Aleksandra{" "}
+                                @Alessio.B{" "}
                                 <MdVerified color="#009eee" size={20} />
                               </h2>
-                              <span>The Avya Jhumka</span>
+                              <span>The Golestan Palace Ring</span>
                             </div>
                           </div>
                         </div>
@@ -170,7 +170,7 @@ const Marketplace = () => {
                           <div className="img2Div">
                             <Link
                               to={
-                                "item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/11"
+                                "item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/98"
                               }
                             >
                               <img
@@ -181,7 +181,7 @@ const Marketplace = () => {
                             </Link>
                             <div className="hidden2Div">
                               <h2>
-                                @Aleesio.B{" "}
+                                @Alessio.B{" "}
                                 <MdVerified color="#009eee" size={15} />
                               </h2>
                               <span>Dolce Vita</span>
@@ -190,7 +190,7 @@ const Marketplace = () => {
                           <div className="img3Div">
                             <Link
                               to={
-                                "item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/3"
+                                "item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/12"
                               }
                             >
                               <img
@@ -201,10 +201,10 @@ const Marketplace = () => {
                             </Link>
                             <div className="hidden3Div">
                               <h2>
-                                Aleksandra{" "}
+                                @Alessio.B{" "}
                                 <MdVerified color="#009eee" size={15} />
                               </h2>
-                              <span>Basic Band</span>
+                              <span>The Tree Of Life</span>
                             </div>
                           </div>
                         </div>

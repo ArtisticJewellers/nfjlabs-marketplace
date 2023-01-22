@@ -764,7 +764,7 @@ const ItemDetails = () => {
           }}
           height={400}
           width={400}
-          style={{ marginTop: "10%" }}
+          style={{ marginTop: "10%", justifyContent: "center", alignItems: "center" }}
         />
       ) : (
         <>
@@ -775,9 +775,6 @@ const ItemDetails = () => {
                 padding: "60px 5px",
               }}
             >
-              {/* <Link to="/explore" className="btn btn-white btn-sm my-40">
-          Back to home
-        </Link> */}
               {false ? (
                 <div>
                   <Loading />
