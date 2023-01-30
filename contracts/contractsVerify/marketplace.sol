@@ -1,235 +1,13 @@
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.16;
-
-import "@openzeppelin/contracts/interfaces/IERC165.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-
-interface IWETH {
-    function transfer(address to, uint256 amount) external returns (bool);
-
-    function transferFrom(
-        address from,
-        address to,
-        uint256 amount
-    ) external returns (bool);
-}
-
-interface IERC165 {
-    /**
-     * @dev Returns true if this contract implements the interface defined by
-     * `interfaceId`. See the corresponding
-     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]
-     * to learn more about how these ids are created.
-     *
-     * This function call must use less than 30 000 gas.
-     */
-    function supportsInterface(bytes4 interfaceId) external view returns (bool);
-}
-
-interface IERC721 is IERC165 {
-    /**
-     * @dev Emitted when `tokenId` token is transferred from `from` to `to`.
-     */
-    event Transfer(
-        address indexed from,
-        address indexed to,
-        uint256 indexed tokenId
-    );
-
-    /**
-     * @dev Emitted when `owner` enables `approved` to manage the `tokenId` token.
-     */
-    event Approval(
-        address indexed owner,
-        address indexed approved,
-        uint256 indexed tokenId
-    );
-
-    /**
-     * @dev Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets.
-     */
-    event ApprovalForAll(
-        address indexed owner,
-        address indexed operator,
-        bool approved
-    );
-
-    /**
-     * @dev Returns the number of tokens in ``owner``'s account.
-     */
-    function balanceOf(address owner) external view returns (uint256 balance);
-
-    /**
-     * @dev Returns the owner of the `tokenId` token.
-     *
-     * Requirements:
-     *
-     * - `tokenId` must exist.
-     */
-    function ownerOf(uint256 tokenId) external view returns (address owner);
-
-    /**
-     * @dev Safely transfers `tokenId` token from `from` to `to`.
-     *
-     * Requirements:
-     *
-     * - `from` cannot be the zero address.
-     * - `to` cannot be the zero address.
-     * - `tokenId` token must exist and be owned by `from`.
-     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.
-     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.
-     *
-     * Emits a {Transfer} event.
-     */
-    function safeTransferFrom(
-        address from,
-        address to,
-        uint256 tokenId,
-        bytes calldata data
-    ) external;
-
-    /**
-     * @dev Safely transfers `tokenId` token from `from` to `to`, checking first that contract recipients
-     * are aware of the ERC721 protocol to prevent tokens from being forever locked.
-     *
-     * Requirements:
-     *
-     * - `from` cannot be the zero address.
-     * - `to` cannot be the zero address.
-     * - `tokenId` token must exist and be owned by `from`.
-     * - If the caller is not `from`, it must have been allowed to move this token by either {approve} or {setApprovalForAll}.
-     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.
-     *
-     * Emits a {Transfer} event.
-     */
-    function safeTransferFrom(
-        address from,
-        address to,
-        uint256 tokenId
-    ) external;
-
-    /**
-     * @dev Transfers `tokenId` token from `from` to `to`.
-     *
-     * WARNING: Usage of this method is discouraged, use {safeTransferFrom} whenever possible.
-     *
-     * Requirements:
-     *
-     * - `from` cannot be the zero address.
-     * - `to` cannot be the zero address.
-     * - `tokenId` token must be owned by `from`.
-     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.
-     *
-     * Emits a {Transfer} event.
-     */
-    function transferFrom(
-        address from,
-        address to,
-        uint256 tokenId
-    ) external;
-
-    /**
-     * @dev Gives permission to `to` to transfer `tokenId` token to another account.
-     * The approval is cleared when the token is transferred.
-     *
-     * Only a single account can be approved at a time, so approving the zero address clears previous approvals.
-     *
-     * Requirements:
-     *
-     * - The caller must own the token or be an approved operator.
-     * - `tokenId` must exist.
-     *
-     * Emits an {Approval} event.
-     */
-    function approve(address to, uint256 tokenId) external;
-
-    /**
-     * @dev Approve or remove `operator` as an operator for the caller.
-     * Operators can call {transferFrom} or {safeTransferFrom} for any token owned by the caller.
-     *
-     * Requirements:
-     *
-     * - The `operator` cannot be the caller.
-     *
-     * Emits an {ApprovalForAll} event.
-     */
-    function setApprovalForAll(address operator, bool _approved) external;
-
-    /**
-     * @dev Returns the account approved for `tokenId` token.
-     *
-     * Requirements:
-     *
-     * - `tokenId` must exist.
-     */
-    function getApproved(uint256 tokenId)
-        external
-        view
-        returns (address operator);
-
-    /**
-     * @dev Returns if the `operator` is allowed to manage all of the assets of `owner`.
-     *
-     * See {setApprovalForAll}
-     */
-    function isApprovedForAll(address owner, address operator)
-        external
-        view
-        returns (bool);
-
-    function getRoyaltyAndPlatformFeeDetails(uint256 _nftId)
-        external
-        view
-        returns (
-            uint256,
-            address,
-            uint256,
-            address
-        );
-
-    function MAX_BPS() external view returns (uint128);
-}
-
-abstract contract ReentrancyGuard {
-    uint256 private constant _NOT_ENTERED = 1;
-    uint256 private constant _ENTERED = 2;
-
-    uint256 private _status;
-
-    constructor() {
-        _status = _NOT_ENTERED;
-    }
-
-    modifier nonReentrant() {
-        _nonReentrantBefore();
-        _;
-        _nonReentrantAfter();
-    }
-
-    function _nonReentrantBefore() private {
-        require(_status != _ENTERED, "ReentrancyGuard: reentrant call");
-        _status = _ENTERED;
-    }
-
-    function _nonReentrantAfter() private {
-        _status = _NOT_ENTERED;
-    }
-}
-
 contract AJMarketplace is ReentrancyGuard {
     address public nftContractAddr;
     event Print(uint256 intVal, address addrVal, string stringVal, bool result);
     address public owner;
-    // uint256[] public nftAmount;
-    // mapping(uint256 => address[] ) public  allBidersAddress;
-
-    // uint256 public transactionId;
     struct allBiddersRec {
         address[] biddersAddr;
         bool[] bidStatus;
         uint256 bidderLenth;
     }
-    mapping(uint256 => mapping(uint8 => allBiddersRec)) public allBidersAddress; // NFT->AuctionIndex->UserAddress
+    mapping(uint256 => mapping(uint8 => allBiddersRec)) public allBidersAddress;
 
     address public WETH;
     struct AuctionData {
@@ -280,7 +58,7 @@ contract AJMarketplace is ReentrancyGuard {
     // --------------------------------- Auction Start ------------------------------------------ //
 
     function reverseLoop(uint256 _nftId) external {
-        uint8 auctionIndex = nftAuctionCount[_nftId];
+        uint8 auctionIndex = nftAuctionCount[_nftId]; // auction index for perticular NFT
         for (
             uint256 i = allBidersAddress[_nftId][auctionIndex]
                 .biddersAddr
@@ -299,7 +77,7 @@ contract AJMarketplace is ReentrancyGuard {
 
     // bidder can cancel thier bid and transfer NFT to them
     function bidCancelByUser(uint256 _nftId) external {
-        uint8 auctionIndex = nftAuctionCount[_nftId];
+        uint8 auctionIndex = nftAuctionCount[_nftId]; // auction index for perticular NFT
         (bool result, uint256 index) = isAddressInArray(
             allBidersAddress[_nftId][auctionIndex].biddersAddr,
             msg.sender
@@ -324,8 +102,7 @@ contract AJMarketplace is ReentrancyGuard {
         ) {
             if (
                 allBidersAddress[_nftId][auctionIndex].bidStatus[i - 1] != true
-            ) //allBidersAddress[_nftId][auctionIndex].biddersAddr[i] == address(0) &&
-            {
+            ) {
                 address higerAddr = allBidersAddress[_nftId][auctionIndex]
                     .biddersAddr[i - 1];
                 AuctionDataset[_nftId].highestBidder = higerAddr;
@@ -345,7 +122,7 @@ contract AJMarketplace is ReentrancyGuard {
     }
 
     function cancelAuction(uint256 _nftId) external nonReentrant {
-        uint8 auctionIndex = nftAuctionCount[_nftId]; // auction index for perticular NFT
+        uint8 auctionIndex = nftAuctionCount[_nftId];
         address nftOwner = AuctionDataset[_nftId].seller;
         require(
             ((msg.sender == owner) || (msg.sender == nftOwner)),
@@ -496,7 +273,6 @@ contract AJMarketplace is ReentrancyGuard {
             "Only Nft Owner can Put NFT for Auction"
         );
         require(!AuctionDataset[_nftId].started, "Already started!");
-        // require(msg.sender == seller, "You can not start the auction!");
 
         // update AuctionDataset
         AuctionDataset[_nftId].nftId = _nftId;
@@ -579,11 +355,7 @@ contract AJMarketplace is ReentrancyGuard {
         );
 
         // ether transfer to the seller
-        // payable(AuctionDataset[_nftId].seller).transfer(_payAmount);
         IWETH(WETH).transferFrom(msg.sender, address(this), _payAmount);
-
-        // uint256 itemActualPrice = (_payAmount * 100) / (100 + platformFee);
-        // uint256 etherValue_platform = (itemActualPrice * (platformFee))/100;
 
         AuctionDataset[_nftId].totalBidAmount += itemActualPrice;
         AuctionDataset[_nftId].highestBid = itemActualPrice;
@@ -623,7 +395,6 @@ contract AJMarketplace is ReentrancyGuard {
 
     // --------------------------------- Auction Ended ------------------------------------------ //
 
-    // Check Address Present or not in given Address Array
     function isAddressInArray(address[] memory _addrArray, address _addr)
         private
         pure
@@ -647,7 +418,6 @@ contract AJMarketplace is ReentrancyGuard {
     function putOnSale(uint256 _tokenId, uint256 _price) external nonReentrant {
         require(_price > 0, "Price must be greater than zero");
         Item storage item = items[_tokenId];
-        // require(!item.forAuction, "item already exist on Auction");
         require(!item.forSale, "item already exist on Fixed Price");
 
         // transfer nft
@@ -656,9 +426,6 @@ contract AJMarketplace is ReentrancyGuard {
             address(this),
             _tokenId
         );
-        // increment itemCount
-
-        // add new item to items mapping
         items[_tokenId] = Item(
             _tokenId,
             nftContractAddr,
@@ -716,21 +483,13 @@ contract AJMarketplace is ReentrancyGuard {
         // Distribute on 3 different address
         payable(platformAddr).transfer(etherValue_platform);
         payable(royaltyAddr).transfer(etherValue_royalty);
-        payable(item.seller).transfer(etherValue_Selling); // to creator address
-
-        // // pay seller and royaltyAccount
-        // item.seller.transfer(item.price);
-        // payable(royaltyAddr).transfer(_totalPrice - item.price);
-
-        // update item to sold
+        payable(item.seller).transfer(etherValue_Selling);
         item.forSale = false;
-        // transfer nft to buyer
         IERC721(nftContractAddr).transferFrom(
             address(this),
             msg.sender,
             item.tokenId
         );
-        // emit Bought event
         emit Bought(
             item.tokenId,
             item.nft,
@@ -739,12 +498,6 @@ contract AJMarketplace is ReentrancyGuard {
             msg.sender
         );
     }
-
-    // function getTotalPrice(uint256 _tokenId) view public returns(uint256){
-    //     // get royalti details
-    //     (uint256 royaltyPercent, address royaltyAddr, uint256 platformFee, address platformAddr) = getRoyaltyPlatformFee(_tokenId);
-    //     return((items[_tokenId].price*(100 + royaltyPercent))/100);
-    // }
 
     function getRoyaltyPlatformFee(uint256 _nftId)
         public
@@ -758,6 +511,4 @@ contract AJMarketplace is ReentrancyGuard {
     {
         return IERC721(nftContractAddr).getRoyaltyAndPlatformFeeDetails(_nftId);
     }
-
-    // --------------------------------- FixSale Ended ------------------------------------------ //
 }

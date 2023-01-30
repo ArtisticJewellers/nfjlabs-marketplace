@@ -762,8 +762,8 @@ const ItemDetails = () => {
               preserveAspectRatio: "xMidYMid slice",
             },
           }}
-          height={400}
-          width={400}
+          height={300}
+          width={300}
           style={{ marginTop: "10%", justifyContent: "center", alignItems: "center" }}
         />
       ) : (
