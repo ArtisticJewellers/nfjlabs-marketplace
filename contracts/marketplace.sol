@@ -1,8 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.16;
-
-import "@openzeppelin/contracts/interfaces/IERC165.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+pragma solidity ^0.8.4;
 
 interface IWETH {
     function transfer(address to, uint256 amount) external returns (bool);
