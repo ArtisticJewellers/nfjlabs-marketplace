@@ -21,7 +21,7 @@ const HeroEditProfile = ({ data }) => {
           <img
             src={
               data?.bg_image ||
-              "https://nfjlabs.com/nfj.png"
+              "static/media/nfj.217747efbfe5a387bd28.png"
             }
             alt="cover"
           />

@@ -345,9 +345,9 @@ const FeaturedNfts = () => {
           slidesPerGroup={2}
           loop={false}
           loopFillGroupWithBlank={false}
-          // pagination={{
-          //   clickable: true,
-          // }}
+          pagination={{
+            clickable: true,
+          }}
           navigation={true}
           modules={[Pagination, Navigation]}
           className="mySwiper"
@@ -393,9 +393,9 @@ const TrendingNfts = () => {
             enabled: true,
           }}
           loopFillGroupWithBlank={true}
-          // pagination={{
-          //   clickable: true,
-          // }}
+          pagination={{
+            clickable: true,
+          }}
           // navigation={true}
           modules={[Pagination, Navigation]}
           className="mySwiper"
@@ -427,9 +427,9 @@ const TopArtist = () => {
           slidesPerGroup={2}
           loop={false}
           loopFillGroupWithBlank={false}
-          // pagination={{
-          //   clickable: true,
-          // }}
+          pagination={{
+            clickable: true,
+          }}
           navigation={true}
           modules={[Pagination, Navigation]}
           className="mySwiper"
@@ -681,9 +681,8 @@ function NftCard({ val }) {
 
                 <div className="card_head">
                   <Link
-                    to={`/item/${val.network}/${
-                      ChainsInfo[val.chainId].NFT_ADDRESS
-                    }/${val.tokenId}`}
+                    to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS
+                      }/${val.tokenId}`}
                   >
                     {val.imageUrl?.includes(".mp4") ? (
                       <video
@@ -711,7 +710,7 @@ function NftCard({ val }) {
                     fontSize: "10px",
                   }}
                 >
-                  {val.category}
+                  {/* {val.category} */}
                 </span>
 
                 <div className="card_footer d-block space-y-10">
@@ -763,7 +762,7 @@ function NftCard({ val }) {
                               }}
                             ></img>
 
-                            <Link to={"/profile/" + val.ownerAddress}>
+                            <Link to={"/profile/" + val.creatorAddress}>
                               <div>
                                 <div
                                   style={{
@@ -772,7 +771,7 @@ function NftCard({ val }) {
                                     fontWeight: "bold",
                                   }}
                                 >
-                                  Artist
+                                  Owner
                                 </div>
                                 <div
                                   style={{

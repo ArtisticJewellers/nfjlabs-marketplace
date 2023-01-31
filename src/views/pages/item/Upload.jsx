@@ -22,7 +22,7 @@ import {
   WALLET_ALERT,
 } from "../../../config/constant/alert";
 import { useWalletValidation } from "../../../context/WalletValidationContext";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { GetAllNfts, UserDetails } from "../../../graphql/query";
 import Badge from "react-bootstrap/Badge";
 import polygon from "../../../assets/icon/polygon.png";
@@ -221,66 +221,67 @@ const UploadComponent = () => {
 
   return (
     <>
-      <>
-        <Header />
-        <div className="hero__upload">
-          <div className="container">
-            <div className="space-y-20">
-              <div
-                className="btn btn-white btn-sm
+      <Header />
+      {user?.user?.username ? (
+        <>
+          <div className="hero__upload">
+            <div className="container">
+              <div className="space-y-20">
+                <div
+                  className="btn btn-white btn-sm
                     switch"
-              >
-                Create NFT
+                >
+                  Create NFT
+                </div>
+                <h1 className="title">Create single NFT</h1>
               </div>
-              <h1 className="title">Create single NFT</h1>
             </div>
           </div>
-        </div>
-        {true ? (
-          <Form
-            layout="vertical"
-            onFinish={(value) => {
-              handleSubmitNFT(value);
-            }}
-            initialValues={{
-              properties: [],
-            }}
-          >
-            <div className="" style={{ maxWidth: "1200px", margin: "0 auto " }}>
-              <div className="box in__upload mb-120">
-                <div className="row">
-                  <div className="col-lg-6">
-                    <div className="left__part space-y-40 md:mb-20 upload_file">
-                      {/* {file == null && ( */}
-                      <Form.Item
-                        name="image"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please input supply!",
-                          },
-                        ]}
-                      >
-                        <Upload.Dragger name="image" accept="">
-                          <div className="space-y-20">
-                            <img
-                              className="icon"
-                              src={`img/icons/upload.svg`}
-                              alt="upload"
-                            />
-                            <h5>Drag and drop your file</h5>
-                            <p className="color_text">PNG, GIF, JPEG, MP4.</p>
-                          </div>
-                          <div className="space-y-20">
-                            <p className="color_text">or choose a file</p>
-                            <div to="#" className="btn btn-white">
-                              Browse files
+          {true ? (
+            <Form
+              layout="vertical"
+              onFinish={(value) => {
+                handleSubmitNFT(value);
+              }}
+              initialValues={{
+                properties: [],
+              }}
+            >
+              <div className="" style={{ maxWidth: "1200px", margin: "0 auto " }}>
+                <div className="box in__upload mb-120">
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <div className="left__part space-y-40 md:mb-20 upload_file">
+                        {/* {file == null && ( */}
+                        <Form.Item
+                          name="image"
+                          rules={[
+                            {
+                              required: true,
+                              message: "Please input supply!",
+                            },
+                          ]}
+                        >
+                          <Upload.Dragger name="image" accept="">
+                            <div className="space-y-20">
+                              <img
+                                className="icon"
+                                src={`img/icons/upload.svg`}
+                                alt="upload"
+                              />
+                              <h5>Drag and drop your file</h5>
+                              <p className="color_text">PNG, GIF, JPEG, MP4.</p>
                             </div>
-                          </div>
-                        </Upload.Dragger>
-                      </Form.Item>
-                      {/* )} */}
-                      {/* {previewURL ? (
+                            <div className="space-y-20">
+                              <p className="color_text">or choose a file</p>
+                              <div to="#" className="btn btn-white">
+                                Browse files
+                              </div>
+                            </div>
+                          </Upload.Dragger>
+                        </Form.Item>
+                        {/* )} */}
+                        {/* {previewURL ? (
                           <div>
                             <img src={previewURL} width="100%" alt="dasd" />
                             <button
@@ -294,240 +295,240 @@ const UploadComponent = () => {
                         ) : (
                           <div />
                         )} */}
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="col-lg-6">
-                    <div className="form-group space-y-10">
-                      <div className="space-y-20">
-                        <div className="space-y-10">
-                          <Form.Item
-                            label="Title"
-                            name="title"
-                            rules={[
-                              {
-                                required: true,
-                                message: "Please input supply!",
-                              },
-                            ]}
-                          >
-                            <Input
-                              className="form-control"
-                              placeholder="e. g. `Artistic design art`"
-                              required={true}
-                            />
-                          </Form.Item>
-                        </div>
-                        <div className="space-y-10">
-                          <Form.Item
-                            label="Description"
-                            name="description"
-                            rules={[
-                              {
-                                required: true,
-                                message: "Please input supply!",
-                              },
-                            ]}
-                          >
-                            <Input.TextArea
-                              className="form-control"
-                              placeholder=""
-                            ></Input.TextArea>
-                          </Form.Item>
-                        </div>
-                        <div className="space-y-10">
+                    <div className="col-lg-6">
+                      <div className="form-group space-y-10">
+                        <div className="space-y-20">
                           <div className="space-y-10">
                             <Form.Item
-                              label="Unlockable Content (Only Visible To Owner Of NFT)"
-                              name="unlock"
-                            >
-                              <Input
-                                className="form-control"
-                                placeholder="eg. `Link or Text`"
-                                required={true}
-                              />
-                            </Form.Item>
-                          </div>
-                          <div className="space-y-10">
-                            <Form.Item
-                              label="External Link"
-                              name="extlink"
+                              label="Title"
+                              name="title"
                               rules={[
                                 {
                                   required: true,
-                                  message: "Please input externalLink",
+                                  message: "Please input supply!",
                                 },
                               ]}
                             >
                               <Input
                                 className="form-control"
-                                placeholder="eg. https://nfjlabs.com/"
+                                placeholder="e. g. `Artistic design art`"
                                 required={true}
                               />
                             </Form.Item>
                           </div>
-                        </div>
-                        {/* categories  */}
-                        <div className="space-y-10">
-                          <Form.Item
-                            label="Category"
-                            name="category"
-                            rules={[
-                              {
-                                required: true,
-                                message: "Please select category!",
-                              },
-                            ]}
-                          >
-                            <Select
-                              onChange={(e) => setCategoryValue(e.value)}
-                              isSearchable={false}
-                              placeholder="Category"
-                              options={[
-                                { label: "Gems", value: "gems" },
-                                { label: "Jewellery", value: "jewellery" },
+                          <div className="space-y-10">
+                            <Form.Item
+                              label="Description"
+                              name="description"
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Please input supply!",
+                                },
                               ]}
-                            ></Select>
-                          </Form.Item>
-                        </div>
-                        {/* sub categroies  */}
-                        <div className="space-y-10">
-                          <Form.Item
-                            label="Sub Category"
-                            name="subcategory"
-                            rules={[
-                              {
-                                required: true,
-                                message: "Please select sub-category!",
-                              },
-                            ]}
+                            >
+                              <Input.TextArea
+                                className="form-control"
+                                placeholder=""
+                              ></Input.TextArea>
+                            </Form.Item>
+                          </div>
+                          <div className="space-y-10">
+                            <div className="space-y-10">
+                              <Form.Item
+                                label="Unlockable Content (Only Visible To Owner Of NFT)"
+                                name="unlock"
+                              >
+                                <Input
+                                  className="form-control"
+                                  placeholder="eg. `Link or Text`"
+                                  required={true}
+                                />
+                              </Form.Item>
+                            </div>
+                            <div className="space-y-10">
+                              <Form.Item
+                                label="External Link"
+                                name="extlink"
+                                rules={[
+                                  {
+                                    required: true,
+                                    message: "Please input externalLink",
+                                  },
+                                ]}
+                              >
+                                <Input
+                                  className="form-control"
+                                  placeholder="eg. https://nfjlabs.com/"
+                                  required={true}
+                                />
+                              </Form.Item>
+                            </div>
+                          </div>
+                          {/* categories  */}
+                          <div className="space-y-10">
+                            <Form.Item
+                              label="Category"
+                              name="category"
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Please select category!",
+                                },
+                              ]}
+                            >
+                              <Select
+                                onChange={(e) => setCategoryValue(e.value)}
+                                isSearchable={false}
+                                placeholder="Category"
+                                options={[
+                                  { label: "Gems", value: "gems" },
+                                  { label: "Jewellery", value: "jewellery" },
+                                ]}
+                              ></Select>
+                            </Form.Item>
+                          </div>
+                          {/* sub categroies  */}
+                          <div className="space-y-10">
+                            <Form.Item
+                              label="Sub Category"
+                              name="subcategory"
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Please select sub-category!",
+                                },
+                              ]}
+                            >
+                              <Select
+                                isSearchable={false}
+                                placeholder="Sub Category"
+                                options={
+                                  categoryValue == "jewellery"
+                                    ? jewelleryCat
+                                    : gemsCat
+                                }
+                              ></Select>
+                            </Form.Item>
+                          </div>
+                          {/* select collection  */}
+                          <div className="space-y-10">
+                            <Form.Item label="Collection" name="collection">
+                              <Select
+                                isSearchable={false}
+                                placeholder="collection"
+                                options={collections}
+                              ></Select>
+                            </Form.Item>
+                          </div>
+                          {/* properties  */}
+                          <span className="variationInput">Properties</span>
+                          <PropertiesForm />
+                          <div
+                            style={{ display: "flex", flexDirection: "column" }}
                           >
-                            <Select
-                              isSearchable={false}
-                              placeholder="Sub Category"
-                              options={
-                                categoryValue == "jewellery"
-                                  ? jewelleryCat
-                                  : gemsCat
-                              }
-                            ></Select>
-                          </Form.Item>
-                        </div>
-                        {/* select collection  */}
-                        <div className="space-y-10">
-                          <Form.Item label="Collection" name="collection">
-                            <Select
-                              isSearchable={false}
-                              placeholder="collection"
-                              options={collections}
-                            ></Select>
-                          </Form.Item>
-                        </div>
-                        {/* properties  */}
-                        <span className="variationInput">Properties</span>
-                        <PropertiesForm />
-                        <div
-                          style={{ display: "flex", flexDirection: "column" }}
-                        >
-                          <span className="variationInput">Certificates</span>
-                          <button
-                            type="button"
-                            onClick={() => showCerti(true)}
-                            style={{
-                              padding: "10px 15px",
-                              borderRadius: "5px",
-                              border: "none",
-                              backgroundColor: "#8c52ff",
-                              color: "white",
-                              width: "170px",
-                              marginTop: "10px",
-                              fontSize: "16px",
-                              fontWeight: "500",
-                            }}
-                          >
-                            Add Certificates
-                          </button>
-                          {certi && (
-                            <div style={{ marginTop: "15px", width: "100%" }}>
-                              {certf.map((inputField, index) => (
-                                <div
-                                  key={index}
-                                  style={{
-                                    display: "flex",
-                                    // flexDirection: "column",
-                                    flexWrap: "wrap",
-                                    width: "100%",
-                                    marginBottom: "20px",
-                                    justifyContent: "space-between",
-                                  }}
-                                >
-                                  <input
-                                    type="text"
-                                    name="title"
-                                    placeholder="Certificate Name"
-                                    value={inputField.title}
-                                    style={{
-                                      width: "200px",
-                                      height: "30px",
-                                      marginRight: "25px",
-                                      marginBottom: "25px",
-                                    }}
-                                    onChange={(e) => {
-                                      handleChangeInput(index, e);
-                                    }}
-                                  />
-                                  <div>
-                                    <input
-                                      type="file"
-                                      name="image"
-                                      style={{ width: "200px" }}
-                                      onChange={(e) => {
-                                        handleChangeInput(
-                                          index,
-                                          e,
-                                          e.target.files[0]
-                                        );
-                                      }}
-                                    />
-                                  </div>
+                            <span className="variationInput">Certificates</span>
+                            <button
+                              type="button"
+                              onClick={() => showCerti(true)}
+                              style={{
+                                padding: "10px 15px",
+                                borderRadius: "5px",
+                                border: "none",
+                                backgroundColor: "#8c52ff",
+                                color: "white",
+                                width: "170px",
+                                marginTop: "10px",
+                                fontSize: "16px",
+                                fontWeight: "500",
+                              }}
+                            >
+                              Add Certificates
+                            </button>
+                            {certi && (
+                              <div style={{ marginTop: "15px", width: "100%" }}>
+                                {certf.map((inputField, index) => (
                                   <div
+                                    key={index}
                                     style={{
                                       display: "flex",
-                                      marginRight: "20px",
+                                      // flexDirection: "column",
+                                      flexWrap: "wrap",
+                                      width: "100%",
+                                      marginBottom: "20px",
+                                      justifyContent: "space-between",
                                     }}
                                   >
-                                    <button
-                                      type="button"
+                                    <input
+                                      type="text"
+                                      name="title"
+                                      placeholder="Certificate Name"
+                                      value={inputField.title}
                                       style={{
-                                        marginRight: "4px",
+                                        width: "200px",
                                         height: "30px",
-                                        width: "30px",
+                                        marginRight: "25px",
+                                        marginBottom: "25px",
                                       }}
-                                      onClick={() => handleRemoveFileds(index)}
-                                    >
-                                      -
-                                    </button>
-                                    <button
+                                      onChange={(e) => {
+                                        handleChangeInput(index, e);
+                                      }}
+                                    />
+                                    <div>
+                                      <input
+                                        type="file"
+                                        name="image"
+                                        style={{ width: "200px" }}
+                                        onChange={(e) => {
+                                          handleChangeInput(
+                                            index,
+                                            e,
+                                            e.target.files[0]
+                                          );
+                                        }}
+                                      />
+                                    </div>
+                                    <div
                                       style={{
-                                        marginRight: "4px",
-                                        height: "30px",
-                                        width: "30px",
+                                        display: "flex",
+                                        marginRight: "20px",
                                       }}
-                                      type="button"
-                                      onClick={() => handleAddFileds()}
                                     >
-                                      +
-                                    </button>
+                                      <button
+                                        type="button"
+                                        style={{
+                                          marginRight: "4px",
+                                          height: "30px",
+                                          width: "30px",
+                                        }}
+                                        onClick={() => handleRemoveFileds(index)}
+                                      >
+                                        -
+                                      </button>
+                                      <button
+                                        style={{
+                                          marginRight: "4px",
+                                          height: "30px",
+                                          width: "30px",
+                                        }}
+                                        type="button"
+                                        onClick={() => handleAddFileds()}
+                                      >
+                                        +
+                                      </button>
+                                    </div>
                                   </div>
-                                </div>
-                              ))}
-                              {/* <button type="button" onClick={handleSubmit}>send</button> */}
-                            </div>
-                          )}
-                        </div>
-                        <div className="space-y-10">
-                          {/* tags  */}
-                          {/* <span className="variationInput">Tags</span>
+                                ))}
+                                {/* <button type="button" onClick={handleSubmit}>send</button> */}
+                              </div>
+                            )}
+                          </div>
+                          <div className="space-y-10">
+                            {/* tags  */}
+                            {/* <span className="variationInput">Tags</span>
                           <div>
                             <div
                               style={{
@@ -573,57 +574,76 @@ const UploadComponent = () => {
                               </Badge>
                             </div>
                           </div> */}
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <p></p>
+                      <p></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="fixed_row bottom-0 left-0 right-0">
+                <div className="container">
+                  <div className="row content justify-content-between mb-20_reset">
+                    <div className="col-md-auto col-12 mb-20"></div>
+                    <div className="col-md-auto col-12 mb-20">
+                      <Form.Item>
+                        <Button
+                          className="btn btn-grad btn-border"
+                          htmlType="submit"
+                          to="item-details"
+                          style={{
+                            backgroundColor: "#8c52ff",
+                            color: "white",
+                            padding: "0 15px",
+                          }}
+                        >
+                          Create Item
+                        </Button>
+                      </Form.Item>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Form>
+          ) : (
+            <div className="container">
+              <div>
+                <div className="box edit_box ">
+                  <h3 className="mb-20 text-center">Please Connect to Wallet</h3>
+                  <div className="text-center">
+                    <div
+                      className="text-center"
+                    // onClick={update}
+                    >
+                      <div className="btn  btn-grad">Connect Wallet</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="fixed_row bottom-0 left-0 right-0">
-              <div className="container">
-                <div className="row content justify-content-between mb-20_reset">
-                  <div className="col-md-auto col-12 mb-20"></div>
-                  <div className="col-md-auto col-12 mb-20">
-                    <Form.Item>
-                      <Button
-                        className="btn btn-grad btn-border"
-                        htmlType="submit"
-                        to="item-details"
-                        style={{
-                          backgroundColor: "#8c52ff",
-                          color: "white",
-                          padding: "0 15px",
-                        }}
-                      >
-                        Create Item
-                      </Button>
-                    </Form.Item>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Form>
-        ) : (
-          <div className="container">
+          )}
+        </>
+      )
+        : (
+          <div className="container mt-80">
             <div>
               <div className="box edit_box ">
-                <h3 className="mb-20 text-center">Please Connect to Wallet</h3>
+                <h3 className="mb-20 text-center">Please Create profile to mint NFT</h3>
                 <div className="text-center">
                   <div
                     className="text-center"
-                    // onClick={update}
+                  // onClick={update}
                   >
-                    <div className="btn  btn-grad">Connect Wallet</div>
+                    <Link to="/edit-profile"><div className="btn btn-dark">  Create Profile</div></Link>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        )}
-      </>
+        )
+      }
     </>
   );
 };

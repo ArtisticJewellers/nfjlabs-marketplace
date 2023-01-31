@@ -124,7 +124,7 @@ const EditProfile = () => {
                 }
               } else {
                 // console.log(data.error.issues);
-                Swal.fire("Fill Correct information", "warning");
+                Swal.fire("Fill Correct information", "Please fill all the required columns");
               }
             }}
           >
@@ -235,7 +235,6 @@ const EditProfile = () => {
                           id="facebookUrl"
                           defaultValue={userData?.user?.facebookUrl}
                           placeholder="facebook URL"
-                          required
                         />
                       </div>
                       <div className="d-flex flex-column">
@@ -246,7 +245,6 @@ const EditProfile = () => {
                           defaultValue={userData?.user?.websiteUrl}
                           className="form-control"
                           placeholder="Website URL"
-                          required
                         />
                       </div>
                     </div>
@@ -266,7 +264,6 @@ const EditProfile = () => {
                           defaultValue={userData?.user?.twitterUrl}
                           className="form-control"
                           placeholder="Twitter URL"
-                          required
                         />
                       </div>
                     </div>
