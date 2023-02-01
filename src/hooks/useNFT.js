@@ -12,7 +12,7 @@ import {
 } from "../utils/contractHelper";
 import { getNetworkChainID } from "../utils/utility";
 
-function useNFT(address) {
+function useNFT(address, royaltyPercent) {
   const { account, library, chainId, active } = useWeb3React();
   const { data: getRole } = useQuery(GetRole, {
     variables: {
@@ -20,14 +20,15 @@ function useNFT(address) {
     },
   });
 
-  const mintNFT = (metadata) => {
+  const mintNFT = (metadata, royaltyPercent) => {
     return getErc721Contract(
       ChainsInfo[chainId].NFT_ADDRESS,
       library.provider
     ).methods.mintNFT(
       account,
       metadata,
-      getRole?.getRole?.royalty,
+      royaltyPercent,
+      // getRole?.getRole?.royalty,
       getRole?.getRole?.royaltyAddress
     );
   };
@@ -72,7 +73,7 @@ function useNFT(address) {
       tokenId,
       new Web3().utils.toWei(startingBid, "ether"),
       parseInt(new Date(auctionTime).getTime() / 1000) -
-        parseInt(new Date().getTime() / 1000)
+      parseInt(new Date().getTime() / 1000)
     );
   };
 
@@ -173,13 +174,13 @@ function useNFT(address) {
             ? "transfer_nft"
             : "place_bid"
           : NFTSeller === account
-          ? "remove_sale"
-          : "buy_now"
+            ? "remove_sale"
+            : "buy_now"
         : NFTOwner === account
-        ? NFTData.isAuction
-          ? "putOnAuction"
-          : "putOnSale"
-        : "not_listed"
+          ? NFTData.isAuction
+            ? "putOnAuction"
+            : "putOnSale"
+          : "not_listed"
       : "connect_wallet";
   };
 
