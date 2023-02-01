@@ -52,6 +52,8 @@ const UploadComponent = () => {
     },
   });
 
+  console.log({ user });
+
   const [addNFToCollection] = useMutation(AddNFToCollection);
   const [getCollectionsById] = useMutation(GetCollectionsById, {
     variables: {
@@ -101,7 +103,6 @@ const UploadComponent = () => {
 
   useEffect(() => {
     if (!account) return;
-
     fetchUserCollections();
     if (active) {
       checkVerification().then((data) => {
@@ -117,7 +118,6 @@ const UploadComponent = () => {
   let selectedCollection;
 
   const handleSubmitNFT = async (value) => {
-    console.log({ value });
     if (!value.collection) {
       history.push("/collections");
       return alert("Please Create A NFT Collection Before Minting Any NFT");

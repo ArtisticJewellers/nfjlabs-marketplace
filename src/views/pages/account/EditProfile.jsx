@@ -28,6 +28,7 @@ const EditProfile = () => {
   const history = useHistory();
   const [updateProfile] = useMutation(UpdateProfile);
   const [register] = useMutation(Register);
+  
   const { data: userData } = useQuery(UserDetails, {
     skip: !active,
     variables: {
