@@ -1,9 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { useWeb3React } from "@web3-react/core";
-import Swal from "sweetalert2";
 import Web3 from "web3";
 import { ChainsInfo } from "../config/config-chains";
-import { ROYALTY_PERCENT, ROYALTIES_ADDRESS } from "../config/constant/address";
 import { GetRole } from "../graphql/query";
 import {
   getErc1155Contract,

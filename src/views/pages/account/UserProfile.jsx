@@ -50,6 +50,7 @@ const UserProfile = () => {
       });
     }
   }, [active, account]);
+
   return (
     <div>
       <Header />
@@ -67,7 +68,10 @@ const UserProfile = () => {
                   <div className="d-flex justify-content-between">
                     <Tabs className="space-x-10">
                       <div className="d-flex justify-content-between"></div>
-                      <div className="tab-content" style={{ paddingTop: "20px" }}>
+                      <div
+                        className="tab-content"
+                        style={{ paddingTop: "20px" }}
+                      >
                         <h5>My NFTs</h5>
                         <CardProfile creatorData={profile?.user} ownedNFTs={ownedNFTs} />
                       </div>
@@ -86,7 +90,7 @@ const UserProfile = () => {
               <div className="text-center">
                 <div
                   className="text-center"
-                // onClick={update}
+                  // onClick={update}
                 >
                   <div className="btn btn-dark">Connect Wallet</div>
                 </div>

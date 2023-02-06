@@ -5,13 +5,25 @@ import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { completeKYC } from "../../../graphql/mutations";
 import { useWeb3React } from "@web3-react/core";
 import Header from "../../../components/header/Header";
-import { kyc } from "../../../graphql/query";
 import { useHistory } from "react-router-dom";
 import Alert from "react-bootstrap/Alert";
 import { UserDetails } from "../../../graphql/query";
+import { GetKycByWalletId } from "../../../graphql/mutations";
 
 const KYCRegistration = () => {
   const { account } = useWeb3React();
+  // const [kycData, setKycData] = useState({
+  //   address: "",
+  //   country: "",
+  //   dob: "",
+  //   email: "",
+  //   fname: "",
+  //   identity: "",
+  //   isApproved: "",
+  //   lname: "",
+  //   phone: "",
+  //   userWallet: "",
+  // });
   const [data, setData] = useState({
     username: "",
     fname: "",
@@ -22,11 +34,14 @@ const KYCRegistration = () => {
     address: "",
     country: "India",
     identity: "",
+    userWallet: "",
   });
+
   const [createKyc, { error }] = useMutation(completeKYC);
+  const [getKycByWalletId] = useMutation(GetKycByWalletId);
+
   const [showAlert, setShowAlert] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
-  // console.log(account);
 
   const { data: user } = useQuery(UserDetails, {
     variables: {
@@ -34,17 +49,20 @@ const KYCRegistration = () => {
     },
   });
 
-  // console.log({ user: user?.user?.username });
+  console.log(account);
 
-  const onChange = (e) => {
+  const onChange = async (e) => {
+    console.log(data);
     setData({ ...data, [e.target.name]: e.target.value });
-    // console.log(data);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { fname, lname, address, country, dob, email, identity, phone } =
       data;
+    let userWallet = account;
+
+    if (!account) return alert("Please connect to your wallet");
 
     const res = await createKyc({
       variables: {
@@ -57,22 +75,38 @@ const KYCRegistration = () => {
         address,
         country,
         identity,
+        userWallet,
       },
     });
+
+    console.log({ res });
 
     if (error) {
       console.log({ error });
     }
 
-    // console.log({ res });
-
     setShowLoading(false);
     setShowAlert(true);
   };
 
+  const fetchKYC = async () => {
+    console.log(account);
+    const res = await getKycByWalletId({
+      variables: {
+        walletId: account,
+      },
+    });
+
+    console.log({ res });
+
+    setData({ ...res.data.getKycByWalletId });
+  };
+
   useEffect(() => {
+    if (account) {
+      fetchKYC();
+    }
     setData({ ...data, username: user?.user?.username });
-    // console.log(data);
   }, [account]);
 
   return (
@@ -119,6 +153,7 @@ const KYCRegistration = () => {
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>First Name</Form.Label>
               <Form.Control
+                value={data.fname}
                 onChange={onChange}
                 name="fname"
                 type="text"
@@ -129,6 +164,7 @@ const KYCRegistration = () => {
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Last Name</Form.Label>
               <Form.Control
+                value={data.lname}
                 onChange={onChange}
                 name="lname"
                 type="text"
@@ -138,11 +174,17 @@ const KYCRegistration = () => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Date Of Birth</Form.Label>
-              <Form.Control onChange={onChange} name="dob" type="date" />
+              <Form.Control
+                value={data.dob}
+                onChange={onChange}
+                name="dob"
+                type="date"
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email Address</Form.Label>
               <Form.Control
+                value={data.email}
                 onChange={onChange}
                 name="email"
                 type="email"
@@ -154,6 +196,7 @@ const KYCRegistration = () => {
               <Form.Label>Phone Number</Form.Label>
               <Form.Control
                 onChange={onChange}
+                value={data.phone}
                 name="phone"
                 type="number"
                 placeholder="+91 7977298813"
@@ -165,6 +208,7 @@ const KYCRegistration = () => {
               <Form.Label>Address</Form.Label>
               <Form.Control
                 onChange={onChange}
+                value={data.address}
                 name="address"
                 type="text"
                 placeholder="24 street, Venice Town"
@@ -173,7 +217,11 @@ const KYCRegistration = () => {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Country</Form.Label>
-              <Form.Select onChange={onChange} name="country">
+              <Form.Select
+                onChange={onChange}
+                defaultValue={data.country}
+                name="country"
+              >
                 <option value="Afghanistan">Afghanistan</option>
                 <option value="Åland Islands">Åland Islands</option>
                 <option value="Albania">Albania</option>
@@ -201,11 +249,15 @@ const KYCRegistration = () => {
                 <option value="Bermuda">Bermuda</option>
                 <option value="Bhutan">Bhutan</option>
                 <option value="Bolivia">Bolivia</option>
-                <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+                <option value="Bosnia and Herzegovina">
+                  Bosnia and Herzegovina
+                </option>
                 <option value="Botswana">Botswana</option>
                 <option value="Bouvet Island">Bouvet Island</option>
                 <option value="Brazil">Brazil</option>
-                <option value="British Indian Ocean Territory">British Indian Ocean Territory</option>
+                <option value="British Indian Ocean Territory">
+                  British Indian Ocean Territory
+                </option>
                 <option value="Brunei Darussalam">Brunei Darussalam</option>
                 <option value="Bulgaria">Bulgaria</option>
                 <option value="Burkina Faso">Burkina Faso</option>
@@ -215,16 +267,22 @@ const KYCRegistration = () => {
                 <option value="Canada">Canada</option>
                 <option value="Cape Verde">Cape Verde</option>
                 <option value="Cayman Islands">Cayman Islands</option>
-                <option value="Central African Republic">Central African Republic</option>
+                <option value="Central African Republic">
+                  Central African Republic
+                </option>
                 <option value="Chad">Chad</option>
                 <option value="Chile">Chile</option>
                 <option value="China">China</option>
                 <option value="Christmas Island">Christmas Island</option>
-                <option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
+                <option value="Cocos (Keeling) Islands">
+                  Cocos (Keeling) Islands
+                </option>
                 <option value="Colombia">Colombia</option>
                 <option value="Comoros">Comoros</option>
                 <option value="Congo">Congo</option>
-                <option value="Congo, The Democratic Republic of The">Congo, The Democratic Republic of The</option>
+                <option value="Congo, The Democratic Republic of The">
+                  Congo, The Democratic Republic of The
+                </option>
                 <option value="Cook Islands">Cook Islands</option>
                 <option value="Costa Rica">Costa Rica</option>
                 <option value="Cote D'ivoire">Cote D'ivoire</option>
@@ -243,14 +301,18 @@ const KYCRegistration = () => {
                 <option value="Eritrea">Eritrea</option>
                 <option value="Estonia">Estonia</option>
                 <option value="Ethiopia">Ethiopia</option>
-                <option value="Falkland Islands (Malvinas)">Falkland Islands (Malvinas)</option>
+                <option value="Falkland Islands (Malvinas)">
+                  Falkland Islands (Malvinas)
+                </option>
                 <option value="Faroe Islands">Faroe Islands</option>
                 <option value="Fiji">Fiji</option>
                 <option value="Finland">Finland</option>
                 <option value="France">France</option>
                 <option value="French Guiana">French Guiana</option>
                 <option value="French Polynesia">French Polynesia</option>
-                <option value="French Southern Territories">French Southern Territories</option>
+                <option value="French Southern Territories">
+                  French Southern Territories
+                </option>
                 <option value="Gabon">Gabon</option>
                 <option value="Gambia">Gambia</option>
                 <option value="Georgia">Georgia</option>
@@ -268,15 +330,21 @@ const KYCRegistration = () => {
                 <option value="Guinea-bissau">Guinea-bissau</option>
                 <option value="Guyana">Guyana</option>
                 <option value="Haiti">Haiti</option>
-                <option value="Heard Island and Mcdonald Islands">Heard Island and Mcdonald Islands</option>
-                <option value="Holy See (Vatican City State)">Holy See (Vatican City State)</option>
+                <option value="Heard Island and Mcdonald Islands">
+                  Heard Island and Mcdonald Islands
+                </option>
+                <option value="Holy See (Vatican City State)">
+                  Holy See (Vatican City State)
+                </option>
                 <option value="Honduras">Honduras</option>
                 <option value="Hong Kong">Hong Kong</option>
                 <option value="Hungary">Hungary</option>
                 <option value="Iceland">Iceland</option>
                 <option value="India">India</option>
                 <option value="Indonesia">Indonesia</option>
-                <option value="Iran, Islamic Republic of">Iran, Islamic Republic of</option>
+                <option value="Iran, Islamic Republic of">
+                  Iran, Islamic Republic of
+                </option>
                 <option value="Iraq">Iraq</option>
                 <option value="Ireland">Ireland</option>
                 <option value="Isle of Man">Isle of Man</option>
@@ -289,21 +357,29 @@ const KYCRegistration = () => {
                 <option value="Kazakhstan">Kazakhstan</option>
                 <option value="Kenya">Kenya</option>
                 <option value="Kiribati">Kiribati</option>
-                <option value="Korea, Democratic People's Republic of">Korea, Democratic People's Republic of</option>
+                <option value="Korea, Democratic People's Republic of">
+                  Korea, Democratic People's Republic of
+                </option>
                 <option value="Korea, Republic of">Korea, Republic of</option>
                 <option value="Kuwait">Kuwait</option>
                 <option value="Kyrgyzstan">Kyrgyzstan</option>
-                <option value="Lao People's Democratic Republic">Lao People's Democratic Republic</option>
+                <option value="Lao People's Democratic Republic">
+                  Lao People's Democratic Republic
+                </option>
                 <option value="Latvia">Latvia</option>
                 <option value="Lebanon">Lebanon</option>
                 <option value="Lesotho">Lesotho</option>
                 <option value="Liberia">Liberia</option>
-                <option value="Libyan Arab Jamahiriya">Libyan Arab Jamahiriya</option>
+                <option value="Libyan Arab Jamahiriya">
+                  Libyan Arab Jamahiriya
+                </option>
                 <option value="Liechtenstein">Liechtenstein</option>
                 <option value="Lithuania">Lithuania</option>
                 <option value="Luxembourg">Luxembourg</option>
                 <option value="Macao">Macao</option>
-                <option value="Macedonia, The Former Yugoslav Republic of">Macedonia, The Former Yugoslav Republic of</option>
+                <option value="Macedonia, The Former Yugoslav Republic of">
+                  Macedonia, The Former Yugoslav Republic of
+                </option>
                 <option value="Madagascar">Madagascar</option>
                 <option value="Malawi">Malawi</option>
                 <option value="Malaysia">Malaysia</option>
@@ -316,8 +392,12 @@ const KYCRegistration = () => {
                 <option value="Mauritius">Mauritius</option>
                 <option value="Mayotte">Mayotte</option>
                 <option value="Mexico">Mexico</option>
-                <option value="Micronesia, Federated States of">Micronesia, Federated States of</option>
-                <option value="Moldova, Republic of">Moldova, Republic of</option>
+                <option value="Micronesia, Federated States of">
+                  Micronesia, Federated States of
+                </option>
+                <option value="Moldova, Republic of">
+                  Moldova, Republic of
+                </option>
                 <option value="Monaco">Monaco</option>
                 <option value="Mongolia">Mongolia</option>
                 <option value="Montenegro">Montenegro</option>
@@ -329,7 +409,9 @@ const KYCRegistration = () => {
                 <option value="Nauru">Nauru</option>
                 <option value="Nepal">Nepal</option>
                 <option value="Netherlands">Netherlands</option>
-                <option value="Netherlands Antilles">Netherlands Antilles</option>
+                <option value="Netherlands Antilles">
+                  Netherlands Antilles
+                </option>
                 <option value="New Caledonia">New Caledonia</option>
                 <option value="New Zealand">New Zealand</option>
                 <option value="Nicaragua">Nicaragua</option>
@@ -337,12 +419,16 @@ const KYCRegistration = () => {
                 <option value="Nigeria">Nigeria</option>
                 <option value="Niue">Niue</option>
                 <option value="Norfolk Island">Norfolk Island</option>
-                <option value="Northern Mariana Islands">Northern Mariana Islands</option>
+                <option value="Northern Mariana Islands">
+                  Northern Mariana Islands
+                </option>
                 <option value="Norway">Norway</option>
                 <option value="Oman">Oman</option>
                 <option value="Pakistan">Pakistan</option>
                 <option value="Palau">Palau</option>
-                <option value="Palestinian Territory, Occupied">Palestinian Territory, Occupied</option>
+                <option value="Palestinian Territory, Occupied">
+                  Palestinian Territory, Occupied
+                </option>
                 <option value="Panama">Panama</option>
                 <option value="Papua New Guinea">Papua New Guinea</option>
                 <option value="Paraguay">Paraguay</option>
@@ -358,13 +444,21 @@ const KYCRegistration = () => {
                 <option value="Russian Federation">Russian Federation</option>
                 <option value="Rwanda">Rwanda</option>
                 <option value="Saint Helena">Saint Helena</option>
-                <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+                <option value="Saint Kitts and Nevis">
+                  Saint Kitts and Nevis
+                </option>
                 <option value="Saint Lucia">Saint Lucia</option>
-                <option value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</option>
-                <option value="Saint Vincent and The Grenadines">Saint Vincent and The Grenadines</option>
+                <option value="Saint Pierre and Miquelon">
+                  Saint Pierre and Miquelon
+                </option>
+                <option value="Saint Vincent and The Grenadines">
+                  Saint Vincent and The Grenadines
+                </option>
                 <option value="Samoa">Samoa</option>
                 <option value="San Marino">San Marino</option>
-                <option value="Sao Tome and Principe">Sao Tome and Principe</option>
+                <option value="Sao Tome and Principe">
+                  Sao Tome and Principe
+                </option>
                 <option value="Saudi Arabia">Saudi Arabia</option>
                 <option value="Senegal">Senegal</option>
                 <option value="Serbia">Serbia</option>
@@ -376,19 +470,27 @@ const KYCRegistration = () => {
                 <option value="Solomon Islands">Solomon Islands</option>
                 <option value="Somalia">Somalia</option>
                 <option value="South Africa">South Africa</option>
-                <option value="South Georgia and The South Sandwich Islands">South Georgia and The South Sandwich Islands</option>
+                <option value="South Georgia and The South Sandwich Islands">
+                  South Georgia and The South Sandwich Islands
+                </option>
                 <option value="Spain">Spain</option>
                 <option value="Sri Lanka">Sri Lanka</option>
                 <option value="Sudan">Sudan</option>
                 <option value="Suriname">Suriname</option>
-                <option value="Svalbard and Jan Mayen">Svalbard and Jan Mayen</option>
+                <option value="Svalbard and Jan Mayen">
+                  Svalbard and Jan Mayen
+                </option>
                 <option value="Swaziland">Swaziland</option>
                 <option value="Sweden">Sweden</option>
                 <option value="Switzerland">Switzerland</option>
-                <option value="Syrian Arab Republic">Syrian Arab Republic</option>
+                <option value="Syrian Arab Republic">
+                  Syrian Arab Republic
+                </option>
                 <option value="Taiwan">Taiwan</option>
                 <option value="Tajikistan">Tajikistan</option>
-                <option value="Tanzania, United Republic of">Tanzania, United Republic of</option>
+                <option value="Tanzania, United Republic of">
+                  Tanzania, United Republic of
+                </option>
                 <option value="Thailand">Thailand</option>
                 <option value="Timor-leste">Timor-leste</option>
                 <option value="Togo">Togo</option>
@@ -398,21 +500,31 @@ const KYCRegistration = () => {
                 <option value="Tunisia">Tunisia</option>
                 <option value="Turkey">Turkey</option>
                 <option value="Turkmenistan">Turkmenistan</option>
-                <option value="Turks and Caicos Islands">Turks and Caicos Islands</option>
+                <option value="Turks and Caicos Islands">
+                  Turks and Caicos Islands
+                </option>
                 <option value="Tuvalu">Tuvalu</option>
                 <option value="Uganda">Uganda</option>
                 <option value="Ukraine">Ukraine</option>
-                <option value="United Arab Emirates">United Arab Emirates</option>
+                <option value="United Arab Emirates">
+                  United Arab Emirates
+                </option>
                 <option value="United Kingdom">United Kingdom</option>
                 <option value="United States">United States</option>
-                <option value="United States Minor Outlying Islands">United States Minor Outlying Islands</option>
+                <option value="United States Minor Outlying Islands">
+                  United States Minor Outlying Islands
+                </option>
                 <option value="Uruguay">Uruguay</option>
                 <option value="Uzbekistan">Uzbekistan</option>
                 <option value="Vanuatu">Vanuatu</option>
                 <option value="Venezuela">Venezuela</option>
                 <option value="Viet Nam">Viet Nam</option>
-                <option value="Virgin Islands, British">Virgin Islands, British</option>
-                <option value="Virgin Islands, U.S.">Virgin Islands, U.S.</option>
+                <option value="Virgin Islands, British">
+                  Virgin Islands, British
+                </option>
+                <option value="Virgin Islands, U.S.">
+                  Virgin Islands, U.S.
+                </option>
                 <option value="Wallis and Futuna">Wallis and Futuna</option>
                 <option value="Western Sahara">Western Sahara</option>
                 <option value="Yemen">Yemen</option>
