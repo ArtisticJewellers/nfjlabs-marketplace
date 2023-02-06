@@ -53,6 +53,7 @@ import Badge from "react-bootstrap/Badge";
 import "./loader.css";
 import Lottie from "react-lottie";
 import loading from "../../../components/Loading/loading.json";
+import { GetKycByWalletId } from "../../../graphql/mutations";
 // Random component
 const ItemDetails = () => {
   useDocumentTitle("Item Details");
@@ -106,6 +107,8 @@ const ItemDetails = () => {
   const [isVideo, setIsVideo] = useState(false);
   const [display, setDisplay] = useState(false);
   const [isloading, setLoading] = useState(false);
+  const [getKycByWalletId] = useMutation(GetKycByWalletId);
+  const [isKycDone, setKycDone] = useState(false);
 
   const { data: nftDetails } = useQuery(GetNftDetails, {
     variables: { contractAddress: address, tokenId: parseInt(tokenId) },
@@ -134,8 +137,21 @@ const ItemDetails = () => {
     setDisplay(true);
   }, 1000);
 
+  const fetchKYC = async () => {
+    console.log(account);
+    if (!account) return;
+    const res = await getKycByWalletId({
+      variables: {
+        walletId: account,
+      },
+    });
+    if (!res) return setKycDone(false);
+    setKycDone(res.data.getKycByWalletId.isApproved);
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    fetchKYC();
 
     if (metaData.external_link?.includes(".mp4")) {
       setIsVideo(true);
@@ -156,7 +172,7 @@ const ItemDetails = () => {
         })
         .catch((err) => console.log(err));
     }
-  });
+  }, [account]);
 
   useEffect(() => {
     setLoading(true);
@@ -1394,6 +1410,10 @@ const ItemDetails = () => {
                                   <span
                                     onClick={() =>
                                       checkChainId(async () => {
+                                        if (!isKycDone)
+                                          return alert(
+                                            "Please Complete your Kyc First"
+                                          );
                                         console.log("buy now called");
                                         if (active) {
                                           showLoading();

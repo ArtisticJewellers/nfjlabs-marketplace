@@ -12,6 +12,7 @@ import { Spinner } from "react-bootstrap";
 const CreateCollection = () => {
   const history = useHistory();
   const [createCollection, { loading, error }] = useMutation(CreateCollections);
+
   const { account, chainId } = useWeb3React();
   const { uploadOnIpfs } = useStorage();
   const [isLoading, setIsLoading] = useState(false);

@@ -15,6 +15,7 @@ function getLibrary(provider) {
   library.pollingInterval = 12000; // frequency provider is polling
   return library;
 }
+
 const client = new ApolloClient({
   // uri: "http://localhost:5000/graphql",
   uri: "http://54.211.23.70:5000/graphql",

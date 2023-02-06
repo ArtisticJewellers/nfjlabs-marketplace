@@ -16,6 +16,21 @@ const kyc = gql`
   }
 `;
 
+const GetKycbyUserId = gql`
+  query GetKycbyUserId($userId: String) {
+    getKycbyUserId(userId: $userId) {
+      address
+      country
+      dob
+      email
+      fname
+      identity
+      isApproved
+      lname
+      phone
+    }
+  }
+`;
 const SignIn = gql`
   query SignIn($walletAddress: String) {
     signIn(walletAddress: $walletAddress) {
@@ -36,6 +51,7 @@ const SignIn = gql`
     }
   }
 `;
+
 const UserDetails = gql`
   query User($walletAddress: String) {
     user(walletAddress: $walletAddress) {
@@ -106,7 +122,6 @@ const GetNftDetails = gql`
         avatar_url
         isVerified
       }
-
       _id
       name
       tokenId
@@ -392,4 +407,5 @@ export {
   GetNftTrans,
   GetPopularCreators,
   kyc,
+  GetKycbyUserId,
 };

@@ -115,6 +115,7 @@ const GetCollectionsById = gql`
 const completeKYC = gql`
   mutation createKyc(
     $username: String!
+    $userWallet: String
     $fname: String!
     $lname: String!
     $dob: String!
@@ -126,6 +127,7 @@ const completeKYC = gql`
   ) {
     createKyc(
       username: $username
+      userWallet: $userWallet
       fname: $fname
       lname: $lname
       dob: $dob
@@ -148,6 +150,7 @@ const completeKYC = gql`
         isApproved
         lname
         phone
+        userWallet
       }
     }
   }
@@ -224,6 +227,24 @@ const Register = gql`
     }
   }
 `;
+
+const GetKycByWalletId = gql`
+  mutation GetKycByWalletId($walletId: String) {
+    getKycByWalletId(walletId: $walletId) {
+      address
+      country
+      dob
+      email
+      fname
+      identity
+      isApproved
+      lname
+      phone
+      userWallet
+    }
+  }
+`;
+
 const CreateNft = gql`
   mutation CreateNft(
     $chainId: Int
@@ -351,4 +372,5 @@ export {
   GetCollectionsById,
   GetIndividualCollection,
   AddNFToCollection,
+  GetKycByWalletId,
 };
