@@ -28,7 +28,7 @@ import {
 import { ChainsInfo } from "../../../config/config-chains";
 import { getNetworkChainID } from "../../../utils/utility";
 import { useLoading } from "../../../context/LoadingContext";
-
+import { useHistory } from "react-router-dom";
 import {
   BUY_NFT_ALERT,
   CANCEL_BID_ALERT,
@@ -62,6 +62,7 @@ const ItemDetails = () => {
   const [AllBiddres, setAllBiddres] = useState([]);
   const { network, address, tokenId } = useParams();
   const { showLoading, hideLoading } = useLoading();
+  const history = useHistory();
 
   const {
     getNftTokenIdData,
@@ -1410,10 +1411,13 @@ const ItemDetails = () => {
                                   <span
                                     onClick={() =>
                                       checkChainId(async () => {
-                                        if (!isKycDone)
-                                          return alert(
+                                        if (!isKycDone) {
+                                          alert(
                                             "Please Complete your Kyc First"
                                           );
+                                          history.push("/kyc");
+                                          return;
+                                        }
                                         console.log("buy now called");
                                         if (active) {
                                           showLoading();

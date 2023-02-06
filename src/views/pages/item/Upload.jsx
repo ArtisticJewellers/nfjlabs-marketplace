@@ -43,6 +43,7 @@ const UploadComponent = () => {
   const { checkVerification, isVerify } = useWalletValidation();
   const [createNft] = useMutation(CreateNft);
   const [certi, showCerti] = useState(false);
+  const [royaltyPercent, setRoyaltyPercent] = useState("");
   // const [tags, setTags] = useState([]);
   const [certf, setCertf] = useState([{ title: "", image: "" }]);
 
@@ -142,7 +143,7 @@ const UploadComponent = () => {
       selectedCollection = "default" || value.collection.id;
       console.log({ uri });
 
-      mintNFT(uri)
+      mintNFT(uri, royaltyPercent)
         .send({
           from: account,
         })
@@ -364,6 +365,26 @@ const UploadComponent = () => {
                                   className="form-control"
                                   placeholder="eg. https://nfjlabs.com/"
                                   required={true}
+                                />
+                              </Form.Item>
+                            </div>
+                            <div className="space-y-10">
+                              <Form.Item
+                                label="Royalty Percent"
+                                name="royalty"
+                                rules={[
+                                  {
+                                    required: true,
+                                    message: "Please input royalty Percent",
+                                  },
+                                ]}
+                              >
+                                <Input
+                                  className="form-control"
+                                  placeholder="eg. for 5% enter 500, for 3% enter 300, for 0% enter 0"
+                                  required={true}
+                                  defaultValue="500"
+                                  onChange={(e) => setRoyaltyPercent(e.target.value)}
                                 />
                               </Form.Item>
                             </div>
