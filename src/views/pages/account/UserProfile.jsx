@@ -13,6 +13,7 @@ import { GetNftsOfUser, UserDetails } from "../../../graphql/query";
 import { useWalletValidation } from "../../../context/WalletValidationContext";
 import { VERIFY_ALERT } from "../../../config/constant/alert";
 import { useHistory } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const UserProfile = () => {
   useDocumentTitle("NFJ Labs - Artist Profile");
@@ -25,8 +26,16 @@ const UserProfile = () => {
       walletAddress: account,
     },
   });
+  const { data: ownedNFTs } = useQuery(GetNftsOfUser, {
+    // skip: !active,
+    variables: {
+      ownerAddress: account,
+    },
+  });
   useEffect(() => {
     window.scrollTo(0, 0);
+    console.log(ownedNFTs);
+
   });
   useEffect(() => {
     if (active) {
@@ -60,7 +69,7 @@ const UserProfile = () => {
                       <div className="d-flex justify-content-between"></div>
                       <div className="tab-content" style={{ paddingTop: "20px" }}>
                         <h5>My NFTs</h5>
-                        <CardProfile creatorData={profile?.user} />
+                        <CardProfile creatorData={profile?.user} ownedNFTs={ownedNFTs} />
                       </div>
                     </Tabs>
                   </div>
