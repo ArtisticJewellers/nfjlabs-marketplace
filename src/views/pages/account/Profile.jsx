@@ -6,7 +6,7 @@ import useDocumentTitle from "../../../components/useDocumentTitle";
 import { Link, useParams } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
 import { truncateAddress } from "../../../utils/utility";
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import { GetNftsOfUser, UserDetails } from "../../../graphql/query";
 import { ChainsInfo } from "../../../config/config-chains";
 import { MdVerified } from "react-icons/md";
@@ -14,11 +14,20 @@ import { MdVerified } from "react-icons/md";
 const Profile = () => {
   useDocumentTitle("NFJ Labs-Marketplace");
   const [creatorData, setCreatorData] = useState([]);
+  const [creatorWallet, setCreatorWallet] = useState([]);
+  const { active, account } = useWeb3React();
   const { address } = useParams();
   const [userInfo] = useLazyQuery(UserDetails);
+  const { data: ownedNFTs } = useQuery(GetNftsOfUser, {
+    // skip: !active,
+    variables: {
+      ownerAddress: address,
+    },
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    console.log(ownedNFTs);
   });
 
   useEffect(() => {
@@ -27,7 +36,7 @@ const Profile = () => {
         walletAddress: address,
       },
     }).then((res) => {
-      // console.log(res);
+      console.log(res);
       if (res.data.user !== null) setCreatorData(res.data.user);
     });
   }, []);
@@ -49,7 +58,7 @@ const Profile = () => {
                     <div className="d-flex  justify-content-between"></div>
                     <div className="mt-4  tab-content">
                       <h5>My NFTs</h5>
-                      <CardProfile creatorData={creatorData} />
+                      <CardProfile creatorData={creatorData} ownedNFTs={ownedNFTs} />
                     </div>
                   </Tabs>
                 </div>
@@ -207,11 +216,116 @@ const SidebarProfile = ({ creatorData }) => {
     </div>
   );
 };
-const CardProfile = ({ creatorData }) => {
+const CardProfile = ({ creatorData, ownedNFTs }) => {
   return (
     <div className="row mb-30_reset">
-      {/* <h5>My NFTs</h5> */}
-      {creatorData?.nfts?.map((val, i) => (
+      {/* {creatorData?.nfts?.map((val, i) => (
+        <>
+          {val.isApproved && (
+            <div
+              className="col-lg-3 col-md-6 col-sm-6"
+              key={i}
+              style={{ maxWidth: "21rem", width: "100%" }}
+            >
+              <div className="card__item four">
+                <div className="card_body space-y-10">
+
+                  <div className="card_head">
+                    <Link
+                      to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS
+                        }/${val.tokenId}`}
+                    >
+                      {val.imageUrl?.includes(".mp4") ? (<video
+                        style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                        src={val.imageUrl}
+                        autoPlay="autoplay"
+                        loop="true"
+                      ></video>) :
+                        (<img
+                          src={val.imageUrl}
+                          alt="nftimage"
+                        />)
+                      }
+                    </Link>
+                  </div>
+                  <h6 className="card_title">{val.name}</h6>
+                  <p></p>
+                  <div className="card_footer d-block space-y-10">
+                    <div className="card_footer d-block space-y-10">
+                      <div className="card_footer justify-content-between">
+                        <div className="">
+                          <p className="txt_sm d-flex flex-column">
+                            <span
+                              style={{
+                                color: "#808080",
+                                fontSize: "12px",
+                              }}
+                            >
+                              Price:
+                            </span>
+                            <span
+                              className="txt_sm"
+                              style={{
+                                color: "#000",
+                                fontSize: "14px",
+                              }}
+                            >
+                              {val.price}{" "}
+                              {ChainsInfo[val.chainId].CURRENCY_SYMBOL}
+                            </span>
+                          </p>
+                        </div>
+                        <div>
+                          <div
+                            className="py-2 d-flex gap-2"
+                            style={{ alignItems: "center" }}
+                          >
+                            <div>
+                              <img
+                                src={creatorData?.avatar_url}
+                                alt=""
+                                width="40px"
+                                height="40px"
+                                style={{
+                                  borderRadius: "9999px",
+                                  objectFit: "cover",
+                                }}
+                              ></img>
+                            </div>
+
+                            <Link to={"/profile/" + val.ownerAddress}>
+                              <div>
+                                <div
+                                  style={{
+                                    color: "#808080",
+                                    fontSize: "12px",
+                                  }}
+                                >
+                                  Artist
+                                </div>
+                                <div
+                                  style={{
+                                    color: "#000",
+                                    fontSize: "10px",
+                                  }}
+                                >
+                                  @{creatorData?.username}
+                                </div>
+                              </div>
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      ))} */}
+
+      {ownedNFTs?.getNftsOfUser?.map((val, i) => (
         <>
           {val.isApproved && (
             <div
@@ -292,14 +406,22 @@ const CardProfile = ({ creatorData }) => {
 
                             <Link to={"/profile/" + val.ownerAddress}>
                               <div>
-                                <div
+                                {val.ownerAddress == val.creatorAddress ? <div
                                   style={{
                                     color: "#808080",
                                     fontSize: "12px",
                                   }}
                                 >
                                   Artist
-                                </div>
+                                </div> : <div
+                                  style={{
+                                    color: "#808080",
+                                    fontSize: "12px",
+                                  }}
+                                >
+                                  Owner
+                                </div>}
+
                                 <div
                                   style={{
                                     color: "#000",
@@ -321,6 +443,7 @@ const CardProfile = ({ creatorData }) => {
           )}
         </>
       ))}
+
     </div>
   );
 };
