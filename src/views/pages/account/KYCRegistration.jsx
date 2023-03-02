@@ -9,7 +9,8 @@ import { useHistory } from "react-router-dom";
 import Alert from "react-bootstrap/Alert";
 import { UserDetails } from "../../../graphql/query";
 import { GetKycByWalletId } from "../../../graphql/mutations";
-
+import app from "../../../firebase/firebase";
+import { sendSignInLinkToEmail, getAuth } from "firebase/auth";
 const KYCRegistration = () => {
   const { account } = useWeb3React();
   // const [kycData, setKycData] = useState({
@@ -49,10 +50,7 @@ const KYCRegistration = () => {
     },
   });
 
-  console.log(account);
-
   const onChange = async (e) => {
-    console.log(data);
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
@@ -64,40 +62,51 @@ const KYCRegistration = () => {
 
     if (!account) return alert("Please connect to your wallet");
 
-    const res = await createKyc({
-      variables: {
-        username: user?.user?.username,
-        fname,
-        lname,
-        dob,
-        email,
-        phone,
-        address,
-        country,
-        identity,
-        userWallet,
-      },
-    });
+    const actionCodeSettings = {
+      url: "http://nfjlabs.io/",
+      handleCodeInApp: true,
+      dynamicLinkDomain: "https://nfjlabs.page.link/abc",
+    };
+
+    const res = await sendSignInLinkToEmail(
+      getAuth(),
+      "gijoge5644@youke1.com",
+      actionCodeSettings
+    );
 
     console.log({ res });
 
-    if (error) {
-      console.log({ error });
-    }
+    // const res = await createKyc({
+    //   variables: {
+    //     username: user?.user?.username,
+    //     fname,
+    //     lname,
+    //     dob,
+    //     email,
+    //     phone,
+    //     address,
+    //     country,
+    //     identity,
+    //     userWallet,
+    //   },
+    // });
 
-    setShowLoading(false);
-    setShowAlert(true);
+    // console.log({ res });
+
+    // if (error) {
+    //   console.log({ error });
+    // }
+
+    // setShowLoading(false);
+    // setShowAlert(true);
   };
 
   const fetchKYC = async () => {
-    console.log(account);
     const res = await getKycByWalletId({
       variables: {
         walletId: account,
       },
     });
-
-    console.log({ res });
 
     setData({ ...res.data.getKycByWalletId });
   };
@@ -131,7 +140,6 @@ const KYCRegistration = () => {
         <Form
           onSubmit={(e) => {
             handleSubmit(e);
-            // console.log(data);
           }}
           style={{
             marginTop: "22px",

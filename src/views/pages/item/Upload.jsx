@@ -53,7 +53,7 @@ const UploadComponent = () => {
     },
   });
 
-  console.log({ user });
+  console.log({ isKycApproved: user?.user?.isKycApproved });
 
   const [addNFToCollection] = useMutation(AddNFToCollection);
   const [getCollectionsById] = useMutation(GetCollectionsById, {
@@ -104,6 +104,13 @@ const UploadComponent = () => {
 
   useEffect(() => {
     if (!account) return;
+    if (!user?.user?.isKycApproved) {
+      alert("You Kyc Is Not Approved Yet");
+      history.push("/");
+
+      return;
+    }
+
     fetchUserCollections();
     if (active) {
       checkVerification().then((data) => {
@@ -248,7 +255,10 @@ const UploadComponent = () => {
                 properties: [],
               }}
             >
-              <div className="" style={{ maxWidth: "1200px", margin: "0 auto " }}>
+              <div
+                className=""
+                style={{ maxWidth: "1200px", margin: "0 auto " }}
+              >
                 <div className="box in__upload mb-120">
                   <div className="row">
                     <div className="col-lg-6">
@@ -384,7 +394,9 @@ const UploadComponent = () => {
                                   placeholder="eg. for 5% enter 500, for 3% enter 300, for 0% enter 0"
                                   required={true}
                                   defaultValue="500"
-                                  onChange={(e) => setRoyaltyPercent(e.target.value)}
+                                  onChange={(e) =>
+                                    setRoyaltyPercent(e.target.value)
+                                  }
                                 />
                               </Form.Item>
                             </div>
@@ -525,7 +537,9 @@ const UploadComponent = () => {
                                           height: "30px",
                                           width: "30px",
                                         }}
-                                        onClick={() => handleRemoveFileds(index)}
+                                        onClick={() =>
+                                          handleRemoveFileds(index)
+                                        }
                                       >
                                         -
                                       </button>
@@ -632,11 +646,13 @@ const UploadComponent = () => {
             <div className="container">
               <div>
                 <div className="box edit_box ">
-                  <h3 className="mb-20 text-center">Please Connect to Wallet</h3>
+                  <h3 className="mb-20 text-center">
+                    Please Connect to Wallet
+                  </h3>
                   <div className="text-center">
                     <div
                       className="text-center"
-                    // onClick={update}
+                      // onClick={update}
                     >
                       <div className="btn  btn-grad">Connect Wallet</div>
                     </div>
@@ -646,25 +662,27 @@ const UploadComponent = () => {
             </div>
           )}
         </>
-      )
-        : (
-          <div className="container mt-80">
-            <div>
-              <div className="box edit_box ">
-                <h3 className="mb-20 text-center">Please Create profile to mint NFT</h3>
-                <div className="text-center">
-                  <div
-                    className="text-center"
+      ) : (
+        <div className="container mt-80">
+          <div>
+            <div className="box edit_box ">
+              <h3 className="mb-20 text-center">
+                Please Create profile to mint NFT
+              </h3>
+              <div className="text-center">
+                <div
+                  className="text-center"
                   // onClick={update}
-                  >
-                    <Link to="/edit-profile"><div className="btn btn-dark">  Create Profile</div></Link>
-                  </div>
+                >
+                  <Link to="/edit-profile">
+                    <div className="btn btn-dark"> Create Profile</div>
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
-        )
-      }
+        </div>
+      )}
     </>
   );
 };

@@ -64,6 +64,7 @@ const UserDetails = gql`
       twitterUrl
       facebookUrl
       firstname
+      isKycApproved
       lastname
       websiteUrl
       isVerified
