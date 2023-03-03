@@ -298,7 +298,7 @@ const EditProfile = () => {
                   <div className="form-group space-y-10 mb-0">
                     <div className="space-y-40">
                       <div className="d-flex flex-column">
-                        <span className="nameInput mb-10">Facebook</span>
+                        <span className="nameInput mb-10">Instagram</span>
                         <input
                           type="text"
                           className="form-control"
@@ -306,7 +306,7 @@ const EditProfile = () => {
                           onChange={handleChange}
                           name="facebookUrl"
                           defaultValue={userData?.user?.facebookUrl}
-                          placeholder="facebook URL"
+                          placeholder="Instagram URL"
                         />
                       </div>
                       <div className="d-flex flex-column">

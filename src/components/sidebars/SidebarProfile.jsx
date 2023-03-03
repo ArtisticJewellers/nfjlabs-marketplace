@@ -16,7 +16,13 @@ const SidebarProfile = ({ userProfile }) => {
                 </h4>
               </div>{" "}
               <div className="col-6">
-                <span className="txt_sm color_text">Follower</span>
+                <span className="txt_sm color_text">Total NFTs</span>
+                <h4>
+                  {userProfile?.nfts?.length ? userProfile?.nfts.length : 0}
+                </h4>
+              </div>{" "}
+              <div className="col-6">
+                <span className="txt_sm color_text">Followers</span>
                 <h4>
                   {userProfile?.follower_list?.length
                     ? userProfile?.follower_list.length
@@ -45,8 +51,8 @@ const SidebarProfile = ({ userProfile }) => {
                     rel="noreferrer"
                     target="_blank"
                   >
-                    <i className="ri-facebook-line" />
-                    <span className="color_text">facebook</span>
+                    <i className="ri-instagram-line" />
+                    <span className="color_text">Instagram</span>
                   </a>
                 </li>
               )}
@@ -60,6 +66,18 @@ const SidebarProfile = ({ userProfile }) => {
                   >
                     <i className="ri-twitter-line" />
                     <span className="color_text">Twitter</span>
+                  </a>
+                </li>
+              )}
+              {userProfile?.websiteUrl && (
+                <li>
+                  <a
+                    href={userProfile?.websiteUrl}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <i className="ri-website-line" />
+                    <span className="color_text">Website</span>
                   </a>
                 </li>
               )}

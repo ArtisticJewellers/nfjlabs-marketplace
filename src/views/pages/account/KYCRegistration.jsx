@@ -10,7 +10,9 @@ import Alert from "react-bootstrap/Alert";
 import { UserDetails } from "../../../graphql/query";
 import { GetKycByWalletId } from "../../../graphql/mutations";
 import app from "../../../firebase/firebase";
-import { sendSignInLinkToEmail, getAuth } from "firebase/auth";
+import { sendSignInLinkToEmail, getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import { async } from "@firebase/util";
+
 const KYCRegistration = () => {
   const { account } = useWeb3React();
   // const [kycData, setKycData] = useState({
@@ -25,6 +27,7 @@ const KYCRegistration = () => {
   //   phone: "",
   //   userWallet: "",
   // });
+
   const [data, setData] = useState({
     username: "",
     fname: "",
@@ -56,25 +59,11 @@ const KYCRegistration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    captchaVerify();
     const { fname, lname, address, country, dob, email, identity, phone } =
       data;
     let userWallet = account;
-
     if (!account) return alert("Please connect to your wallet");
-
-    const actionCodeSettings = {
-      url: "http://nfjlabs.io/",
-      handleCodeInApp: true,
-      dynamicLinkDomain: "https://nfjlabs.page.link/abc",
-    };
-
-    const res = await sendSignInLinkToEmail(
-      getAuth(),
-      "gijoge5644@youke1.com",
-      actionCodeSettings
-    );
-
-    console.log({ res });
 
     // const res = await createKyc({
     //   variables: {
@@ -100,6 +89,48 @@ const KYCRegistration = () => {
     // setShowLoading(false);
     // setShowAlert(true);
   };
+
+  const auth = getAuth(app);
+
+  const verifyEmail = async () => {
+    const actionCodeSettings = {
+      url: "http://nfjlabs.io/#/item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/13",
+      handleCodeInApp: true,
+      dynamicLinkDomain: "nfjlabs1.page.link",
+    };
+    const res = await sendSignInLinkToEmail(
+      auth,
+      "quantumroasts786@gmail.com",
+      actionCodeSettings
+    );
+    console.log({ firebaseResp: res });
+  }
+
+  const captchaVerify = async () => {
+    console.log("captcha called");
+    window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+      'size': 'invisible',
+      'callback': (response) => {
+        console.log("captcha success");
+        verifyPhone();
+      },
+    }, auth);
+  }
+
+  const verifyPhone = () => {
+    console.log("verify called");
+    const phoneNumber = "+919967721650";
+    const appVerifier = window.recaptchaVerifier;
+    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+      .then((confirmationResult) => {
+        // SMS sent. Prompt user to type the code from the message, then sign the
+        // user in with confirmationResult.confirm(code).
+        window.confirmationResult = confirmationResult;
+        alert("otp has been sended");
+      }).catch((error) => {
+        console.log(error)
+      });
+  }
 
   const fetchKYC = async () => {
     const res = await getKycByWalletId({
@@ -557,6 +588,7 @@ const KYCRegistration = () => {
           </Button>
         </Form>
       </div>
+      <div id="recaptcha-container"></div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import Footer from "../../../components/footer/Footer";
 import Header from "../../../components/header/Header";
@@ -7,6 +7,7 @@ import MenuCategoriesMarket from "../elements/MenuCategoriesMarket";
 import { useParams } from "react-router-dom";
 
 const Marketplace = () => {
+  const [display, setDisplay] = useState(false);
   const param = useParams();
   const { cat } = param;
   useDocumentTitle("NFJ Labs - Marketplace");
@@ -15,6 +16,10 @@ const Marketplace = () => {
     window.scrollTo(0, 0);
   }, [cat]);
 
+  setTimeout(() => {
+    setDisplay(true);
+  }, 500);
+
   return (
     <div>
       <Header />
@@ -22,7 +27,7 @@ const Marketplace = () => {
       <div className="d-flex justify-content-center">
         <MenuCategoriesMarket cat={cat} />
       </div>
-      <Footer />
+      {display ? <Footer /> : ""}
     </div>
   );
 };

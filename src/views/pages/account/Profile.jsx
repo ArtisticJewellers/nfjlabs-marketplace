@@ -151,7 +151,13 @@ const SidebarProfile = ({ creatorData }) => {
                 </h4>
               </div>{" "}
               <div className="col-6">
-                <span className="txt_sm color_text">Follower</span>
+                <span className="txt_sm color_text">Total NFTs</span>
+                <h4>
+                  {creatorData?.nfts?.length ? creatorData?.nfts?.length : 0}
+                </h4>
+              </div>{" "}
+              <div className="col-6">
+                <span className="txt_sm color_text">Followers</span>
                 <h4>
                   {creatorData?.follower_list?.length
                     ? creatorData?.follower_list?.length
@@ -180,8 +186,8 @@ const SidebarProfile = ({ creatorData }) => {
                     rel="noreferrer"
                     target="_blank"
                   >
-                    <i className="ri-facebook-line" />
-                    <span className="color_text">facebook</span>
+                    <i className="ri-instagram-line" />
+                    <span className="color_text">Instagram</span>
                   </a>
                 </li>
               )}

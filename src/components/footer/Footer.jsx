@@ -12,7 +12,7 @@ function Footer() {
     >
       <footer className="footer__1" style={{ marginTop: "0" }}>
 
-        <div className="phoneHidden container px-5">
+        {/* <div className="phoneHidden container px-5">
           <div className="row " style={{ marginBottom: "100px" }}>
             <div className="col-lg-6 space-y-20 ">
               <h2 style={{ color: "white", lineHeight: 1.4 }}>
@@ -46,7 +46,8 @@ function Footer() {
           }}
         >
           { }{" "}
-        </div>
+        </div> */}
+
         <div className="container px-5">
           <div className="row">
             <div className="col-lg-6 space-y-20">
