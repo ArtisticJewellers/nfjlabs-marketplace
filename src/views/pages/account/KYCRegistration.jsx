@@ -10,7 +10,12 @@ import Alert from "react-bootstrap/Alert";
 import { UserDetails } from "../../../graphql/query";
 import { GetKycByWalletId } from "../../../graphql/mutations";
 import app from "../../../firebase/firebase";
-import { sendSignInLinkToEmail, getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import {
+  sendSignInLinkToEmail,
+  getAuth,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+} from "firebase/auth";
 import { async } from "@firebase/util";
 
 const KYCRegistration = () => {
@@ -40,9 +45,12 @@ const KYCRegistration = () => {
     identity: "",
     userWallet: "",
   });
+  const [is_otp_sent, set_is_otp_sent] = useState(false);
+  const [is_otp_valid, set_is_otp_valid] = useState(false);
 
   const [createKyc, { error }] = useMutation(completeKYC);
   const [getKycByWalletId] = useMutation(GetKycByWalletId);
+  const [user_otp, set_user_otp] = useState("");
 
   const [showAlert, setShowAlert] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
@@ -59,11 +67,13 @@ const KYCRegistration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    captchaVerify();
+    if (!is_otp_valid)
+      return alert("Please First Verify Your Phone Number & Email");
     const { fname, lname, address, country, dob, email, identity, phone } =
       data;
     let userWallet = account;
     if (!account) return alert("Please connect to your wallet");
+    captchaVerify();
 
     // const res = await createKyc({
     //   variables: {
@@ -90,13 +100,13 @@ const KYCRegistration = () => {
     // setShowAlert(true);
   };
 
-  const auth = getAuth(app);
+  const auth = getAuth();
 
   const verifyEmail = async () => {
     const actionCodeSettings = {
       url: "http://nfjlabs.io/#/item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/13",
       handleCodeInApp: true,
-      dynamicLinkDomain: "nfjlabs1.page.link",
+      dynamicLinkDomain: "nfjlabs.page.link",
     };
     const res = await sendSignInLinkToEmail(
       auth,
@@ -104,33 +114,70 @@ const KYCRegistration = () => {
       actionCodeSettings
     );
     console.log({ firebaseResp: res });
-  }
+  };
 
   const captchaVerify = async () => {
     console.log("captcha called");
-    window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-      'size': 'invisible',
-      'callback': (response) => {
-        console.log("captcha success");
-        verifyPhone();
-      },
-    }, auth);
-  }
 
-  const verifyPhone = () => {
+    window.recaptchaVerifier = new RecaptchaVerifier(
+      "recaptcha-container",
+      {
+        size: "invisible",
+        callback: (response) => {
+          console.log({ response });
+        },
+      },
+      auth
+    );
+    const widgetId = await window.recaptchaVerifier.render();
+    window.recaptchaWidgetId = widgetId;
+
+    verifyPhone();
+  };
+
+  const verifyPhone = async () => {
     console.log("verify called");
-    const phoneNumber = "+919967721650";
+    // const phoneNumber = "+917977581183";
     const appVerifier = window.recaptchaVerifier;
-    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-      .then((confirmationResult) => {
-        // SMS sent. Prompt user to type the code from the message, then sign the
-        // user in with confirmationResult.confirm(code).
-        window.confirmationResult = confirmationResult;
-        alert("otp has been sended");
-      }).catch((error) => {
-        console.log(error)
+    // signInWithPhoneNumber(auth, phoneNumber, appVerifier).then()
+
+    const confirmationResult = await signInWithPhoneNumber(
+      auth,
+      `+91${data.phone}`,
+      appVerifier
+    );
+    window.confirmationResult = confirmationResult;
+
+    // .then((confirmationResult) => {
+    //   // SMS sent. Prompt user to type the code from the message, then sign the
+    //   // user in with confirmationResult.confirm(code).
+    //   window.confirmationResult = confirmationResult;
+    //   confirmationResult.confirm()
+    //   alert("otp has been sended");
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    // });
+  };
+
+  const checkUserOtp = async (code) => {
+    console.log({ phone_num: code });
+    window.confirmationResult
+      .confirm(code)
+      .then((result) => {
+        // User signed in successfully.
+        const user = result.user;
+        alert("OTP Verified!!");
+        is_otp_valid(true);
+        console.log({ result });
+      })
+      .catch((error) => {
+        // User couldn't sign in (bad verification code?)
+        alert("Please Enter Correct Otp");
+        is_otp_valid(false);
+        // ...
       });
-  }
+  };
 
   const fetchKYC = async () => {
     const res = await getKycByWalletId({
@@ -241,7 +288,32 @@ const KYCRegistration = () => {
                 placeholder="+91 7977298813"
                 required
               />
+              <button
+                type="button"
+                onClick={() => {
+                  captchaVerify();
+                  set_is_otp_sent(true);
+                }}
+              >
+                Verify Otp
+              </button>
             </Form.Group>
+
+            {is_otp_sent && (
+              <form className="mb-3" controlId="formBasicEmail">
+                <label>Verify Phone Number</label>
+                <input
+                  onChange={(e) => set_user_otp(e.target.value)}
+                  name="verify_phone"
+                  type="number"
+                  placeholder="+91 7977298813"
+                  required
+                />
+                <button type="button" onClick={() => checkUserOtp(user_otp)}>
+                  verify
+                </button>
+              </form>
+            )}
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Address</Form.Label>

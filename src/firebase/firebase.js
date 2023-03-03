@@ -1,4 +1,3 @@
-
 // import { initializeApp } from "firebase/app";
 // const firebaseConfig = {
 //   apiKey: "AIzaSyDPHlh6xzfy0pe5Mh5UtUXB2XJAxpxRfZA",
@@ -11,7 +10,6 @@
 // const app = initializeApp(firebaseConfig);
 // export default app;
 
-
 import { initializeApp } from "firebase/app";
 const firebaseConfig = {
   apiKey: "AIzaSyC4HUOC5cj-26wa9aD5w1dUoa22YTYadBA",
@@ -20,7 +18,7 @@ const firebaseConfig = {
   storageBucket: "nfjlabs-f3662.appspot.com",
   messagingSenderId: "688664659504",
   appId: "1:688664659504:web:871aea9565a25d63358ff5",
-  measurementId: "G-ME02EGGH4P"
+  measurementId: "G-ME02EGGH4P",
 };
 const app = initializeApp(firebaseConfig);
 export default app;
