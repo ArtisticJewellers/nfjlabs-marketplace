@@ -20,18 +20,18 @@ import { async } from "@firebase/util";
 
 const KYCRegistration = () => {
   const { account } = useWeb3React();
-  // const [kycData, setKycData] = useState({
-  //   address: "",
-  //   country: "",
-  //   dob: "",
-  //   email: "",
-  //   fname: "",
-  //   identity: "",
-  //   isApproved: "",
-  //   lname: "",
-  //   phone: "",
-  //   userWallet: "",
-  // });
+  const [kycData, setKycData] = useState({
+    address: "",
+    country: "",
+    dob: "",
+    email: "",
+    fname: "",
+    identity: "",
+    isApproved: "",
+    lname: "",
+    phone: "",
+    userWallet: "",
+  });
 
   const [data, setData] = useState({
     username: "",
@@ -46,13 +46,16 @@ const KYCRegistration = () => {
     userWallet: "",
   });
   const [is_otp_sent, set_is_otp_sent] = useState(false);
-  const [is_otp_valid, set_is_otp_valid] = useState(false);
+  const [is_otp_verified, set_is_otp_verified] = useState(false);
 
   const [createKyc, { error }] = useMutation(completeKYC);
   const [getKycByWalletId] = useMutation(GetKycByWalletId);
   const [user_otp, set_user_otp] = useState("");
 
   const [showAlert, setShowAlert] = useState(false);
+  const [redAlert, setRedAlert] = useState(false);
+  const [sendOtpAlert, setSendOtpAlert] = useState(false);
+  const [formSubmitAlert, setFormSubmitAlert] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
 
   const { data: user } = useQuery(UserDetails, {
@@ -67,58 +70,55 @@ const KYCRegistration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!is_otp_valid)
-      return alert("Please First Verify Your Phone Number & Email");
+    if (!is_otp_verified)
+      return alert("Please First Verify Your Phone Number");
+
     const { fname, lname, address, country, dob, email, identity, phone } =
       data;
     let userWallet = account;
     if (!account) return alert("Please connect to your wallet");
+    setShowLoading(true);
     captchaVerify();
 
-    // const res = await createKyc({
-    //   variables: {
-    //     username: user?.user?.username,
-    //     fname,
-    //     lname,
-    //     dob,
-    //     email,
-    //     phone,
-    //     address,
-    //     country,
-    //     identity,
-    //     userWallet,
-    //   },
-    // });
+    const res = await createKyc({
+      variables: {
+        username: user?.user?.username,
+        fname,
+        lname,
+        dob,
+        email,
+        phone,
+        address,
+        country,
+        identity,
+        userWallet,
+      },
+    });
+    if (error) {
+      console.log({ error });
+    }
 
-    // console.log({ res });
-
-    // if (error) {
-    //   console.log({ error });
-    // }
-
-    // setShowLoading(false);
-    // setShowAlert(true);
+    setShowLoading(false);
+    alert("Your KYC form has been submitted successfully, You will get verified soon..")
   };
 
+  // auth for verifications 
   const auth = getAuth();
-
-  const verifyEmail = async () => {
-    const actionCodeSettings = {
-      url: "http://nfjlabs.io/#/item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/13",
-      handleCodeInApp: true,
-      dynamicLinkDomain: "nfjlabs.page.link",
-    };
-    const res = await sendSignInLinkToEmail(
-      auth,
-      "quantumroasts786@gmail.com",
-      actionCodeSettings
-    );
-    console.log({ firebaseResp: res });
-  };
+  // const verifyEmail = async () => {
+  //   const actionCodeSettings = {
+  //     url: "http://nfjlabs.io/#/item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/13",
+  //     handleCodeInApp: true,
+  //     dynamicLinkDomain: "nfjlabs.page.link",
+  //   };
+  //   const res = await sendSignInLinkToEmail(
+  //     auth,
+  //     "quantumroasts786@gmail.com",
+  //     actionCodeSettings
+  //   );
+  //   console.log({ firebaseResp: res });
+  // };
 
   const captchaVerify = async () => {
-    console.log("captcha called");
-
     window.recaptchaVerifier = new RecaptchaVerifier(
       "recaptcha-container",
       {
@@ -131,54 +131,36 @@ const KYCRegistration = () => {
     );
     const widgetId = await window.recaptchaVerifier.render();
     window.recaptchaWidgetId = widgetId;
-
     verifyPhone();
   };
 
   const verifyPhone = async () => {
-    console.log("verify called");
-    // const phoneNumber = "+917977581183";
     const appVerifier = window.recaptchaVerifier;
-    // signInWithPhoneNumber(auth, phoneNumber, appVerifier).then()
-
     const confirmationResult = await signInWithPhoneNumber(
       auth,
       `+91${data.phone}`,
       appVerifier
     );
     window.confirmationResult = confirmationResult;
-
-    // .then((confirmationResult) => {
-    //   // SMS sent. Prompt user to type the code from the message, then sign the
-    //   // user in with confirmationResult.confirm(code).
-    //   window.confirmationResult = confirmationResult;
-    //   confirmationResult.confirm()
-    //   alert("otp has been sended");
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    // });
   };
 
   const checkUserOtp = async (code) => {
-    console.log({ phone_num: code });
     window.confirmationResult
       .confirm(code)
       .then((result) => {
-        // User signed in successfully.
         const user = result.user;
-        alert("OTP Verified!!");
-        is_otp_valid(true);
-        console.log({ result });
+        setSendOtpAlert(false);
+        setShowAlert(true);
+        setRedAlert(false);
+        set_is_otp_verified(true);
       })
       .catch((error) => {
-        // User couldn't sign in (bad verification code?)
-        alert("Please Enter Correct Otp");
-        is_otp_valid(false);
-        // ...
+        { error && setSendOtpAlert(false) };
+        { error && setRedAlert(true) };
       });
   };
 
+  // kyc fetch 
   const fetchKYC = async () => {
     const res = await getKycByWalletId({
       variables: {
@@ -199,9 +181,19 @@ const KYCRegistration = () => {
   return (
     <div>
       <Header />
+      {sendOtpAlert && (
+        <Alert variant={"success"}>
+          Otp send successfully on your phone number
+        </Alert>
+      )}
       {showAlert && (
         <Alert variant={"success"}>
-          Your KYC has been successfully submitted
+          Otp has been verified successfully, now you can submit the KYC form
+        </Alert>
+      )}
+      {redAlert && (
+        <Alert variant={"danger"}>
+          Please enter correct OTP
         </Alert>
       )}
 
@@ -278,45 +270,49 @@ const KYCRegistration = () => {
                 required
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3" controlId="formBasicEmail" style={{ position: "relative" }}>
               <Form.Label>Phone Number</Form.Label>
               <Form.Control
                 onChange={onChange}
-                value={data.phone}
+                value={data.phone && data.phone || "+91 7977298813"}
                 name="phone"
                 type="number"
                 placeholder="+91 7977298813"
                 required
               />
-              <button
-                type="button"
-                onClick={() => {
-                  captchaVerify();
-                  set_is_otp_sent(true);
-                }}
-              >
-                Verify Otp
-              </button>
+              {is_otp_verified == false &&
+                <h4
+                  onClick={() => {
+                    captchaVerify();
+                    setSendOtpAlert(true);
+                    set_is_otp_sent(true);
+                  }}
+                  style={{ position: "absolute", right: "40px", top: "49px", fontSize: "13px", cursor: "pointer" }}
+                >
+                  {is_otp_sent == true ? "OTP SENDED" : "VERIFY OTP"}
+                </h4>
+              }
+
             </Form.Group>
 
-            {is_otp_sent && (
-              <form className="mb-3" controlId="formBasicEmail">
-                <label>Verify Phone Number</label>
+            {is_otp_sent && is_otp_verified == false && (
+              <form className="mb-3" controlId="formBasicEmail" style={{ position: "relative" }}>
+                <label>Verify OTP</label>
                 <input
                   onChange={(e) => set_user_otp(e.target.value)}
                   name="verify_phone"
-                  type="number"
-                  placeholder="+91 7977298813"
+                  type="text"
+                  placeholder="Enter OTP recieved on your mobile phone"
                   required
                 />
-                <button type="button" onClick={() => checkUserOtp(user_otp)}>
-                  verify
-                </button>
+                <h4 onClick={() => checkUserOtp(user_otp)} style={{ position: "absolute", right: "20px", top: "36px", fontSize: "15px", cursor: "pointer", borderRadius: "4px", padding: "8px 14px", color: "white", backgroundColor: "#3f88fc" }}>
+                  VERIFY
+                </h4>
               </form>
             )}
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Address</Form.Label>
+              <Form.Label>Residnetial Address</Form.Label>
               <Form.Control
                 onChange={onChange}
                 value={data.address}
@@ -644,7 +640,7 @@ const KYCRegistration = () => {
               </Form.Select>
             </Form.Group>
             <Form.Group controlId="formFile" className="mb-3">
-              <Form.Label>Upload Your Passport</Form.Label>
+              <Form.Label>Upload Your Passport / Any Country Identity Card</Form.Label>
               <Form.Control
                 onChange={
                   (e) => setData({ ...data, identity: "" })
