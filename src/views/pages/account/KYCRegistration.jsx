@@ -10,6 +10,7 @@ import Alert from "react-bootstrap/Alert";
 import { UserDetails } from "../../../graphql/query";
 import { GetKycByWalletId } from "../../../graphql/mutations";
 import app from "../../../firebase/firebase";
+import useStorage from "../../../hooks/useStorage";
 import {
   sendSignInLinkToEmail,
   getAuth,
@@ -19,6 +20,7 @@ import {
 import { async } from "@firebase/util";
 
 const KYCRegistration = () => {
+  const storage = useStorage();
   const { account } = useWeb3React();
   const [kycData, setKycData] = useState({
     address: "",
@@ -78,7 +80,7 @@ const KYCRegistration = () => {
     let userWallet = account;
     if (!account) return alert("Please connect to your wallet");
     captchaVerify();
-
+    const identity_file = await storage.uploadOnIpfs(identity);
     const res = await createKyc({
       variables: {
         username: user?.user?.username,
@@ -89,19 +91,22 @@ const KYCRegistration = () => {
         phone,
         address,
         country,
-        identity,
+        identity: identity_file,
         userWallet,
       },
     });
+
     if (error) {
       console.log({ error });
     }
 
     setShowLoading(false);
-    alert("Your KYC form has been submitted successfully, You will get verified soon..")
+    alert(
+      "Your KYC form has been submitted successfully, You will get verified soon.."
+    );
   };
 
-  // auth for verifications 
+  // auth for verifications
   const auth = getAuth();
   // const verifyEmail = async () => {
   //   const actionCodeSettings = {
@@ -154,12 +159,16 @@ const KYCRegistration = () => {
         set_is_otp_verified(true);
       })
       .catch((error) => {
-        { error && setSendOtpAlert(false) };
-        { error && setRedAlert(true) };
+        {
+          error && setSendOtpAlert(false);
+        }
+        {
+          error && setRedAlert(true);
+        }
       });
   };
 
-  // kyc fetch 
+  // kyc fetch
   const fetchKYC = async () => {
     const res = await getKycByWalletId({
       variables: {
@@ -190,11 +199,7 @@ const KYCRegistration = () => {
           Otp has been verified successfully, now you can submit the KYC form
         </Alert>
       )}
-      {redAlert && (
-        <Alert variant={"danger"}>
-          Please enter correct OTP
-        </Alert>
-      )}
+      {redAlert && <Alert variant={"danger"}>Please enter correct OTP</Alert>}
 
       <h1 style={{ textAlign: "center", marginTop: "40px", fontSize: "35px" }}>
         Complete Your KYC
@@ -269,33 +274,46 @@ const KYCRegistration = () => {
                 required
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail" style={{ position: "relative" }}>
+            <Form.Group
+              className="mb-3"
+              controlId="formBasicEmail"
+              style={{ position: "relative" }}
+            >
               <Form.Label>Phone Number</Form.Label>
               <Form.Control
                 onChange={onChange}
-                value={data.phone && data.phone || "+91 7977298813"}
+                value={(data.phone && data.phone) || "+91 7977298813"}
                 name="phone"
                 type="number"
                 placeholder="+91 7977298813"
                 required
               />
-              {is_otp_verified == false &&
+              {is_otp_verified == false && (
                 <h4
                   onClick={() => {
                     captchaVerify();
                     setSendOtpAlert(true);
                     set_is_otp_sent(true);
                   }}
-                  style={{ position: "absolute", right: "40px", top: "49px", fontSize: "13px", cursor: "pointer" }}
+                  style={{
+                    position: "absolute",
+                    right: "40px",
+                    top: "49px",
+                    fontSize: "13px",
+                    cursor: "pointer",
+                  }}
                 >
                   {is_otp_sent == true ? "OTP SENDED" : "VERIFY OTP"}
                 </h4>
-              }
-
+              )}
             </Form.Group>
 
             {is_otp_sent && is_otp_verified == false && (
-              <form className="mb-3" controlId="formBasicEmail" style={{ position: "relative" }}>
+              <form
+                className="mb-3"
+                controlId="formBasicEmail"
+                style={{ position: "relative" }}
+              >
                 <label>Verify OTP</label>
                 <input
                   onChange={(e) => set_user_otp(e.target.value)}
@@ -304,7 +322,20 @@ const KYCRegistration = () => {
                   placeholder="Enter OTP recieved on your mobile phone"
                   required
                 />
-                <h4 onClick={() => checkUserOtp(user_otp)} style={{ position: "absolute", right: "20px", top: "36px", fontSize: "15px", cursor: "pointer", borderRadius: "4px", padding: "8px 14px", color: "white", backgroundColor: "#3f88fc" }}>
+                <h4
+                  onClick={() => checkUserOtp(user_otp)}
+                  style={{
+                    position: "absolute",
+                    right: "20px",
+                    top: "36px",
+                    fontSize: "15px",
+                    cursor: "pointer",
+                    borderRadius: "4px",
+                    padding: "8px 14px",
+                    color: "white",
+                    backgroundColor: "#3f88fc",
+                  }}
+                >
                   VERIFY
                 </h4>
               </form>
@@ -639,10 +670,12 @@ const KYCRegistration = () => {
               </Form.Select>
             </Form.Group>
             <Form.Group controlId="formFile" className="mb-3">
-              <Form.Label>Upload Your Passport / Any Country Identity Card</Form.Label>
+              <Form.Label>
+                Upload Your Passport / Any Country Identity Card
+              </Form.Label>
               <Form.Control
                 onChange={
-                  (e) => setData({ ...data, identity: "" })
+                  (e) => setData({ ...data, identity: e.target.files[0] })
                   // setData({ ...data, identity: e.target.files[0] })
                 }
                 name="passport"
