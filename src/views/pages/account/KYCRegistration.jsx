@@ -72,12 +72,11 @@ const KYCRegistration = () => {
     e.preventDefault();
     if (!is_otp_verified)
       return alert("Please First Verify Your Phone Number");
-
+    setShowLoading(true);
     const { fname, lname, address, country, dob, email, identity, phone } =
       data;
     let userWallet = account;
     if (!account) return alert("Please connect to your wallet");
-    setShowLoading(true);
     captchaVerify();
 
     const res = await createKyc({
