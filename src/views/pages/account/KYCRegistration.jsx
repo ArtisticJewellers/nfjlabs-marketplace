@@ -10,6 +10,7 @@ import Alert from "react-bootstrap/Alert";
 import { UserDetails } from "../../../graphql/query";
 import { GetKycByWalletId } from "../../../graphql/mutations";
 import app from "../../../firebase/firebase";
+import useStorage from "../../../hooks/useStorage";
 import {
   sendSignInLinkToEmail,
   getAuth,
@@ -19,6 +20,7 @@ import {
 import { async } from "@firebase/util";
 
 const KYCRegistration = () => {
+  const storage = useStorage();
   const { account } = useWeb3React();
   // const [kycData, setKycData] = useState({
   //   address: "",
@@ -67,37 +69,35 @@ const KYCRegistration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!is_otp_valid)
-      return alert("Please First Verify Your Phone Number & Email");
+    // if (!is_otp_valid)
+    //   return alert("Please First Verify Your Phone Number & Email");
     const { fname, lname, address, country, dob, email, identity, phone } =
       data;
     let userWallet = account;
     if (!account) return alert("Please connect to your wallet");
-    captchaVerify();
+    // captchaVerify();
+    const identity_file = await storage.uploadOnIpfs(identity);
+    const res = await createKyc({
+      variables: {
+        username: user?.user?.username,
+        fname,
+        lname,
+        dob,
+        email,
+        phone,
+        address,
+        country,
+        identity: identity_file,
+        userWallet,
+      },
+    });
 
-    // const res = await createKyc({
-    //   variables: {
-    //     username: user?.user?.username,
-    //     fname,
-    //     lname,
-    //     dob,
-    //     email,
-    //     phone,
-    //     address,
-    //     country,
-    //     identity,
-    //     userWallet,
-    //   },
-    // });
+    if (error) {
+      console.log({ error });
+    }
 
-    // console.log({ res });
-
-    // if (error) {
-    //   console.log({ error });
-    // }
-
-    // setShowLoading(false);
-    // setShowAlert(true);
+    setShowLoading(false);
+    setShowAlert(true);
   };
 
   const auth = getAuth();
@@ -647,7 +647,7 @@ const KYCRegistration = () => {
               <Form.Label>Upload Your Passport</Form.Label>
               <Form.Control
                 onChange={
-                  (e) => setData({ ...data, identity: "" })
+                  (e) => setData({ ...data, identity: e.target.files[0] })
                   // setData({ ...data, identity: e.target.files[0] })
                 }
                 name="passport"
