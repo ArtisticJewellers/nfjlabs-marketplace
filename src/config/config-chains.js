@@ -1,6 +1,6 @@
 export const ChainsInfo = {
   5: {
-    NETWORK_NAME: "",
+    NETWORK_NAME: "Goerli Testnet",
     CHAIN_NAME: "Ethereum",
     CURRENCY_SYMBOL: "ETH",
     NFT_MARKETPLACE_ADDRESS: "0x2a21d13776F7317b93ba74Ac7639ad39F4e2db8E",

@@ -72,8 +72,9 @@ const KYCRegistration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!is_otp_verified) return alert("Please First Verify Your Phone Number");
-
+    if (!is_otp_verified)
+      return alert("Please First Verify Your Phone Number");
+    setShowLoading(true);
     const { fname, lname, address, country, dob, email, identity, phone } =
       data;
     let userWallet = account;

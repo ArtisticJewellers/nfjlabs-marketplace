@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+/// @custom:oz-upgrades-unsafe-allow constructor
 pragma solidity ^0.8.4;
 
 interface IERC20Upgradeable {
@@ -46,10 +47,10 @@ interface IERC20Upgradeable {
      *
      * This value changes when {approve} or {transferFrom} are called.
      */
-    function allowance(address owner, address spender)
-        external
-        view
-        returns (uint256);
+    function allowance(
+        address owner,
+        address spender
+    ) external view returns (uint256);
 
     /**
      * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.
@@ -356,10 +357,10 @@ library AddressUpgradeable {
      *
      * _Available since v3.1._
      */
-    function functionCall(address target, bytes memory data)
-        internal
-        returns (bytes memory)
-    {
+    function functionCall(
+        address target,
+        bytes memory data
+    ) internal returns (bytes memory) {
         return
             functionCallWithValue(
                 target,
@@ -442,11 +443,10 @@ library AddressUpgradeable {
      *
      * _Available since v3.3._
      */
-    function functionStaticCall(address target, bytes memory data)
-        internal
-        view
-        returns (bytes memory)
-    {
+    function functionStaticCall(
+        address target,
+        bytes memory data
+    ) internal view returns (bytes memory) {
         return
             functionStaticCall(
                 target,
@@ -518,10 +518,10 @@ library AddressUpgradeable {
         }
     }
 
-    function _revert(bytes memory returndata, string memory errorMessage)
-        private
-        pure
-    {
+    function _revert(
+        bytes memory returndata,
+        string memory errorMessage
+    ) private pure {
         // Look for revert reason and bubble it up if present
         if (returndata.length > 0) {
             // The easiest way to bubble the revert reason is using memory via assembly
@@ -751,10 +751,10 @@ abstract contract ERC1967UpgradeUpgradeable is Initializable {
      *
      * _Available since v3.4._
      */
-    function _functionDelegateCall(address target, bytes memory data)
-        private
-        returns (bytes memory)
-    {
+    function _functionDelegateCall(
+        address target,
+        bytes memory data
+    ) private returns (bytes memory) {
         require(
             AddressUpgradeable.isContract(target),
             "Address: delegate call to non-contract"
@@ -807,11 +807,9 @@ library StorageSlotUpgradeable {
     /**
      * @dev Returns an `AddressSlot` with member `value` located at `slot`.
      */
-    function getAddressSlot(bytes32 slot)
-        internal
-        pure
-        returns (AddressSlot storage r)
-    {
+    function getAddressSlot(
+        bytes32 slot
+    ) internal pure returns (AddressSlot storage r) {
         /// @solidity memory-safe-assembly
         assembly {
             r.slot := slot
@@ -821,11 +819,9 @@ library StorageSlotUpgradeable {
     /**
      * @dev Returns an `BooleanSlot` with member `value` located at `slot`.
      */
-    function getBooleanSlot(bytes32 slot)
-        internal
-        pure
-        returns (BooleanSlot storage r)
-    {
+    function getBooleanSlot(
+        bytes32 slot
+    ) internal pure returns (BooleanSlot storage r) {
         /// @solidity memory-safe-assembly
         assembly {
             r.slot := slot
@@ -835,11 +831,9 @@ library StorageSlotUpgradeable {
     /**
      * @dev Returns an `Bytes32Slot` with member `value` located at `slot`.
      */
-    function getBytes32Slot(bytes32 slot)
-        internal
-        pure
-        returns (Bytes32Slot storage r)
-    {
+    function getBytes32Slot(
+        bytes32 slot
+    ) internal pure returns (Bytes32Slot storage r) {
         /// @solidity memory-safe-assembly
         assembly {
             r.slot := slot
@@ -849,11 +843,9 @@ library StorageSlotUpgradeable {
     /**
      * @dev Returns an `Uint256Slot` with member `value` located at `slot`.
      */
-    function getUint256Slot(bytes32 slot)
-        internal
-        pure
-        returns (Uint256Slot storage r)
-    {
+    function getUint256Slot(
+        bytes32 slot
+    ) internal pure returns (Uint256Slot storage r) {
         /// @solidity memory-safe-assembly
         assembly {
             r.slot := slot
@@ -943,12 +935,10 @@ abstract contract UUPSUpgradeable is
      *
      * Emits an {Upgraded} event.
      */
-    function upgradeToAndCall(address newImplementation, bytes memory data)
-        external
-        payable
-        virtual
-        onlyProxy
-    {
+    function upgradeToAndCall(
+        address newImplementation,
+        bytes memory data
+    ) external payable virtual onlyProxy {
         _authorizeUpgrade(newImplementation);
         _upgradeToAndCallUUPS(newImplementation, data, true);
     }
@@ -1112,11 +1102,7 @@ interface IERC721Upgradeable is IERC165Upgradeable {
      *
      * Emits a {Transfer} event.
      */
-    function transferFrom(
-        address from,
-        address to,
-        uint256 tokenId
-    ) external;
+    function transferFrom(address from, address to, uint256 tokenId) external;
 
     /**
      * @dev Gives permission to `to` to transfer `tokenId` token to another account.
@@ -1152,20 +1138,19 @@ interface IERC721Upgradeable is IERC165Upgradeable {
      *
      * - `tokenId` must exist.
      */
-    function getApproved(uint256 tokenId)
-        external
-        view
-        returns (address operator);
+    function getApproved(
+        uint256 tokenId
+    ) external view returns (address operator);
 
     /**
      * @dev Returns if the `operator` is allowed to manage all of the assets of `owner`.
      *
      * See {setApprovalForAll}
      */
-    function isApprovedForAll(address owner, address operator)
-        external
-        view
-        returns (bool);
+    function isApprovedForAll(
+        address owner,
+        address operator
+    ) external view returns (bool);
 }
 
 interface IERC721ReceiverUpgradeable {
@@ -1251,11 +1236,10 @@ library StringsUpgradeable {
     /**
      * @dev Converts a `uint256` to its ASCII `string` hexadecimal representation with fixed length.
      */
-    function toHexString(uint256 value, uint256 length)
-        internal
-        pure
-        returns (string memory)
-    {
+    function toHexString(
+        uint256 value,
+        uint256 length
+    ) internal pure returns (string memory) {
         bytes memory buffer = new bytes(2 * length + 2);
         buffer[0] = "0";
         buffer[1] = "x";
@@ -1283,13 +1267,9 @@ abstract contract ERC165Upgradeable is Initializable, IERC165Upgradeable {
     /**
      * @dev See {IERC165-supportsInterface}.
      */
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        virtual
-        override
-        returns (bool)
-    {
+    function supportsInterface(
+        bytes4 interfaceId
+    ) public view virtual override returns (bool) {
         return interfaceId == type(IERC165Upgradeable).interfaceId;
     }
 
@@ -1433,17 +1413,17 @@ contract ERC721Upgradeable is
     /**
      * @dev Initializes the contract by setting a `name` and a `symbol` to the token collection.
      */
-    function __ERC721_init(string memory name_, string memory symbol_)
-        internal
-        onlyInitializing
-    {
+    function __ERC721_init(
+        string memory name_,
+        string memory symbol_
+    ) internal onlyInitializing {
         __ERC721_init_unchained(name_, symbol_);
     }
 
-    function __ERC721_init_unchained(string memory name_, string memory symbol_)
-        internal
-        onlyInitializing
-    {
+    function __ERC721_init_unchained(
+        string memory name_,
+        string memory symbol_
+    ) internal onlyInitializing {
         _name = name_;
         _symbol = symbol_;
     }
@@ -1451,7 +1431,9 @@ contract ERC721Upgradeable is
     /**
      * @dev See {IERC165-supportsInterface}.
      */
-    function supportsInterface(bytes4 interfaceId)
+    function supportsInterface(
+        bytes4 interfaceId
+    )
         public
         view
         virtual
@@ -1467,13 +1449,9 @@ contract ERC721Upgradeable is
     /**
      * @dev See {IERC721-balanceOf}.
      */
-    function balanceOf(address owner)
-        public
-        view
-        virtual
-        override
-        returns (uint256)
-    {
+    function balanceOf(
+        address owner
+    ) public view virtual override returns (uint256) {
         require(
             owner != address(0),
             "ERC721: address zero is not a valid owner"
@@ -1484,13 +1462,9 @@ contract ERC721Upgradeable is
     /**
      * @dev See {IERC721-ownerOf}.
      */
-    function ownerOf(uint256 tokenId)
-        public
-        view
-        virtual
-        override
-        returns (address)
-    {
+    function ownerOf(
+        uint256 tokenId
+    ) public view virtual override returns (address) {
         address owner = _owners[tokenId];
         require(owner != address(0), "ERC721: invalid token ID");
         return owner;
@@ -1513,13 +1487,9 @@ contract ERC721Upgradeable is
     /**
      * @dev See {IERC721Metadata-tokenURI}.
      */
-    function tokenURI(uint256 tokenId)
-        public
-        view
-        virtual
-        override
-        returns (string memory)
-    {
+    function tokenURI(
+        uint256 tokenId
+    ) public view virtual override returns (string memory) {
         _requireMinted(tokenId);
 
         string memory baseURI = _baseURI();
@@ -1556,13 +1526,9 @@ contract ERC721Upgradeable is
     /**
      * @dev See {IERC721-getApproved}.
      */
-    function getApproved(uint256 tokenId)
-        public
-        view
-        virtual
-        override
-        returns (address)
-    {
+    function getApproved(
+        uint256 tokenId
+    ) public view virtual override returns (address) {
         _requireMinted(tokenId);
 
         return _tokenApprovals[tokenId];
@@ -1571,24 +1537,20 @@ contract ERC721Upgradeable is
     /**
      * @dev See {IERC721-setApprovalForAll}.
      */
-    function setApprovalForAll(address operator, bool approved)
-        public
-        virtual
-        override
-    {
+    function setApprovalForAll(
+        address operator,
+        bool approved
+    ) public virtual override {
         _setApprovalForAll(_msgSender(), operator, approved);
     }
 
     /**
      * @dev See {IERC721-isApprovedForAll}.
      */
-    function isApprovedForAll(address owner, address operator)
-        public
-        view
-        virtual
-        override
-        returns (bool)
-    {
+    function isApprovedForAll(
+        address owner,
+        address operator
+    ) public view virtual override returns (bool) {
         return _operatorApprovals[owner][operator];
     }
 
@@ -1686,12 +1648,10 @@ contract ERC721Upgradeable is
      *
      * - `tokenId` must exist.
      */
-    function _isApprovedOrOwner(address spender, uint256 tokenId)
-        internal
-        view
-        virtual
-        returns (bool)
-    {
+    function _isApprovedOrOwner(
+        address spender,
+        uint256 tokenId
+    ) internal view virtual returns (bool) {
         address owner = ERC721Upgradeable.ownerOf(tokenId);
         return (spender == owner ||
             isApprovedForAll(owner, spender) ||
@@ -2000,10 +1960,10 @@ contract ArtisticJeweller is
         _disableInitializers();
     }
 
-    function initialize(address _platformReciverAddr, uint128 _platformCuts)
-        public
-        initializer
-    {
+    function initialize(
+        address _platformReciverAddr,
+        uint128 _platformCuts
+    ) public initializer {
         __ERC721_init("ArtisticJeweller", "AJ");
         __Pausable_init();
         __Ownable_init();
@@ -2036,11 +1996,9 @@ contract ArtisticJeweller is
         super._beforeTokenTransfer(from, to, tokenId);
     }
 
-    function _authorizeUpgrade(address newImplementation)
-        internal
-        override
-        onlyOwner
-    {}
+    function _authorizeUpgrade(
+        address newImplementation
+    ) internal override onlyOwner {}
 
     modifier NFTOwner(uint256 tokenIdCounter) {
         require(
@@ -2089,10 +2047,10 @@ contract ArtisticJeweller is
     }
 
     // only owner can update NFTjson data etc using this function
-    function updateNFTJsonData(uint256 tokenIdCounter, string memory _jsonData)
-        public
-        NFTOwner(tokenIdCounter)
-    {
+    function updateNFTJsonData(
+        uint256 tokenIdCounter,
+        string memory _jsonData
+    ) public NFTOwner(tokenIdCounter) {
         storeData[tokenIdCounter].jsonData = _jsonData;
     }
 
@@ -2121,16 +2079,9 @@ contract ArtisticJeweller is
     }
 
     // get Royalty Details by NFT Id
-    function getRoyaltyAndPlatformFeeDetails(uint256 _nftId)
-        public
-        view
-        returns (
-            uint256,
-            address,
-            uint256,
-            address
-        )
-    {
+    function getRoyaltyAndPlatformFeeDetails(
+        uint256 _nftId
+    ) public view returns (uint256, address, uint256, address) {
         // return 1. Nft Royalty %, 2. NFT Royalty Address, 3. NFT Platform % and 4. NFT Platfrom Address
         return (
             storeData[_nftId].nftRoyalty,
