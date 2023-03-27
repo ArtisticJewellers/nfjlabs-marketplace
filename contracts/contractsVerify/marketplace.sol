@@ -49,7 +49,10 @@ contract AJMarketplace is ReentrancyGuard {
         address indexed buyer
     );
 
+    // issue B.4 solved
     constructor(address _nftContractAddr, address _weth) {
+        require(_nftContractAddr != address(0), "Zero address");
+        require(_weth != address(0), "Zero address");
         nftContractAddr = _nftContractAddr;
         WETH = _weth;
         owner = msg.sender;
@@ -294,11 +297,10 @@ contract AJMarketplace is ReentrancyGuard {
         nftAuctionCount[_nftId] += 1;
     }
 
-    function getNFTFinalRate(uint256 _sellPrice, uint256 _tokenId)
-        public
-        view
-        returns (uint256)
-    {
+    function getNFTFinalRate(
+        uint256 _sellPrice,
+        uint256 _tokenId
+    ) public view returns (uint256) {
         // get royalti details
         (, , uint256 platformFee, ) = getRoyaltyPlatformFee(_tokenId);
         return ((_sellPrice *
@@ -306,11 +308,10 @@ contract AJMarketplace is ReentrancyGuard {
             IERC721(nftContractAddr).MAX_BPS());
     }
 
-    function getBidderAddressAndStatus(uint256 _nftId, uint8 _auctionIndex)
-        public
-        view
-        returns (address[] memory, bool[] memory)
-    {
+    function getBidderAddressAndStatus(
+        uint256 _nftId,
+        uint8 _auctionIndex
+    ) public view returns (address[] memory, bool[] memory) {
         return (
             allBidersAddress[_nftId][_auctionIndex].biddersAddr,
             allBidersAddress[_nftId][_auctionIndex].bidStatus
@@ -349,10 +350,7 @@ contract AJMarketplace is ReentrancyGuard {
                 "Please place high bid"
             );
         }
-        require(
-            _payAmount >= totalAmountUserPay,
-            "Not enough ether to cover item price and market fee, Price + Platfrom Fee"
-        );
+        require(_payAmount >= totalAmountUserPay, "Not enough ethers");
 
         // ether transfer to the seller
         IWETH(WETH).transferFrom(msg.sender, address(this), _payAmount);
@@ -371,20 +369,16 @@ contract AJMarketplace is ReentrancyGuard {
         }
     }
 
-    function getAllBidders(uint256 _nftId)
-        public
-        view
-        returns (address[] memory)
-    {
+    function getAllBidders(
+        uint256 _nftId
+    ) public view returns (address[] memory) {
         uint8 auctionIndex = nftAuctionCount[_nftId];
         return allBidersAddress[_nftId][auctionIndex].biddersAddr;
     }
 
-    function AuctionRemainingTime(uint256 _nftId)
-        public
-        view
-        returns (uint256)
-    {
+    function AuctionRemainingTime(
+        uint256 _nftId
+    ) public view returns (uint256) {
         uint256 currentTime = block.timestamp;
         if (AuctionDataset[_nftId].endAt > currentTime) {
             return (AuctionDataset[_nftId].endAt - currentTime);
@@ -395,11 +389,10 @@ contract AJMarketplace is ReentrancyGuard {
 
     // --------------------------------- Auction Ended ------------------------------------------ //
 
-    function isAddressInArray(address[] memory _addrArray, address _addr)
-        private
-        pure
-        returns (bool, uint256)
-    {
+    function isAddressInArray(
+        address[] memory _addrArray,
+        address _addr
+    ) private pure returns (bool, uint256) {
         bool tempbool = false;
         uint256 index = 0;
         while (index < _addrArray.length) {
@@ -441,7 +434,7 @@ contract AJMarketplace is ReentrancyGuard {
         Item storage item = items[_tokenId];
         require(
             address(item.seller) == msg.sender,
-            "Only Seller can remove the NFT from sale"
+            "Only Seller can remove the NFT"
         );
         require(
             block.timestamp < AuctionDataset[_tokenId].endAt,
@@ -468,10 +461,7 @@ contract AJMarketplace is ReentrancyGuard {
 
         require(msg.sender != address(0), "Zero address");
         require(item.forSale, "item doesn't exist");
-        require(
-            msg.value >= totalAmountUserPay,
-            "Not enough ether to cover item price and market fee, Price + Platfrom Fee + Royalty"
-        );
+        require(msg.value >= totalAmountUserPay, "Not enough ethers");
 
         // divide ether value in 3 part
         uint256 etherValue_platform = (item.price * (platformFee)) /
@@ -499,16 +489,9 @@ contract AJMarketplace is ReentrancyGuard {
         );
     }
 
-    function getRoyaltyPlatformFee(uint256 _nftId)
-        public
-        view
-        returns (
-            uint256,
-            address,
-            uint256,
-            address
-        )
-    {
+    function getRoyaltyPlatformFee(
+        uint256 _nftId
+    ) public view returns (uint256, address, uint256, address) {
         return IERC721(nftContractAddr).getRoyaltyAndPlatformFeeDetails(_nftId);
     }
 }

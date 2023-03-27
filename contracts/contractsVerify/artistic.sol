@@ -8,7 +8,9 @@ contract ArtisticJeweller is
 {
     using CountersUpgradeable for CountersUpgradeable.Counter;
     CountersUpgradeable.Counter private _tokenIdCounter;
-    uint128 public constant MAX_BPS = 10_000;
+
+    // issue A.4 solved
+    // uint128 public constant MAX_BPS = 10_000;
 
     address payable public PlatformAddress;
     uint128 public PlatformFee;
@@ -18,16 +20,24 @@ contract ArtisticJeweller is
         address royaltyAddress;
         address nftCreator;
     }
+
+    event NFTsData(
+        string jsonData,
+        uint128 nftRoyalty,
+        address royaltyAddress,
+        address nftCreator
+    );
+
     mapping(uint256 => NFTData) public storeData;
 
     constructor() {
         _disableInitializers();
     }
 
-    function initialize(address _platformReciverAddr, uint128 _platformCuts)
-        public
-        initializer
-    {
+    function initialize(
+        address _platformReciverAddr,
+        uint128 _platformCuts
+    ) public initializer {
         __ERC721_init("ArtisticJeweller", "AJ");
         __Pausable_init();
         __Ownable_init();
@@ -52,19 +62,18 @@ contract ArtisticJeweller is
         _safeMint(to, tokenId);
     }
 
-    function _beforeTokenTransfer(
-        address from,
-        address to,
-        uint256 tokenId
-    ) internal override whenNotPaused {
-        super._beforeTokenTransfer(from, to, tokenId);
-    }
+    // issue A.1 solved
+    // function _beforeTokenTransfer(
+    //     address from,
+    //     address to,
+    //     uint256 tokenId
+    // ) internal override whenNotPaused {
+    //     super._beforeTokenTransfer(from, to, tokenId);
+    // }
 
-    function _authorizeUpgrade(address newImplementation)
-        internal
-        override
-        onlyOwner
-    {}
+    function _authorizeUpgrade(
+        address newImplementation
+    ) internal override onlyOwner {}
 
     modifier NFTOwner(uint256 tokenIdCounter) {
         require(
@@ -95,7 +104,8 @@ contract ArtisticJeweller is
         storeData[tokenIdCounter].royaltyAddress = _royaltyAddress;
         storeData[tokenIdCounter].nftCreator = msg.sender;
 
-        require(msg.sender != address(0), "Zero address");
+        // issue A.3 solved
+        // require(msg.sender != address(0), "Zero address");
 
         // Mint NFT
         uint256 tokenId = _tokenIdCounter.current();
@@ -113,10 +123,10 @@ contract ArtisticJeweller is
     }
 
     // only owner can update NFTjson data etc using this function
-    function updateNFTJsonData(uint256 tokenIdCounter, string memory _jsonData)
-        public
-        NFTOwner(tokenIdCounter)
-    {
+    function updateNFTJsonData(
+        uint256 tokenIdCounter,
+        string memory _jsonData
+    ) public NFTOwner(tokenIdCounter) {
         storeData[tokenIdCounter].jsonData = _jsonData;
     }
 
@@ -139,22 +149,17 @@ contract ArtisticJeweller is
         storeData[tokenIdCounter].royaltyAddress = _royaltyAddress;
     }
 
+    // issue A.5 solved
     // return total nft count
-    function getTotalNFTCount() public view returns (uint256) {
+    function getTotalNFTCount() external view returns (uint256) {
         return uint256(_tokenIdCounter.current());
     }
 
+    // issue A.5 second one solved
     // get Royalty Details by NFT Id
-    function getRoyaltyAndPlatformFeeDetails(uint256 _nftId)
-        public
-        view
-        returns (
-            uint256,
-            address,
-            uint256,
-            address
-        )
-    {
+    function getRoyaltyAndPlatformFeeDetails(
+        uint256 _nftId
+    ) external view returns (uint256, address, uint256, address) {
         return (
             storeData[_nftId].nftRoyalty,
             storeData[_nftId].royaltyAddress,
