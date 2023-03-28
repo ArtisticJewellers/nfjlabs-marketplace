@@ -1,3 +1,10 @@
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.17;
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "../WETH.sol";
+import "./artistic.sol";
+
 contract AJMarketplace is ReentrancyGuard {
     address public nftContractAddr;
     event Print(uint256 intVal, address addrVal, string stringVal, bool result);
