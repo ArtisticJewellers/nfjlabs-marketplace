@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.17;
+pragma solidity ^0.8.17;
 import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721BurnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
@@ -20,7 +20,7 @@ contract ArtisticJeweller is
     CountersUpgradeable.Counter private _tokenIdCounter;
 
     // issue A.4 solved
-    // uint128 public constant MAX_BPS = 10_000;
+    uint128 public constant MAX_BPS = 10_000;
 
     address payable public PlatformAddress;
     uint128 public PlatformFee;
