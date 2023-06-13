@@ -331,6 +331,8 @@ contract AJMarketplace is ReentrancyGuard {
     function cancelAuction(uint256 _nftId) external nonReentrant {
         uint8 auctionIndex = nftAuctionCount[_nftId];
         address nftOwner = AuctionDataset[_nftId].seller;
+         // B1 ISSUE FIXED
+        require(!auctionIndex.ended, "This Auction Is Already Ended");
         require(
             ((msg.sender == owner) || (msg.sender == nftOwner)),
             "Only NFT owner or Platform Owner can cancel Auction"
@@ -524,6 +526,9 @@ contract AJMarketplace is ReentrancyGuard {
 
     function bid(uint256 _nftId, uint256 _payAmount) external {
         uint8 auctionIndex = nftAuctionCount[_nftId];
+
+        // B2 ISSUE FIXED
+        require(auctionIndex.started, "Auction is not yet started");
         uint256 totalAmountUserPay = getNFTFinalRate(
             AuctionDataset[_nftId].highestBid,
             _nftId
@@ -639,6 +644,13 @@ contract AJMarketplace is ReentrancyGuard {
         require(
             address(item.seller) == msg.sender,
             "Only Seller can remove the NFT"
+        );
+        // B3 ISSUE FIXED
+        if(item.ended){
+            IERC721(nftContractAddr).transferFrom(
+            address(this),
+            msg.sender,
+            item.tokenId
         );
         require(
             block.timestamp < AuctionDataset[_tokenId].endAt,
