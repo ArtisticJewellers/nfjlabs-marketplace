@@ -26,8 +26,8 @@ function useNFT(address, royaltyPercent) {
       account,
       metadata,
       royaltyPercent,
-      // getRole?.getRole?.royalty,
-      getRole?.getRole?.royaltyAddress
+      // getRole?.getRole?.royaltyAddress
+      "0x7671A05D4e947A7E991a8e2A92EEd7A3a9b9A861"
     );
   };
   const getTokenBalance = (network, tokenAddress) => {

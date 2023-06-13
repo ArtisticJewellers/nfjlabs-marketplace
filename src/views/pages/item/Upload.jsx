@@ -104,12 +104,12 @@ const UploadComponent = () => {
 
   useEffect(() => {
     if (!account) return;
-    if (!user?.user?.isKycApproved) {
-      alert("You Kyc Is Not Approved Yet");
-      history.push("/");
+    // if (!user?.user?.isKycApproved) {
+    //   alert("You Kyc Is Not Approved Yet");
+    //   history.push("/");
 
-      return;
-    }
+    //   return;
+    // }
 
     fetchUserCollections();
     if (active) {

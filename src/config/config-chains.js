@@ -42,6 +42,6 @@ export const ChainsInfo = {
       "https://upload.wikimedia.org/wikipedia/commons/0/05/Ethereum_logo_2014.svg",
     CHAIN_ID: "80001",
     BLOCK_EXPLORER_URL: "https://mumbai.polygonscan.com/",
-    RPC_PROVIDER_URL: "https://rpc-mumbai.matic.today",
+    RPC_PROVIDER_URL: "https://polygon-mumbai-bor.publicnode.com",
   },
 };
