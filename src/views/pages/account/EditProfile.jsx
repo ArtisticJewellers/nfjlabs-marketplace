@@ -80,6 +80,8 @@ const EditProfile = () => {
     const User = z.object({
       username: z.string().max(20).trim(),
       firstname: z.string().max(20).trim(),
+      bgImage: z.string(),
+      avatarUrl: z.string(),
       lastname: z.string().max(20).trim(),
       aboutDetails: z.string().max(200).trim(),
       facebookUrl: z.string().url().trim(),
