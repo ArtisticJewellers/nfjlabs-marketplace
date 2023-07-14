@@ -145,7 +145,7 @@ const Marketplace = () => {
                           <div className="img1Div">
                             <Link
                               to={
-                                "item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/13"
+                                "item/ethereum/0xdC4643fc6A81247c75f5f434f9256A1de4C9aacb/7"
                               }
                             >
                               <img
@@ -170,7 +170,7 @@ const Marketplace = () => {
                           <div className="img2Div">
                             <Link
                               to={
-                                "item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/98"
+                                "item/ethereum/0xdC4643fc6A81247c75f5f434f9256A1de4C9aacb/6"
                               }
                             >
                               <img
@@ -190,7 +190,7 @@ const Marketplace = () => {
                           <div className="img3Div">
                             <Link
                               to={
-                                "item/binance/0x890d7056337B8456550b3287725096815C3CCDD9/12"
+                                "item/ethereum/0xdC4643fc6A81247c75f5f434f9256A1de4C9aacb/10"
                               }
                             >
                               <img
@@ -378,6 +378,7 @@ const TrendingNfts = () => {
   const { data: trending_nft } = useQuery(TrendingNft, {
     variables: { popularCollection: "trending_nft" },
   });
+
   return (
     <>
       <div>
@@ -681,8 +682,9 @@ function NftCard({ val }) {
 
                 <div className="card_head">
                   <Link
-                    to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS
-                      }/${val.tokenId}`}
+                    to={`/item/${val.network}/${
+                      ChainsInfo[val.chainId].NFT_ADDRESS
+                    }/${val.tokenId}`}
                   >
                     {val.imageUrl?.includes(".mp4") ? (
                       <video
