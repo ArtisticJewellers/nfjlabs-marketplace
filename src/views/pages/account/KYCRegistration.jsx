@@ -303,7 +303,7 @@ const KYCRegistration = () => {
                     cursor: "pointer",
                   }}
                 >
-                  {is_otp_sent == true ? "OTP SENDED" : "VERIFY OTP"}
+                  {is_otp_sent == true ? "OTP SENT" : "VERIFY OTP"}
                 </h4>
               )}
             </Form.Group>
