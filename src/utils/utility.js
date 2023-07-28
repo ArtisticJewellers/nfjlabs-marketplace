@@ -11,6 +11,8 @@ export const truncateAddress = (address) => {
 
 export const getNetworkName = (chainId) => {
   switch (chainId) {
+    case 11155111:
+      return "ethereumSepolia";
     case 5:
       return "ethereum";
     case 97:
@@ -24,6 +26,8 @@ export const getNetworkName = (chainId) => {
 
 export const getNetworkChainID = (network) => {
   switch (network) {
+    case "ethereumSepolia":
+      return "11155111";
     case "ethereum":
       return "5";
     case "polygon":

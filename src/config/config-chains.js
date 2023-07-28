@@ -44,4 +44,18 @@ export const ChainsInfo = {
     BLOCK_EXPLORER_URL: "https://mumbai.polygonscan.com/",
     RPC_PROVIDER_URL: "https://polygon-mumbai-bor.publicnode.com",
   },
+  11155111: {
+    NETWORK_NAME: "Sepolia Testnet",
+    CHAIN_NAME: "EthereumSepolia",
+    CURRENCY_SYMBOL: "ETH",
+    NFT_MARKETPLACE_ADDRESS: "0xa527c9578Bd1EF73f0102ff9379Ab003F0026E32",
+    NFT_ADDRESS: "0x8a6337a6eFDA1aADc72d0ab1bbc2c535d961E4dE",
+    WRAP_TOKEN: "0x20935E173bff982458E245382f13b63c484BE701",
+    IS_MAIN_NET: false,
+    LOGO_URL:
+      "https://upload.wikimedia.org/wikipedia/commons/0/05/Ethereum_logo_2014.svg",
+    CHAIN_ID: "11155111",
+    BLOCK_EXPLORER_URL: "https://sepolia.etherscan.io/",
+    RPC_PROVIDER_URL: "https://sepolia.infura.io/v3/dc33d84612cc470db1924b37c4248c60",
+  },
 };

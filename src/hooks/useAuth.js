@@ -13,7 +13,11 @@ export const useAuth = () => {
   const history = useHistory();
 
   const login = () => {
-    activate(injected);
+    try {
+      activate(injected);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const switchNetwork = async (chainId) => {

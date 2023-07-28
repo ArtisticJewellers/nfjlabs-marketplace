@@ -30,6 +30,10 @@ const icons = {
     icon: eth,
     name: "Ethereum",
   },
+  11155111: {
+    icon: eth,
+    name: "Ethereum"
+  }
 };
 
 const Header = () => {
