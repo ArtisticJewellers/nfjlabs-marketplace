@@ -81,20 +81,17 @@ const ItemDetails = () => {
     getTokenBalance,
   } = useNFT();
 
-  let blockURL = "";
-  if (ChainsInfo[getNetworkChainID(network)].CHAIN_ID == 1) {
-    blockURL = "https://etherscan.io/";
-  } else if (ChainsInfo[getNetworkChainID(network)].CHAIN_ID == 137) {
-    blockURL = "https://polygonscan.com/";
-  } else if (ChainsInfo[getNetworkChainID(network)].CHAIN_ID == 80001) {
-    blockURL = "https://mumbai.polygonscan.com/";
-  } else if (ChainsInfo[getNetworkChainID(network)].CHAIN_ID == 5) {
-    blockURL = "https://goerli.etherscan.io/";
-  } else if (ChainsInfo[getNetworkChainID(network)].CHAIN_ID == 97) {
-    blockURL = "https://testnet.bscscan.com/";
-  } else {
-    blockURL = "https://bscscan.com/";
-  }
+  const chainURLs = {
+    1: "https://etherscan.io/",
+    137: "https://polygonscan.com/",
+    80001: "https://mumbai.polygonscan.com/",
+    5: "https://goerli.etherscan.io/",
+    97: "https://testnet.bscscan.com/",
+    11155111: "https://sepolia.etherscan.io/",
+  };
+
+  const chainID = ChainsInfo[getNetworkChainID(network)].CHAIN_ID;
+  const blockURL = chainURLs[chainID] || "https://bscscan.com/";
 
   const { downloadJSONOnIpfs } = useStorage();
   const [metaData, setMetaData] = useState({});
@@ -114,6 +111,7 @@ const ItemDetails = () => {
   const { data: nftDetails } = useQuery(GetNftDetails, {
     variables: { contractAddress: address, tokenId: parseInt(tokenId) },
   });
+  console.log("the nft details are------>", nftDetails);
 
   const { data: signIn } = useQuery(SignIn, {
     skip: !nftDetails?.getNftDetails,
@@ -169,7 +167,7 @@ const ItemDetails = () => {
       )
         .then((res) => res.json())
         .then((data) => {
-          // console.log(data);
+          console.log(data);
           setUsdPrice(parseFloat(data.lprice));
         })
         .catch((err) => console.log(err));
@@ -186,6 +184,8 @@ const ItemDetails = () => {
         creatorAddress: res.nftCreator,
         ipfsLink: res.jsonData,
       });
+
+      console.log("the metadata------>", metaData);
 
       setLoading(false);
     });
