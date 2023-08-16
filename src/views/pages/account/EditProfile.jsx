@@ -22,6 +22,7 @@ import {
   ACCOUNT_UPDATE_ALERT,
 } from "../../../config/constant/alert";
 import useStorage from "../../../hooks/useStorage";
+import { IPFS_URL } from "../../../config/constant/contract";
 
 const EditProfile = () => {
   useDocumentTitle("NFJ Labs-Marketplace");
@@ -43,7 +44,7 @@ const EditProfile = () => {
     twitterUrl: "",
   });
 
-  const { uploadOnIpfs } = useStorage();
+  const { uploadFileToIPFS } = useStorage();
   const { data: userData } = useQuery(UserDetails, {
     skip: !active,
     variables: {
@@ -63,17 +64,11 @@ const EditProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    let avatarImage = await uploadOnIpfs(userProfileData.avatarUrl);
-    let coverImage = await uploadOnIpfs(userProfileData.coverUrl);
+    let avatarImage = await uploadFileToIPFS(userProfileData.avatarUrl);
+    let coverImage = await uploadFileToIPFS(userProfileData.coverUrl);
 
-    let newavatarImage = avatarImage.replace(
-      "ipfs://",
-      "https://gateway.ipfscdn.io/ipfs/"
-    );
-    let newConverImage = coverImage.replace(
-      "ipfs://",
-      "https://gateway.ipfscdn.io/ipfs/"
-    );
+    let newavatarImage = avatarImage.replace("ipfs://", IPFS_URL);
+    let newConverImage = coverImage.replace("ipfs://", IPFS_URL);
     console.log(newavatarImage);
     console.log(newConverImage);
 

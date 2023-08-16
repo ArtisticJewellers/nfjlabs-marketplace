@@ -14,7 +14,7 @@ const CreateCollection = () => {
   const [createCollection, { loading, error }] = useMutation(CreateCollections);
 
   const { account, chainId } = useWeb3React();
-  const { uploadOnIpfs } = useStorage();
+  const { uploadFileToIPFS } = useStorage();
   const [isLoading, setIsLoading] = useState(false);
 
   const [data, setData] = useState({
@@ -101,7 +101,7 @@ const CreateCollection = () => {
               required
               onChange={async (e) => {
                 setIsLoading(true);
-                let image = await uploadOnIpfs(e.target.files[0]);
+                let image = await uploadFileToIPFS(e.target.files[0]);
                 setData({ ...data, bannerImageUrl: image });
                 setIsLoading(false);
               }}
@@ -117,7 +117,7 @@ const CreateCollection = () => {
               required
               onChange={async (e) => {
                 setIsLoading(true);
-                let image = await uploadOnIpfs(e.target.files[0]);
+                let image = await uploadFileToIPFS(e.target.files[0]);
                 setData({ ...data, avatarUrl: image });
                 setIsLoading(false);
               }}

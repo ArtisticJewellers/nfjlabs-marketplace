@@ -29,6 +29,7 @@ import polygon from "../../../assets/icon/polygon.png";
 import ethereum from "../../../assets/icon/eth.svg";
 import binance from "../../../assets/icon/bnb.svg";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
+import { IPFS_URL } from "../../../config/constant/contract";
 const UploadComponent = () => {
   const [collections, setCollections] = useState([
     { label: "", value: "", id: "" },
@@ -37,7 +38,12 @@ const UploadComponent = () => {
   const [categoryValue, setCategoryValue] = useState("");
   const { mintNFT } = useNFT();
   const history = useHistory();
-  const { uploadOnIpfs, downloadJSONOnIpfs } = useStorage();
+  const {
+    uploadOnIpfs,
+    downloadJSONOnIpfs,
+    uploadFileToIPFS,
+    uploadJSONToIPFS,
+  } = useStorage();
   const { account, chainId, active } = useWeb3React();
   const { showLoading, hideLoading } = useLoading();
   const { checkVerification, isVerify } = useWalletValidation();
@@ -134,21 +140,26 @@ const UploadComponent = () => {
     if (!active) {
       WALLET_ALERT();
     } else {
+      showLoading();
+      for (let index = 0; index < certf.length; index++) {
+        const _fileUrl = await uploadFileToIPFS(certf[index].image);
+        certf[index].image = _fileUrl;
+      }
+      const fileUrl = await uploadFileToIPFS(value.image.file.originFileObj);
       const metadata = {
         title: value.title,
         description: value.description,
-        external_link: value.image.file.originFileObj,
+        external_link: fileUrl,
         properties: value.properties,
         extLink: value.extlink,
         certificates: certf,
         // unlock: value.unlock,
       };
-      showLoading();
       console.log({ metadata });
-      let uri = await uploadOnIpfs(metadata);
+      // let uri = await uploadOnIpfs(metadata);
+      let uri = await uploadJSONToIPFS(metadata);
       let url = await downloadJSONOnIpfs(uri);
       selectedCollection = "default" || value.collection.id;
-      console.log({ uri });
 
       mintNFT(uri, royaltyPercent)
         .send({
