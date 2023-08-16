@@ -40,7 +40,8 @@ let gemsCat = [
   { label: "Opal", value: "opal" },
   { label: "Ruby", value: "ruby" },
   { label: "Sapphire", value: "sapphire" },
-  { label: "Diamond", value: "diamond" },
+  { label: "Natural Diamond", value: "natural_diamond" },
+  { label: "Lab Grown Diamond", value: "lab_diamond" },
   { label: "Emrald", value: "emrald" },
 ];
 
@@ -58,7 +59,8 @@ let allCat = [
   { label: "Opal", value: "opal" },
   { label: "Ruby", value: "ruby" },
   { label: "Sapphire", value: "sapphire" },
-  { label: "Diamond", value: "diamond" },
+  { label: "Natural Diamond", value: "natural_diamond" },
+  { label: "Lab Grown Diamond", value: "lab_diamond" },
   { label: "Emrald", value: "emrald" },
 ];
 
