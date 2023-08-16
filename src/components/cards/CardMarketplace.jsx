@@ -25,7 +25,8 @@ function CardMarketplace({ FilterData, searchNFTData }) {
                           ChainsInfo[val.chainId].NFT_ADDRESS
                         }/${val.tokenId}`}
                       >
-                        {val?.imageUrl?.includes(".mp4") ? (
+                        {val?.imageUrl?.includes(".mp4") ||
+                        val?.imageUrl?.includes(".webm") ? (
                           <video
                             // className="item_img"
                             style={{

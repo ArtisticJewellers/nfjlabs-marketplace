@@ -111,7 +111,7 @@ const ItemDetails = () => {
   const { data: nftDetails } = useQuery(GetNftDetails, {
     variables: { contractAddress: address, tokenId: parseInt(tokenId) },
   });
-  console.log("the nft details are------>", nftDetails);
+ 
 
   const { data: signIn } = useQuery(SignIn, {
     skip: !nftDetails?.getNftDetails,
@@ -138,7 +138,7 @@ const ItemDetails = () => {
   }, 1000);
 
   const fetchKYC = async () => {
-    console.log(account);
+    // console.log(account);
     if (!account) return;
     const res = await getKycByWalletId({
       variables: {
@@ -153,11 +153,12 @@ const ItemDetails = () => {
     window.scrollTo(0, 0);
     fetchKYC();
 
-    if (metaData.external_link?.includes(".mp4")) {
-      setIsVideo(true);
-    } else {
-      setIsVideo(false);
-    }
+    // console.log("the external link------>", metaData);
+    // if (metaData.external_link?.includes(".webm")) {
+    //   setIsVideo(true);
+    // } else {
+    //   setIsVideo(false);
+    // }
 
     if (nftDetails?.getNftDetails?.chainId) {
       fetch(
@@ -184,8 +185,15 @@ const ItemDetails = () => {
         creatorAddress: res.nftCreator,
         ipfsLink: res.jsonData,
       });
-
-      console.log("the metadata------>", metaData);
+      if (
+        data.external_link?.includes(".webm") ||
+        data.external_link?.includes(".mp4")
+      ) {
+        setIsVideo(true);
+      } else {
+        setIsVideo(false);
+      }
+      // console.log("the metadata------>", data);
 
       setLoading(false);
     });
@@ -1436,7 +1444,6 @@ const ItemDetails = () => {
                                             history.push("/kyc");
                                             return;
                                           }
-                                          console.log("buy now called");
                                           if (active) {
                                             showLoading();
                                             await purchaseNFT(

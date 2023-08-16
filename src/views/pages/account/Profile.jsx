@@ -58,7 +58,10 @@ const Profile = () => {
                     <div className="d-flex  justify-content-between"></div>
                     <div className="mt-4  tab-content">
                       <h5>My NFTs</h5>
-                      <CardProfile creatorData={creatorData} ownedNFTs={ownedNFTs} />
+                      <CardProfile
+                        creatorData={creatorData}
+                        ownedNFTs={ownedNFTs}
+                      />
                     </div>
                   </Tabs>
                 </div>
@@ -345,21 +348,26 @@ const CardProfile = ({ creatorData, ownedNFTs }) => {
 
                   <div className="card_head">
                     <Link
-                      to={`/item/${val.network}/${ChainsInfo[val.chainId].NFT_ADDRESS
-                        }/${val.tokenId}`}
+                      to={`/item/${val.network}/${
+                        ChainsInfo[val.chainId].NFT_ADDRESS
+                      }/${val.tokenId}`}
                     >
-                      {val.imageUrl?.includes(".mp4") ? (<video
-                        // className="item_img"
-                        style={{ objectFit: "cover", width: "100%", height: "100%" }}
-                        src={val.imageUrl}
-                        autoPlay="autoplay"
-                        loop="true"
-                      ></video>) :
-                        (<img
+                      {val.imageUrl?.includes(".mp4") ||
+                      val.imageUrl?.includes(".webm") ? (
+                        <video
+                          // className="item_img"
+                          style={{
+                            objectFit: "cover",
+                            width: "100%",
+                            height: "100%",
+                          }}
                           src={val.imageUrl}
-                          alt="nftimage"
-                        />)
-                      }
+                          autoPlay="autoplay"
+                          loop="true"
+                        ></video>
+                      ) : (
+                        <img src={val.imageUrl} alt="nftimage" />
+                      )}
                     </Link>
                     {/*
                      */}
@@ -412,21 +420,25 @@ const CardProfile = ({ creatorData, ownedNFTs }) => {
 
                             <Link to={"/profile/" + val.ownerAddress}>
                               <div>
-                                {val.ownerAddress == val.creatorAddress ? <div
-                                  style={{
-                                    color: "#808080",
-                                    fontSize: "12px",
-                                  }}
-                                >
-                                  Artist
-                                </div> : <div
-                                  style={{
-                                    color: "#808080",
-                                    fontSize: "12px",
-                                  }}
-                                >
-                                  Owner
-                                </div>}
+                                {val.ownerAddress == val.creatorAddress ? (
+                                  <div
+                                    style={{
+                                      color: "#808080",
+                                      fontSize: "12px",
+                                    }}
+                                  >
+                                    Artist
+                                  </div>
+                                ) : (
+                                  <div
+                                    style={{
+                                      color: "#808080",
+                                      fontSize: "12px",
+                                    }}
+                                  >
+                                    Owner
+                                  </div>
+                                )}
 
                                 <div
                                   style={{
@@ -449,7 +461,6 @@ const CardProfile = ({ creatorData, ownedNFTs }) => {
           )}
         </>
       ))}
-
     </div>
   );
 };
