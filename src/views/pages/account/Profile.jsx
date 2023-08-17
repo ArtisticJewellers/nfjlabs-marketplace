@@ -5,7 +5,7 @@ import { Tabs } from "react-tabs";
 import useDocumentTitle from "../../../components/useDocumentTitle";
 import { Link, useParams } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
-import { truncateAddress } from "../../../utils/utility";
+import { isImage, truncateAddress } from "../../../utils/utility";
 import { useLazyQuery, useQuery } from "@apollo/client";
 import { GetNftsOfUser, UserDetails } from "../../../graphql/query";
 import { ChainsInfo } from "../../../config/config-chains";
@@ -226,6 +226,146 @@ const SidebarProfile = ({ creatorData }) => {
   );
 };
 const CardProfile = ({ creatorData, ownedNFTs }) => {
+  const Card = ({ val, i }) => {
+    const [isVideo, setisVideo] = useState();
+    useEffect(() => {
+      const _isVideo = async () => {
+        if (await isImage(val?.imageUrl)) {
+          setisVideo(false);
+        } else {
+          setisVideo(true);
+        }
+      };
+      _isVideo();
+    }, []);
+    return (
+      <>
+        {val.isApproved && (
+          <div
+            className="col-lg-3 col-md-6 col-sm-6"
+            key={i}
+            style={{ maxWidth: "21rem", width: "100%" }}
+          >
+            <div className="card__item four">
+              <div className="card_body space-y-10">
+                {/* =============== */}
+
+                <div className="card_head">
+                  <Link
+                    to={`/item/${val.network}/${
+                      ChainsInfo[val.chainId].NFT_ADDRESS
+                    }/${val.tokenId}`}
+                  >
+                    {isVideo ? (
+                      <video
+                        // className="item_img"
+                        style={{
+                          objectFit: "cover",
+                          width: "100%",
+                          height: "100%",
+                        }}
+                        src={val.imageUrl}
+                        autoPlay="autoplay"
+                        loop="true"
+                      ></video>
+                    ) : (
+                      <img src={val.imageUrl} alt="nftimage" />
+                    )}
+                  </Link>
+                  {/*
+                   */}
+                </div>
+                {/* =============== */}
+                <h6 className="card_title">{val.name}</h6>
+                <p></p>
+                <div className="card_footer d-block space-y-10">
+                  <div className="card_footer d-block space-y-10">
+                    <div className="card_footer justify-content-between">
+                      <div className="">
+                        <p className="txt_sm d-flex flex-column">
+                          <span
+                            style={{
+                              color: "#808080",
+                              fontSize: "12px",
+                            }}
+                          >
+                            Pricesssssss:
+                          </span>
+                          <span
+                            className="txt_sm"
+                            style={{
+                              color: "#000",
+                              fontSize: "14px",
+                            }}
+                          >
+                            {val.price}{" "}
+                            {ChainsInfo[val.chainId].CURRENCY_SYMBOL}
+                          </span>
+                        </p>
+                      </div>
+                      <div>
+                        <div
+                          className="py-2 d-flex gap-2"
+                          style={{ alignItems: "center" }}
+                        >
+                          <div>
+                            <img
+                              src={creatorData?.avatar_url}
+                              alt=""
+                              width="40px"
+                              height="40px"
+                              style={{
+                                borderRadius: "9999px",
+                                objectFit: "cover",
+                              }}
+                            ></img>
+                          </div>
+
+                          <Link to={"/profile/" + val.ownerAddress}>
+                            <div>
+                              {val.ownerAddress == val.creatorAddress ? (
+                                <div
+                                  style={{
+                                    color: "#808080",
+                                    fontSize: "12px",
+                                  }}
+                                >
+                                  Artist
+                                </div>
+                              ) : (
+                                <div
+                                  style={{
+                                    color: "#808080",
+                                    fontSize: "12px",
+                                  }}
+                                >
+                                  Owner
+                                </div>
+                              )}
+
+                              <div
+                                style={{
+                                  color: "#000",
+                                  fontSize: "10px",
+                                }}
+                              >
+                                @{creatorData?.username}
+                              </div>
+                            </div>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
+    );
+  };
+
   return (
     <div className="row mb-30_reset">
       {/* {creatorData?.nfts?.map((val, i) => (
@@ -335,131 +475,7 @@ const CardProfile = ({ creatorData, ownedNFTs }) => {
       ))} */}
 
       {ownedNFTs?.getNftsOfUser?.map((val, i) => (
-        <>
-          {val.isApproved && (
-            <div
-              className="col-lg-3 col-md-6 col-sm-6"
-              key={i}
-              style={{ maxWidth: "21rem", width: "100%" }}
-            >
-              <div className="card__item four">
-                <div className="card_body space-y-10">
-                  {/* =============== */}
-
-                  <div className="card_head">
-                    <Link
-                      to={`/item/${val.network}/${
-                        ChainsInfo[val.chainId].NFT_ADDRESS
-                      }/${val.tokenId}`}
-                    >
-                      {val.imageUrl?.includes(".mp4") ||
-                      val.imageUrl?.includes(".webm") ? (
-                        <video
-                          // className="item_img"
-                          style={{
-                            objectFit: "cover",
-                            width: "100%",
-                            height: "100%",
-                          }}
-                          src={val.imageUrl}
-                          autoPlay="autoplay"
-                          loop="true"
-                        ></video>
-                      ) : (
-                        <img src={val.imageUrl} alt="nftimage" />
-                      )}
-                    </Link>
-                    {/*
-                     */}
-                  </div>
-                  {/* =============== */}
-                  <h6 className="card_title">{val.name}</h6>
-                  <p></p>
-                  <div className="card_footer d-block space-y-10">
-                    <div className="card_footer d-block space-y-10">
-                      <div className="card_footer justify-content-between">
-                        <div className="">
-                          <p className="txt_sm d-flex flex-column">
-                            <span
-                              style={{
-                                color: "#808080",
-                                fontSize: "12px",
-                              }}
-                            >
-                              Price:
-                            </span>
-                            <span
-                              className="txt_sm"
-                              style={{
-                                color: "#000",
-                                fontSize: "14px",
-                              }}
-                            >
-                              {val.price}{" "}
-                              {ChainsInfo[val.chainId].CURRENCY_SYMBOL}
-                            </span>
-                          </p>
-                        </div>
-                        <div>
-                          <div
-                            className="py-2 d-flex gap-2"
-                            style={{ alignItems: "center" }}
-                          >
-                            <div>
-                              <img
-                                src={creatorData?.avatar_url}
-                                alt=""
-                                width="40px"
-                                height="40px"
-                                style={{
-                                  borderRadius: "9999px",
-                                  objectFit: "cover",
-                                }}
-                              ></img>
-                            </div>
-
-                            <Link to={"/profile/" + val.ownerAddress}>
-                              <div>
-                                {val.ownerAddress == val.creatorAddress ? (
-                                  <div
-                                    style={{
-                                      color: "#808080",
-                                      fontSize: "12px",
-                                    }}
-                                  >
-                                    Artist
-                                  </div>
-                                ) : (
-                                  <div
-                                    style={{
-                                      color: "#808080",
-                                      fontSize: "12px",
-                                    }}
-                                  >
-                                    Owner
-                                  </div>
-                                )}
-
-                                <div
-                                  style={{
-                                    color: "#000",
-                                    fontSize: "10px",
-                                  }}
-                                >
-                                  @{creatorData?.username}
-                                </div>
-                              </div>
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </>
+        <Card val={val} i={i} />
       ))}
     </div>
   );

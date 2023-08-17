@@ -55,3 +55,21 @@ export const getIPFSLink = (text) => {
   }
   return "/";
 };
+
+export const isImage = async (url) => {
+  try {
+    const response = await fetch(url, { method: "HEAD" });
+    const contentType = response.headers.get("content-type");
+
+    if (contentType && contentType.startsWith("video/")) {
+      console.log("returning false");
+      return false;
+    } else {
+      console.log("returning true");
+      return true;
+    }
+  } catch (error) {
+    console.error("Error fetching content type:", error);
+    return false;
+  }
+};

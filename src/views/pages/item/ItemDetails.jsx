@@ -13,6 +13,7 @@ import useStorage from "../../../hooks/useStorage";
 import {
   decimalToInt,
   getIPFSLink,
+  isImage,
   truncateAddress,
 } from "../../../utils/utility";
 
@@ -111,7 +112,6 @@ const ItemDetails = () => {
   const { data: nftDetails } = useQuery(GetNftDetails, {
     variables: { contractAddress: address, tokenId: parseInt(tokenId) },
   });
- 
 
   const { data: signIn } = useQuery(SignIn, {
     skip: !nftDetails?.getNftDetails,
@@ -185,13 +185,11 @@ const ItemDetails = () => {
         creatorAddress: res.nftCreator,
         ipfsLink: res.jsonData,
       });
-      if (
-        data.external_link?.includes(".webm") ||
-        data.external_link?.includes(".mp4")
-      ) {
-        setIsVideo(true);
-      } else {
+
+      if (await isImage(data.external_link)) {
         setIsVideo(false);
+      } else {
+        setIsVideo(true);
       }
       // console.log("the metadata------>", data);
 
